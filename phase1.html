@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALERI Phase 1 - Identifikation von Vorteilen und Belastungen</title>
+    <link href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d2c010e595f61517badb6_enfit_Logo_32x32.png" rel="shortcut icon" type="image/x-icon">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #ecf4f4 100%);
+            min-height: 100vh;
+            color: #1f2937;
+            padding: 34px 16px;
+        }
+        .page { max-width: 1260px; margin: 0 auto; }
+        .shell {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid #e5e7eb;
+            border-radius: 22px;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+            padding: 28px;
+        }
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 20px;
+            margin-bottom: 22px;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(223, 244, 94, 0.35);
+            background: rgba(223, 244, 94, 0.12);
+            color: #111827;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.92rem;
+            transition: all 0.25s ease;
+        }
+        .back-link:hover { transform: translateY(-2px); background: rgba(223, 244, 94, 0.2); }
+        h1 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 8px; }
+        .lead { color: #4b5563; line-height: 1.6; max-width: 860px; }
+        .layout {
+            display: grid;
+            grid-template-columns: 1.8fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+        .panel {
+            border: 1px solid #e5e7eb;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(248, 250, 252, 0.92));
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.045);
+        }
+        .panel-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: 0.01em;
+        }
+        .label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .field-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .example-btn {
+            border: 1px solid #d1d5db;
+            background: #f8fafc;
+            color: #4b5563;
+            border-radius: 999px;
+            padding: 2px 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .example-btn:hover { background: #eef2f7; border-color: #cbd5e1; }
+        .example-btn::after {
+            content: "Insert sample text";
+            position: absolute;
+            right: 0;
+            top: -32px;
+            font-size: 0.68rem;
+            color: #334155;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 4px 7px;
+            white-space: nowrap;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(4px);
+            transition: all 0.16s ease;
+        }
+        .example-btn:hover::after {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        textarea {
+            width: 100%;
+            border: 1px solid #dbe1ea;
+            border-radius: 12px;
+            padding: 12px;
+            font: inherit;
+            line-height: 1.5;
+            resize: vertical;
+            min-height: 110px;
+            background: #f8fafc;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: rgba(212, 225, 87, 0.9);
+            box-shadow: 0 0 0 4px rgba(212, 225, 87, 0.2);
+            background: #ffffff;
+        }
+        .meta-row {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            color: #6b7280;
+            font-size: 0.84rem;
+        }
+        .actions {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            border: none;
+            border-radius: 12px;
+            padding: 11px 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #dff45e, #c7e03a);
+            color: #111827;
+            box-shadow: 0 8px 20px rgba(223, 244, 94, 0.35);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(170, 190, 60, 0.33);
+        }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn-secondary {
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            color: #312e81;
+            box-shadow: 0 8px 20px rgba(165, 180, 252, 0.25);
+        }
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(129, 140, 248, 0.3);
+        }
+        .btn-secondary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        #statusText { color: #6b7280; font-size: 0.9rem; }
+        .pipeline-stepper {
+            margin-top: 10px;
+            position: relative;
+        }
+        .pipeline-stepper::before {
+            content: "";
+            position: absolute;
+            left: 11px;
+            top: 2px;
+            bottom: 2px;
+            width: 1px;
+            background: #e5e7eb;
+        }
+        .step {
+            position: relative;
+            display: grid;
+            grid-template-columns: 24px 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+            align-items: start;
+        }
+        .step:last-child { margin-bottom: 0; }
+        .step-dot {
+            width: 22px;
+            height: 22px;
+            border-radius: 999px;
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: #6b7280;
+            z-index: 1;
+        }
+        .step-body {
+            border: 1px solid #e5e7eb;
+            background: #fff;
+            border-radius: 10px;
+            padding: 8px 10px;
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.04);
+        }
+        .step-title { font-size: 0.87rem; color: #111827; font-weight: 500; line-height: 1.45; }
+        .step.completed .step-dot {
+            background: rgba(212, 225, 87, 0.24);
+            border-color: rgba(212, 225, 87, 0.7);
+            color: #3f4d16;
+        }
+        .step.active .step-dot {
+            background: #d4e157;
+            border-color: #c0cf48;
+            color: #263238;
+            box-shadow: 0 0 0 4px rgba(212, 225, 87, 0.2);
+        }
+        .step.pending .step-dot { background: #fff; color: #94a3b8; }
+        .step.active .step-body {
+            border-color: rgba(212, 225, 87, 0.45);
+            background: rgba(212, 225, 87, 0.1);
+        }
+        .hidden { display: none !important; }
+        .questions-grid { display: grid; gap: 12px; margin-top: 12px; }
+        .q-card {
+            border: 1px solid #e6eaf0;
+            border-radius: 12px;
+            background: #fff;
+            padding: 12px;
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.03);
+        }
+        .q-title { font-weight: 600; font-size: 0.93rem; }
+        .q-why { margin-top: 3px; color: #6b7280; font-size: 0.84rem; }
+        .result-wrap { margin-top: 20px; }
+        .result-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+        .loop-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(223, 244, 94, 0.42);
+            background: rgba(223, 244, 94, 0.14);
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+        .effects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+        .effect-col {
+            border: 1px solid #e7ebf1;
+            border-radius: 12px;
+            background: #fff;
+            padding: 12px;
+            min-height: 290px;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.035);
+        }
+        .effect-col h3 {
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+        .effect-col ul { list-style: none; display: grid; gap: 10px; }
+        .effect-col li {
+            line-height: 1.45;
+            font-size: 0.9rem;
+            border: 1px solid #edf1f7;
+            border-radius: 10px;
+            padding: 8px;
+            background: #fbfdff;
+        }
+        .effect-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .effect-icon {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .effect-icon.benefit { color: #65a30d; }
+        .effect-icon.burden { color: #f59e0b; }
+        .effect-head {
+            font-weight: 500;
+            color: #111827;
+            margin-bottom: 2px;
+        }
+        .effect-reason { color: #4b5563; }
+        .secondary-grid {
+            margin-top: 14px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+        .card-lite {
+            border: 1px solid #e7ebf1;
+            border-radius: 12px;
+            background: #fff;
+            padding: 12px;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.03);
+        }
+        .card-lite h3 {
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+        .empty { color: #6b7280; font-size: 0.9rem; }
+        .alert-box {
+            margin-top: 10px;
+            border: 1px solid #f59e0b;
+            background: #fffbeb;
+            color: #92400e;
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+        .synth-block { margin-bottom: 8px; }
+        .synth-title { font-weight: 700; font-size: 0.92rem; margin-bottom: 4px; }
+        .synth-block ul { margin-left: 18px; }
+        .sources-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .source-tag {
+            border: 1px solid #dbe2ea;
+            background: #f8fafc;
+            color: #334155;
+            border-radius: 999px;
+            padding: 5px 10px;
+            font-size: 0.77rem;
+            cursor: help;
+            transition: all 0.2s ease;
+        }
+        .source-tag:hover {
+            border-color: rgba(212, 225, 87, 0.7);
+            background: rgba(212, 225, 87, 0.18);
+        }
+        @media (max-width: 1060px) {
+            .layout { grid-template-columns: 1fr; }
+            .effects-grid { grid-template-columns: 1fr; }
+            .secondary-grid { grid-template-columns: 1fr; }
+            .effect-col { min-height: unset; }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <section class="shell">
+            <header class="topbar">
+                <div>
+                    <h1>Phase 1: Identifikation von Vorteilen und Belastungen</h1>
+                    <p class="lead">
+                        Beschreiben Sie Ihre Investitionsidee moeglichst vollstaendig. Der Assistent fuehrt einen mehrstufigen
+                        Analyseprozess mit Rückfragen durch und liefert eine strukturierte Bewertung in drei Kategorien:
+                        <strong>Energiefluss</strong>, <strong>Finanzielle Effekte</strong> und <strong>Weitere Effekte</strong>.
+                    </p>
+                </div>
+                <a href="/accesspoint" class="back-link">Zurück zum Access Point</a>
+            </header>
+
+            <section class="layout">
+                <div class="panel">
+                    <h2 class="panel-title">Projektinput</h2>
+                    
+                    <div class="field-head">
+                        <label for="ideaInput" class="label" style="margin-bottom:0;">1. Ihre Investitionsidee (KMU-Kontext)</label>
+                        <button type="button" id="ideaExampleBtn" class="example-btn">Beispiel</button>
+                    </div>
+                    <textarea id="ideaInput" rows="6" placeholder="Beschreiben Sie kurz: Ausgangssituation, Zielbild, technische Massnahmen, erwartete Auswirkungen."></textarea>
+                    
+                    <label for="boundariesInput" class="label" style="margin-top: 14px;">2. Systemgrenzen</label>
+                    <p style="font-size: 0.85rem; color: #6b7280; margin-bottom: 8px;">Geben Sie physische und technische Grenzen der Bewertung an (z.B. nur eine Maschine, ganze Produktionslinie oder ganzes Gebaeude).</p>
+                    <textarea id="boundariesInput" rows="4" placeholder="z.B. Bewertung umfasst nur die neue Waermepumpenanlage und den direkten Produktionsprozess..."></textarea>
+                    
+                    <label for="capexInput" class="label" style="margin-top: 14px;">3. Investitionskosten (CAPEX)</label>
+                    <p style="font-size: 0.85rem; color: #6b7280; margin-bottom: 8px;">Alle einmaligen Kosten: Ausruestung, Planung, Montage, Inbetriebnahme, Schulung, Entsorgung alter Anlagen.</p>
+                    <textarea id="capexInput" rows="4" placeholder="z.B. Waermepumpe: 250.000 EUR, Planung: 15.000 EUR, Montage/Inbetriebnahme: 45.000 EUR, Demontage alte Kessel: 20.000 EUR, Schulung: 5.000 EUR..."></textarea>
+                    
+                    <label for="opexInput" class="label" style="margin-top: 14px;">4. Betriebskostenänderungen (OPEX)</label>
+                    <p style="font-size: 0.85rem; color: #6b7280; margin-bottom: 8px;">Wie ändern sich jährliche Betriebskosten: Wartung, Personal, Verbrauchsmaterialien?</p>
+                    <textarea id="opexInput" rows="4" placeholder="z.B. Wartung: +2.000 EUR/Jahr, Kältemittel: +500 EUR/Jahr, Stromkosten: -50.000 EUR/Jahr, Gaskosten: -30.000 EUR/Jahr..."></textarea>
+                    
+                    <label for="lifetimeInput" class="label" style="margin-top: 14px;">5. Lebensdauer und Zeitintervalle</label>
+                    <p style="font-size: 0.85rem; color: #6b7280; margin-bottom: 8px;">Technische Lebensdauer der Investition und geplanter Inbetriebnahmezeitpunkt.</p>
+                    <textarea id="lifetimeInput" rows="3" placeholder="z.B. Technische Lebensdauer: 20 Jahre, geplanter Inbetriebnahme: Q3 2026..."></textarea>
+                    
+                    <label for="subsidiesInput" class="label" style="margin-top: 14px;">6. Steuern, Subventionen und Quoten</label>
+                    <p style="font-size: 0.85rem; color: #6b7280; margin-bottom: 8px;">Erwartete staatliche Zuschüsse oder Auswirkungen auf CO2-Zahlungen/Umweltsteuern?</p>
+                    <textarea id="subsidiesInput" rows="3" placeholder="z.B. Bundesförderung für effiziente Wärmepumpen: 40%, CO2-Einsparung: ~300 t/Jahr..."></textarea>
+                    
+                    <label for="qualitativeInput" class="label" style="margin-top: 14px;">7. Qualitative (nicht-monetäre) Effekte</label>
+                    <p style="font-size: 0.85rem; color: #6b7280; margin-bottom: 8px;">Effekte, die nicht direkt in Euro messbar sind: Zuverlässigkeit, Arbeitsbedingungen, ESG-Rating.</p>
+                    <textarea id="qualitativeInput" rows="4" placeholder="z.B. Weniger Ausfallzahlen, bessere Arbeitssicherheit, ESG-Compliance, geringere Emissionen, Imagegebung..."></textarea>
+                    
+                    <div id="qualityAlert" class="alert-box hidden" style="margin-top: 14px;"></div>
+                    <div class="meta-row" style="margin-top: 14px;">
+                        <span>Vollständigere Angaben = präzisere Effekt-Identifikation</span>
+                        <span id="charCount">0 Zeichen insgesamt</span>
+                    </div>
+                    <div class="actions">
+                        <button id="startBtn" class="btn btn-primary">Phase 1 Analyse starten</button>
+                        <span id="statusText"></span>
+                    </div>
+                </div>
+
+                <aside class="panel">
+                    <h2 class="panel-title">Smart Pipeline</h2>
+                    <div class="pipeline-stepper" id="pipelineStepper">
+                        <div class="step active" data-step="1">
+                            <div class="step-dot">1</div>
+                            <div class="step-body"><p class="step-title">Strukturierung Ihrer Idee in ein Projektbriefing</p></div>
+                        </div>
+                        <div class="step pending" data-step="2">
+                            <div class="step-dot">2</div>
+                            <div class="step-body"><p class="step-title">Erste Effekte-Matrix (Benefit/Burden)</p></div>
+                        </div>
+                        <div class="step pending" data-step="3">
+                            <div class="step-dot">3</div>
+                            <div class="step-body"><p class="step-title">Gap Detection + gezielte Rückfragen</p></div>
+                        </div>
+                        <div class="step pending" data-step="4">
+                            <div class="step-dot">4</div>
+                            <div class="step-body"><p class="step-title">Iterative Verfeinerung mit Confidence</p></div>
+                        </div>
+                        <div class="step pending" data-step="5">
+                            <div class="step-dot">5</div>
+                            <div class="step-body"><p class="step-title">Konsolidierte Synthese mit Referenzen</p></div>
+                        </div>
+                    </div>
+                </aside>
+            </section>
+
+            <section id="questionsPanel" class="panel hidden" style="margin-top: 16px;">
+                <h2 class="panel-title">Klärungsschleife</h2>
+                <p class="lead" style="font-size: 0.95rem;">Beantworten Sie die Rückfragen kurz und konkret, damit die Matrix präziser wird.</p>
+                <div id="questionsContainer" class="questions-grid"></div>
+                <div class="actions">
+                    <button id="generateExamplesBtn" class="btn btn-secondary" style="margin-right: 10px;">📋 Beispielantworten generieren</button>
+                    <button id="refineBtn" class="btn btn-primary">Antworten übernehmen</button>
+                </div>
+                <p id="examplesStatus" style="margin-top: 12px; font-size: 0.9rem; color: #4b5563; display: none;"></p>
+            </section>
+
+            <section id="resultPanel" class="panel hidden result-wrap">
+                <div class="result-head">
+                    <h2 class="panel-title" style="margin: 0;">Phase 1 Ausgabe</h2>
+                    <div id="loopMeta" class="loop-badge">Schleife</div>
+                </div>
+
+                <div class="effects-grid">
+                    <div class="effect-col">
+                        <h3>Energiefluss-Effekte</h3>
+                        <ul id="energyEffects"></ul>
+                    </div>
+                    <div class="effect-col">
+                        <h3>Finanzielle Effekte</h3>
+                        <ul id="financialEffects"></ul>
+                    </div>
+                    <div class="effect-col">
+                        <h3>Weitere Effekte</h3>
+                        <ul id="otherEffects"></ul>
+                    </div>
+                </div>
+
+                <div class="secondary-grid">
+                    <div class="card-lite">
+                        <h3>Synthese</h3>
+                        <div id="synthesisBox"></div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+                    <div id="projectSaveContainer" class="hidden">
+                        <button id="saveProjectBtn" style="padding: 12px 20px; background: linear-gradient(135deg, #dff45e 0%, #bfe541 100%); color: #111; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 1rem; transition: all 0.2s ease;">
+                            💾 Projekt speichern
+                        </button>
+                        <p id="projectSaveStatus" style="margin-top: 12px; padding: 12px; background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; color: #166534; display: none;"></p>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        let phaseSessionId = null;
+        let latestQuestions = [];
+        let latestPhase1Data = null; // Store latest phase1 data for project creation
+        let userIdea = ''; // Store original idea for project creation
+
+        const startBtn = document.getElementById('startBtn');
+        const refineBtn = document.getElementById('refineBtn');
+        const generateExamplesBtn = document.getElementById('generateExamplesBtn');
+        const statusText = document.getElementById('statusText');
+        const examplesStatus = document.getElementById('examplesStatus');
+        const questionsPanel = document.getElementById('questionsPanel');
+        const questionsContainer = document.getElementById('questionsContainer');
+        const resultPanel = document.getElementById('resultPanel');
+        const loopMeta = document.getElementById('loopMeta');
+        const ideaInput = document.getElementById('ideaInput');
+        const charCount = document.getElementById('charCount');
+        const qualityAlert = document.getElementById('qualityAlert');
+        const ideaExampleBtn = document.getElementById('ideaExampleBtn');
+        const pipelineStepper = document.getElementById('pipelineStepper');
+        const saveProjectBtn = document.getElementById('saveProjectBtn');
+        const projectSaveContainer = document.getElementById('projectSaveContainer');
+        const projectSaveStatus = document.getElementById('projectSaveStatus');
+
+
+        function setStatus(text) {
+            statusText.textContent = text;
+        }
+
+        function setBusy(button, busy) {
+            button.disabled = busy;
+            if (busy) {
+                button.dataset.originalText = button.textContent;
+                button.textContent = 'Bitte warten...';
+            } else if (button.dataset.originalText) {
+                button.textContent = button.dataset.originalText;
+            }
+        }
+
+        function clearQualityAlert() {
+            qualityAlert.classList.add('hidden');
+            qualityAlert.textContent = '';
+        }
+
+        function showQualityAlert(message, guidance = [], quality = null) {
+            const score = quality && typeof quality.qualityScore === 'number' ? ` (Quality score: ${quality.qualityScore}/100)` : '';
+            const points = Array.isArray(guidance) && guidance.length
+                ? `<ul style="margin-top:6px; margin-left:18px;">${guidance.map(g => `<li>${g}</li>`).join('')}</ul>`
+                : '';
+            qualityAlert.innerHTML = `<strong>${message}${score}</strong>${points}`;
+            qualityAlert.classList.remove('hidden');
+        }
+
+        function updatePipelineStep(activeStep) {
+            const steps = pipelineStepper.querySelectorAll('.step');
+            steps.forEach((step) => {
+                const stepNumber = Number(step.dataset.step);
+                step.classList.remove('completed', 'active', 'pending');
+                if (stepNumber < activeStep) step.classList.add('completed');
+                else if (stepNumber === activeStep) step.classList.add('active');
+                else step.classList.add('pending');
+            });
+        }
+
+        function renderEffects(listId, effects) {
+            const el = document.getElementById(listId);
+            el.innerHTML = '';
+            if (!effects || !effects.length) {
+                el.innerHTML = '<li class="empty">Noch keine Einträge.</li>';
+                return;
+            }
+            effects.forEach(effect => {
+                const li = document.createElement('li');
+                const confidence = effect.confidence ? ` [${effect.confidence}]` : '';
+                const isBurden = effect.type === 'burden';
+                const iconSvg = isBurden
+                    ? '<svg viewBox="0 0 24 24" class="effect-icon burden" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>'
+                    : '<svg viewBox="0 0 24 24" class="effect-icon benefit" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 14l5-5 5 5"/><path d="M12 19V9"/></svg>';
+                li.innerHTML = `
+                    <div class="effect-row">
+                        ${iconSvg}
+                        <div>
+                            <div class="effect-head">${effect.name}${confidence}</div>
+                            <div class="effect-reason">${effect.reason || ''}</div>
+                        </div>
+                    </div>
+                `;
+                el.appendChild(li);
+            });
+        }
+
+        function renderSynthesis(synthesis) {
+            const box = document.getElementById('synthesisBox');
+            box.innerHTML = '';
+            if (!synthesis || Object.keys(synthesis).length === 0) {
+                box.innerHTML = '<p class="empty">Synthese erscheint nach der Verfeinerung.</p>';
+                return;
+            }
+
+            const chunks = [
+                ['Wichtigste Vorteile', synthesis.top_benefits],
+                ['Wichtigste Belastungen', synthesis.top_burdens],
+                ['Hervorgehobene weitere Effekte', synthesis.other_effects_highlights],
+                ['Empfohlene nächste Daten', synthesis.recommended_next_data_to_collect]
+            ];
+
+            chunks.forEach(([title, items]) => {
+                const wrap = document.createElement('div');
+                const arr = Array.isArray(items) ? items : [];
+                wrap.className = 'synth-block';
+                wrap.innerHTML = `<p class="synth-title">${title}</p><ul>${arr.map(i => `<li>${i}</li>`).join('')}</ul>`;
+                box.appendChild(wrap);
+            });
+        }
+
+        function renderQuestions(questions) {
+            latestQuestions = questions || [];
+            questionsContainer.innerHTML = '';
+            latestQuestions.forEach(q => {
+                const wrap = document.createElement('div');
+                wrap.className = 'q-card';
+                wrap.innerHTML = `
+                    <p class="q-title">${q.id}: ${q.question}</p>
+                    <p class="q-why">${q.why_it_matters || ''}</p>
+                    <div style="margin-top:8px;">
+                        <button type="button" class="example-btn q-example-btn" data-example="">Beispielantwort</button>
+                    </div>
+                    <textarea data-qid="${q.id}" rows="3" placeholder="Ihre Antwort"></textarea>
+                `;
+                questionsContainer.appendChild(wrap);
+            });
+        }
+
+        function renderResult(data) {
+            resultPanel.classList.remove('hidden');
+            const statusText = {
+                'in_progress': 'laufend',
+                'final': 'abgeschlossen',
+                'needs_refinement': 'Verfeinerung erforderlich'
+            }[data.status] || 'laufend';
+            loopMeta.textContent = `Schleife ${data.loopCount} / ${data.maxLoops} - ${statusText}`;
+            const matrix = data.effectsMatrix || data.currentEffects || {};
+            renderEffects('energyEffects', matrix.energy_flow_effects || []);
+            renderEffects('financialEffects', matrix.additional_financial_effects || []);
+            renderEffects('otherEffects', matrix.other_effects || []);
+            renderSynthesis(data.synthesis || {});
+            
+            // Store data for project creation
+            latestPhase1Data = {
+                sessionId: phaseSessionId,
+                projectBrief: data.project_brief || {},
+                effectsMatrix: data.effectsMatrix || data.currentEffects || {},
+                synthesis: data.synthesis || {},
+                references: data.references || []
+            };
+            
+            // Show save project button if finalized
+            if (data.status === 'final') {
+                projectSaveContainer.classList.remove('hidden');
+            } else {
+                projectSaveContainer.classList.add('hidden');
+            }
+        }
+
+        ideaInput.addEventListener('input', () => {
+            const totalChars = 
+                document.getElementById('ideaInput').value.length +
+                document.getElementById('boundariesInput').value.length +
+                document.getElementById('capexInput').value.length +
+                document.getElementById('opexInput').value.length +
+                document.getElementById('lifetimeInput').value.length +
+                document.getElementById('subsidiesInput').value.length +
+                document.getElementById('qualitativeInput').value.length;
+            charCount.textContent = `${totalChars} Zeichen insgesamt`;
+            clearQualityAlert();
+        });
+
+        document.getElementById('boundariesInput').addEventListener('input', () => ideaInput.dispatchEvent(new Event('input')));
+        document.getElementById('capexInput').addEventListener('input', () => ideaInput.dispatchEvent(new Event('input')));
+        document.getElementById('opexInput').addEventListener('input', () => ideaInput.dispatchEvent(new Event('input')));
+        document.getElementById('lifetimeInput').addEventListener('input', () => ideaInput.dispatchEvent(new Event('input')));
+        document.getElementById('subsidiesInput').addEventListener('input', () => ideaInput.dispatchEvent(new Event('input')));
+        document.getElementById('qualitativeInput').addEventListener('input', () => ideaInput.dispatchEvent(new Event('input')));
+
+        ideaExampleBtn.addEventListener('click', () => {
+            document.getElementById('ideaInput').value = 'Wir sind ein metallverarbeitendes KMU in Bayern und planen, einen gasbasierten Prozesswaermeerzeuger durch eine industrielle Waermepumpe zu ersetzen.';
+            document.getElementById('boundariesInput').value = 'Bewertung umfasst die neue Waermepumpenanlage und den direkten Produktionsprozess in Halle 2.';
+            document.getElementById('capexInput').value = 'Waermepumpe: 250.000 EUR, Planung: 15.000 EUR, Montage: 45.000 EUR, Demontage altem: 20.000 EUR, Schulung: 5.000 EUR. Gesamt: 335.000 EUR.';
+            document.getElementById('opexInput').value = 'Wartung: +2.000 EUR/Jahr, Kältemittel: +500 EUR/Jahr, Stromkosten: -50.000 EUR/Jahr, Gaskosten: -30.000 EUR/Jahr. Netto: -77.500 EUR/Jahr.';
+            document.getElementById('lifetimeInput').value = 'Technische Lebensdauer: 20 Jahre, geplanter Inbetriebnahme: Q3 2026.';
+            document.getElementById('subsidiesInput').value = 'Bundesförderung effiziente Waermepumpen: 40%, CO2-Einsparung: ~300 t/Jahr.';
+            document.getElementById('qualitativeInput').value = 'Reduktion Ausfallzahlen, bessere Arbeitssicherheit (weniger Hitze), ESG-Compliance, positives Image.';
+            ideaInput.dispatchEvent(new Event('input'));
+        });
+
+        questionsContainer.addEventListener('click', (event) => {
+            const btn = event.target.closest('.q-example-btn');
+            if (!btn) return;
+            const card = btn.closest('.q-card');
+            const ta = card ? card.querySelector('textarea[data-qid]') : null;
+            if (!ta) return;
+            
+            // Only insert if example exists
+            if (btn.dataset.example) {
+                ta.value = btn.dataset.example;
+                ta.dispatchEvent(new Event('input'));
+            } else {
+                alert('Bitte generieren Sie zuerst Beispielantworten über den Button "Beispielantworten generieren".');
+            }
+        });
+
+        startBtn.addEventListener('click', async () => {
+            const idea = document.getElementById('ideaInput').value.trim();
+            const boundaries = document.getElementById('boundariesInput').value.trim();
+            const capex = document.getElementById('capexInput').value.trim();
+            const opex = document.getElementById('opexInput').value.trim();
+            const lifetime = document.getElementById('lifetimeInput').value.trim();
+            const subsidies = document.getElementById('subsidiesInput').value.trim();
+            const qualitative = document.getElementById('qualitativeInput').value.trim();
+            
+            if (idea.length < 30) {
+                alert('Bitte geben Sie die Investitionsidee ein (mindestens 30 Zeichen).');
+                return;
+            }
+            
+            userIdea = idea;
+
+            setStatus('Analysieren...');
+            setBusy(startBtn, true);
+            clearQualityAlert();
+            try {
+                const response = await fetch('/api/valeri/phase1/init', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        idea,
+                        boundaries,
+                        capex,
+                        opex,
+                        lifetime,
+                        subsidies,
+                        qualitative
+                    })
+                });
+                const data = await response.json();
+                if (!response.ok) {
+                    if (response.status === 422 && data.status === 'requires_better_input') {
+                        showQualityAlert(data.error || 'Eingabebewertung zu niedrig für zuverlässige Analyse.', data.guidance || [], data.quality || null);
+                        // Wichtig: Speichere sessionId auch bei Clarification!
+                        phaseSessionId = data.sessionId || null;
+                        questionsPanel.classList.remove('hidden');
+                        renderQuestions(data.followUpQuestions || []);
+                        resultPanel.classList.add('hidden');
+                        setStatus('Bitte beantworten Sie die Klärungsfragen, um die Eingabebewertung zu verbessern.');
+                        return;
+                    }
+                    throw new Error(data.error || 'Initialisierung fehlgeschlagen');
+                }
+
+                phaseSessionId = data.sessionId;
+                renderResult(data);
+                renderQuestions(data.followUpQuestions || []);
+                questionsPanel.classList.remove('hidden');
+                setStatus('Initiale Analyse abgeschlossen. Bitte Rückfragen beantworten.');
+                updatePipelineStep(3);
+            } catch (error) {
+                setStatus('');
+                alert(error.message || 'Initialisierung fehlgeschlagen');
+            } finally {
+                setBusy(startBtn, false);
+            }
+        });
+
+        refineBtn.addEventListener('click', async () => {
+            if (!phaseSessionId) return;
+            const answers = Array.from(document.querySelectorAll('#questionsContainer textarea'))
+                .map(el => ({ id: el.dataset.qid, answer: el.value.trim() }))
+                .filter(x => x.answer.length > 0);
+
+            if (!answers.length) {
+                alert('Bitte beantworten Sie mindestens eine Rückfrage.');
+                return;
+            }
+
+                setStatus('Verfeinere Analyse...');
+            setBusy(refineBtn, true);
+            try {
+                const response = await fetch('/api/valeri/phase1/refine', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionId: phaseSessionId, answers })
+                });
+                const data = await response.json();
+                
+                // Verarbeitung von "bessere Eingaben erforderlich" beim Verfeinerungs-Versuch
+                if (!response.ok && response.status === 422 && data.status === 'requires_better_input_retry') {
+                    showQualityAlert(data.error || 'Eingabebewertung immer noch nicht ausreichend. Bitte noch konkreter antworten.', [], data.quality);
+                    renderQuestions(data.followUpQuestions || []);
+                    resultPanel.classList.add('hidden');
+                    setStatus('Versuch ' + (data.clarificationAttempt || 1) + ': Bitte noch präziser antworten.');
+                    return;
+                }
+                
+                if (!response.ok) throw new Error(data.error || 'Verfeinerung fehlgeschlagen');
+
+                renderResult(data);
+                if (data.status === 'final') {
+                    questionsPanel.classList.add('hidden');
+                    setStatus('Phase-1-Analyse finalisiert.');
+                    updatePipelineStep(5);
+                } else {
+                    renderQuestions(data.nextQuestions || []);
+                    setStatus('Verfeinert. Bitte nächste Rückfragen beantworten.');
+                    updatePipelineStep(4);
+                }
+            } catch (error) {
+                setStatus('');
+                alert(error.message || 'Verfeinerung fehlgeschlagen');
+            } finally {
+                setBusy(refineBtn, false);
+            }
+        });
+
+        generateExamplesBtn.addEventListener('click', async () => {
+            if (!phaseSessionId || !latestQuestions || latestQuestions.length === 0) {
+                alert('Keine Fragen vorhanden. Bitte starten Sie zuerst die Analyse.');
+                return;
+            }
+
+            examplesStatus.style.display = 'block';
+            examplesStatus.textContent = '⏳ Generiere Beispielantworten...';
+            setBusy(generateExamplesBtn, true);
+
+            try {
+                console.log('Generating examples for sessionId:', phaseSessionId);
+                console.log('Questions to send:', latestQuestions);
+
+                const response = await fetch('/api/valeri/phase1/generate-examples', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        sessionId: phaseSessionId, 
+                        questions: latestQuestions 
+                    })
+                });
+                
+                console.log('Response status:', response.status);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Server response:', response.status, errorText);
+                    const data = errorText.startsWith('{') ? JSON.parse(errorText) : { error: errorText };
+                    throw new Error(data.error || data.details || `Server error ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Response data:', data);
+
+                // Update example buttons with generated examples
+                if (data.examples && Array.isArray(data.examples) && data.examples.length > 0) {
+                    const examplesMap = {};
+                    data.examples.forEach(ex => {
+                        examplesMap[ex.id] = ex.exampleAnswer;
+                    });
+
+                    let updatedCount = 0;
+                    document.querySelectorAll('.q-example-btn').forEach(btn => {
+                        const card = btn.closest('.q-card');
+                        const ta = card ? card.querySelector('textarea[data-qid]') : null;
+                        if (!ta) return;
+                        const qid = ta.dataset.qid;
+                        if (examplesMap[qid]) {
+                            btn.setAttribute('data-example', examplesMap[qid].replace(/"/g, '&quot;'));
+                            updatedCount++;
+                        }
+                    });
+
+                    examplesStatus.textContent = `✓ ${updatedCount} Beispielantworten generiert und verfügbar!`;
+                    examplesStatus.style.color = '#16a34a';
+                    setTimeout(() => {
+                        examplesStatus.style.display = 'none';
+                    }, 3000);
+                } else {
+                    throw new Error('Keine gültigen Beispiele im Response');
+                }
+            } catch (error) {
+                examplesStatus.textContent = `✕ Fehler: ${error.message}`;
+                examplesStatus.style.color = '#dc2626';
+                console.error('Error generating examples:', error);
+            } finally {
+                setBusy(generateExamplesBtn, false);
+            }
+        });
+
+        // Save Project (without redirect)
+        saveProjectBtn.addEventListener('click', async () => {
+            if (!latestPhase1Data || !userIdea) {
+                alert('Error: Phase 1 data not available');
+                return;
+            }
+
+            saveProjectBtn.disabled = true;
+            saveProjectBtn.textContent = 'Сохранение...';
+            projectSaveStatus.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/valeri/projects', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        idea: userIdea,
+                        phase1Data: latestPhase1Data
+                    })
+                });
+
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to save project');
+                }
+
+                // Show success message with Phase 2 navigation
+                const projectId = data.projectId;
+                projectSaveStatus.style.display = 'block';
+                projectSaveStatus.innerHTML = `✓ Projekt "<strong>${data.projectName}</strong>" erfolgreich gespeichert! 
+                    <br><small style="opacity: 0.8; margin-top: 8px; display: block;">
+                        Phasen müssen in Reihenfolge durchgeführt werden:<br>
+                        <a href="/valeri/phase-2?projectId=${projectId}" style="color: inherit; text-decoration: underline; font-weight: 600;">→ Gehen Sie zu Phase 2: Quantifizierung der Effekte</a> (nächster Schritt)<br>
+                        <a href="/valeri/phase-7?projectId=${projectId}" style="color: inherit; text-decoration: underline;">→ Phase 7: NPV-Analyse (später)</a>
+                    </small>`;
+                
+                saveProjectBtn.textContent = 'Projekt gespeichert!';
+            } catch (error) {
+                projectSaveStatus.style.display = 'block';
+                projectSaveStatus.innerHTML = `✗ Fehler: ${error.message || 'Projekt konnte nicht gespeichert werden'}`;
+                projectSaveStatus.style.background = '#fee2e2';
+                projectSaveStatus.style.borderColor = '#fecaca';
+                projectSaveStatus.style.color = '#991b1b';
+                saveProjectBtn.disabled = false;
+                saveProjectBtn.textContent = '💾 Projekt speichern';
+            }
+        });
+
+        updatePipelineStep(1);
+    </script>
+</body>
+</html>

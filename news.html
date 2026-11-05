@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMU News Feed</title>
+    <link href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d2c010e595f61517badb6_enfit_Logo_32x32.png" rel="shortcut icon" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* БАЗОВЫЕ СТИЛИ */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #ecf4f4 0%, #e8f2f2 100%);
+            min-height: 100vh;
+            display: flex;
+            color: #2d3748;
+        }
+
+        /* SIDEBAR */
+        .dashboard-sidebar1 {
+            width: 312px;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            display: flex;
+            padding: 8px 0 0;
+            flex-direction: column;
+            background-color: rgba(236, 244, 244, 0.95);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(223, 244, 94, 0.2);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* Кастомный scrollbar для sidebar */
+        .dashboard-sidebar1::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .dashboard-sidebar1::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .dashboard-sidebar1::-webkit-scrollbar-thumb {
+            background: rgba(223, 244, 94, 0.3);
+            border-radius: 3px;
+        }
+
+        .dashboard-sidebar1::-webkit-scrollbar-thumb:hover {
+            background: rgba(223, 244, 94, 0.5);
+        }
+
+        /* Для Firefox */
+        .dashboard-sidebar1 {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(223, 244, 94, 0.3) transparent;
+        }
+
+        .dashboard-menu-top { 
+            padding: 16px 24px 16px 0; 
+            flex-shrink: 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .dashboard-rectangle18 { 
+            width: 97px; 
+            object-fit: contain;
+            max-width: 100%;
+        }
+
+        /* Кнопка Einklappen (как в newchat) */
+        .sidebar-menu-toggle {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(223, 244, 94, 0.3);
+            border-radius: 12px;
+            padding: 10px 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #374151;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        .sidebar-menu-toggle:hover {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(223, 244, 94, 0.5);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .sidebar-menu-toggle:active {
+            transform: translateY(0);
+        }
+        .sidebar-menu-toggle svg {
+            width: 16px;
+            height: 16px;
+        }
+        .sidebar-collapsed .sidebar-menu-toggle {
+            display: none;
+        }
+        .dashboard-sidebar1:not(.sidebar-collapsed) .sidebar-menu-toggle {
+            display: flex;
+        }
+
+        /* Кнопка Ausklappen (когда меню свёрнуто) */
+        .expand-sidebar-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(223, 244, 94, 0.4);
+            border-radius: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        .expand-sidebar-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(223, 244, 94, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        .expand-sidebar-btn:active {
+            transform: translateY(0);
+        }
+        .expand-sidebar-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+        .expand-sidebar-btn svg {
+            transform: rotate(180deg);
+        }
+        .sidebar-collapsed .expand-sidebar-btn {
+            display: flex;
+        }
+        .news-root:not(.sidebar-collapsed) .expand-sidebar-btn {
+            display: none;
+        }
+
+        /* Сворачивание сайдбара */
+        .news-root {
+            display: flex;
+            width: 100%;
+        }
+        .dashboard-sidebar1 {
+            transition: width 0.3s ease, padding 0.3s ease, border 0.3s ease;
+        }
+        .sidebar-collapsed .dashboard-sidebar1 {
+            width: 0;
+            padding: 0;
+            border-right: none;
+            overflow: hidden;
+        }
+        .sidebar-collapsed .dashboard-sidebar1 * {
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .main-content {
+            transition: margin-left 0.3s ease;
+        }
+
+        .dashboard-menu-list1 { 
+            gap: 8px; 
+            display: flex; 
+            flex-direction: column; 
+            padding: 0 16px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        
+        .nav-link {
+            gap: 12px;
+            display: flex;
+            padding: 16px 20px;
+            align-items: center;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            color: rgba(34, 34, 34, 0.9);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .nav-link:hover, .nav-link.active { background: rgba(223, 244, 94, 0.15); border: 1px solid rgba(223, 244, 94, 0.3); }
+
+        /* CONTENT Area */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .news-header {
+            text-align: center;
+            margin-bottom: 32px;
+            max-width: 800px;
+        }
+
+        .news-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 16px;
+        }
+
+        /* TOOLBAR (Search & Sort) */
+        .toolbar {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            gap: 16px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .search-wrapper {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 20px 14px 48px;
+            border-radius: 15px;
+            border: 2px solid rgba(223, 244, 94, 0.3);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #dff45e;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(223, 244, 94, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #718096;
+        }
+
+        .sort-select {
+            padding: 0 20px;
+            height: 52px;
+            border-radius: 15px;
+            border: 2px solid rgba(223, 244, 94, 0.3);
+            background: rgba(255, 255, 255, 0.7);
+            font-family: inherit;
+            font-weight: 500;
+            color: #4a5568;
+            cursor: pointer;
+            outline: none;
+        }
+
+        /* CATEGORY FILTERS */
+        .category-filters {
+            width: calc(100% - 32px);
+            margin: 16px;
+            margin-top: 24px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(223, 244, 94, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            flex-shrink: 0;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .category-filters-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .category-filters-title svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .category-groups {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow: hidden;
+        }
+
+        .category-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow: hidden;
+        }
+
+        .category-group-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #4a5568;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(223, 244, 94, 0.2);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .category-checkboxes {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow: hidden;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .checkbox-wrapper:hover {
+            background: rgba(223, 244, 94, 0.1);
+        }
+
+        .category-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #dff45e;
+            border-radius: 4px;
+        }
+
+        .checkbox-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #2d3748;
+            cursor: pointer;
+            user-select: none;
+            flex: 1;
+            line-height: 1.4;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .category-count {
+            font-size: 0.7rem;
+            color: #718096;
+            background: rgba(223, 244, 94, 0.2);
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .reset-filters-btn {
+            margin-top: 16px;
+            padding: 8px 16px;
+            background: rgba(223, 244, 94, 0.2);
+            border: 2px solid rgba(223, 244, 94, 0.4);
+            border-radius: 10px;
+            color: #2d3748;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .reset-filters-btn:hover {
+            background: rgba(223, 244, 94, 0.3);
+            border-color: rgba(223, 244, 94, 0.6);
+        }
+
+        .reset-filters-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* NEWS GRID */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .news-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(223, 244, 94, 0.3);
+            border-radius: 20px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(223, 244, 94, 0.25);
+            border-color: rgba(223, 244, 94, 0.6);
+        }
+
+        .news-tag {
+            background: #dff45e;
+            color: #111827;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            align-self: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .news-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .news-category {
+            background: rgba(223, 244, 94, 0.2);
+            color: #2d3748;
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid rgba(223, 244, 94, 0.4);
+        }
+
+        .news-category.cat-focus {
+            background: rgba(223, 244, 94, 0.3);
+        }
+
+        .news-category.cat-topic {
+            background: rgba(223, 244, 94, 0.25);
+        }
+
+        .news-category.cat-target {
+            background: rgba(223, 244, 94, 0.2);
+        }
+
+        .news-category.cat-region {
+            background: rgba(223, 244, 94, 0.18);
+        }
+
+        .news-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.4;
+            color: #1a202c;
+        }
+
+        .news-description {
+            font-size: 0.95rem;
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .news-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .read-more {
+            color: #1a202c;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .news-date { font-size: 12px; color: #718096; font-weight: 500; }
+
+        #loader { font-weight: 600; color: #718096; margin-top: 50px; text-align: center; }
+
+        /* Results info */
+        .results-info {
+            width: 100%;
+            max-width: 1200px;
+            display: none;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 16px;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .results-count-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(223, 244, 94, 0.25);
+            border: 1px solid rgba(223, 244, 94, 0.6);
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .results-count-pill-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #dff45e;
+            box-shadow: 0 0 0 4px rgba(223, 244, 94, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-sidebar1 { 
+                display: none !important; 
+            }
+            .sidebar-menu-toggle { display: none !important; }
+            .expand-sidebar-btn { display: none !important; }
+            .news-root.sidebar-collapsed .dashboard-sidebar1 { display: none !important; }
+            .main-content { padding: 20px; }
+            .toolbar { flex-direction: column; }
+            .search-wrapper { min-width: 100%; }
+            .category-filters { 
+                display: block !important;
+                margin: 16px 0;
+                padding: 16px;
+            }
+            .category-groups { 
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="newsRoot" class="news-root">
+    <div class="dashboard-sidebar1">
+        <div class="dashboard-menu-top">
+            <img src="public/rectangle189142-3pmr-200w.png" alt="enefit Logo" class="dashboard-rectangle18">
+            <button id="sidebarToggle" class="sidebar-menu-toggle" title="Seitenleiste einklappen">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+                <span class="menu-text">Einklappen</span>
+            </button>
+        </div>
+        <div class="dashboard-menu-list1">
+            <a href="accesspoint.html" class="nav-link" id="accesspointNavLink">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+                Accesspoint
+            </a>
+            <a href="newchat.html" class="nav-link" id="assistantNavLink">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Assistant
+            </a>
+            <a href="news.html" class="nav-link active">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 20l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                KMU News
+            </a>
+        </div>
+
+        <div class="category-filters" id="categoryFilters" style="display: none;">
+            <div class="category-filters-title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                </svg>
+                Filter
+            </div>
+            <div class="category-groups" id="categoryGroups"></div>
+        </div>
+    </div>
+
+    <button id="expandSidebarBtn" class="expand-sidebar-btn" title="Seitenleiste ausklappen">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/>
+        </svg>
+        <span class="expand-text">Ausklappen</span>
+    </button>
+
+        <div class="main-content">
+        <div class="news-header">
+            <h1>KMU News</h1>
+            <p>Kuratierte Nachrichten aus verschiedenen Quellen zu Themen wie Förderung, Events, Infrastruktur und Politik, die für kleine und mittlere Unternehmen (KMU) relevant sind.</p>
+            <div style="margin-top: 10px; margin-bottom: 24px;">
+                 <a href="news-info.html" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: rgba(223, 244, 94, 0.3); border: 1px solid rgba(223, 244, 94, 0.6); border-radius: 12px; color: #1f2937; text-decoration: none; font-weight: 600; font-size: 14px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(223, 244, 94, 0.2);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(223, 244, 94, 0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(223, 244, 94, 0.2)';">
+                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                         <circle cx="12" cy="12" r="10"></circle>
+                         <line x1="12" y1="16" x2="12" y2="12"></line>
+                         <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                     </svg>
+                     Wie es funktioniert
+                 </a>
+            </div>
+            <div class="news-sources-note" style="background: rgba(223, 244, 94, 0.1); border-left: 4px solid #dff45e; padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 13px; color: #4b5563; text-align: left; display: inline-flex; align-items: flex-start; gap: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.02);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#8aa833" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px;">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <strong>Unsere Nachrichtenquellen:</strong>
+                    <span style="color: #6b7280; line-height: 1.6;">
+                        <a href="https://www.foerderdatenbank.de" target="_blank" style="color: #8aa833; text-decoration: none; border-bottom: 1px dotted #8aa833;">foerderdatenbank.de</a> &bull; 
+                        <a href="https://www.bmas.de" target="_blank" style="color: #8aa833; text-decoration: none; border-bottom: 1px dotted #8aa833;">bmas.de</a> &bull; 
+                        <a href="https://www.bundeswirtschaftsministerium.de" target="_blank" style="color: #8aa833; text-decoration: none; border-bottom: 1px dotted #8aa833;">bundeswirtschaftsministerium.de</a> &bull; 
+                        <a href="https://www.verkuendung-bayern.de" target="_blank" style="color: #8aa833; text-decoration: none; border-bottom: 1px dotted #8aa833;">verkuendung-bayern.de</a> &bull; 
+                        <a href="https://www.innovation-beratung-foerderung.de" target="_blank" style="color: #8aa833; text-decoration: none; border-bottom: 1px dotted #8aa833;">innovation-beratung-foerderung.de</a> &bull; 
+                        <a href="https://www.wuerzburg.ihk.de/" target="_blank" style="color: #8aa833; text-decoration: none; border-bottom: 1px dotted #8aa833;">wuerzburg.ihk.de</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="toolbar">
+            <div class="search-wrapper">
+                <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="searchInput" class="search-input" placeholder="Nachrichten suchen...">
+            </div>
+            <select id="sortSelect" class="sort-select">
+                <option value="newest">Neueste zuerst</option>
+                <option value="oldest">Älteste zuerst</option>
+                <option value="title">Alphabetisch (A-Z)</option>
+            </select>
+        </div>
+
+        <div id="loader">Lade aktuelle Nachrichten...</div>
+        <div id="resultsInfo" class="results-info">
+            <span class="results-count-pill">
+                <span class="results-count-pill-dot"></span>
+                <span id="resultsCount">0 Ergebnisse</span>
+            </span>
+        </div>
+        <div class="news-grid" id="newsGrid"></div>
+    </div>
+    </div>
+
+    <script>
+        let allNews = []; // Глобальное хранилище данных
+
+        // Функция парсинга дат (поддерживает ISO и формат DD.MM.YYYY)
+        function parseDate(dateStr) {
+            if (!dateStr) return new Date(0);
+            if (dateStr.includes('.')) {
+                const [d, m, y] = dateStr.split('.');
+                return new Date(`${y}-${m}-${d}`);
+            }
+            return new Date(dateStr);
+        }
+
+        // Форматирование даты новости: обрезаем секунды и таймзону
+        // Thu, 26 Feb 2026 15:01:28 +0100 -> Thu, 26 Feb 2026 15:01
+        function formatNewsDate(dateStr) {
+            if (!dateStr) return '';
+            // Удаляем ":SS +ZZZZ" в конце строки, если есть
+            return dateStr.replace(/:\d{2}\s[+-]\d{4}$/, '');
+        }
+
+        // Сбор всех уникальных категорий
+        function collectCategories() {
+            const categories = {
+                cat_focus: new Set(),
+                cat_topic: new Set(),
+                cat_target: new Set(),
+                cat_region: new Set()
+            };
+
+            allNews.forEach(item => {
+                if (item.cat_focus) categories.cat_focus.add(item.cat_focus);
+                if (item.cat_topic) categories.cat_topic.add(item.cat_topic);
+                if (item.cat_target) categories.cat_target.add(item.cat_target);
+                if (item.cat_region) categories.cat_region.add(item.cat_region);
+            });
+
+            return {
+                cat_focus: Array.from(categories.cat_focus).sort(),
+                cat_topic: Array.from(categories.cat_topic).sort(),
+                cat_target: Array.from(categories.cat_target).sort(),
+                cat_region: Array.from(categories.cat_region).sort()
+            };
+        }
+
+        // Подсчет новостей для категории
+        function countNewsForCategory(categoryType, categoryValue) {
+            return allNews.filter(item => {
+                if (categoryType === 'cat_focus') return item.cat_focus === categoryValue;
+                if (categoryType === 'cat_topic') return item.cat_topic === categoryValue;
+                if (categoryType === 'cat_target') return item.cat_target === categoryValue;
+                if (categoryType === 'cat_region') return item.cat_region === categoryValue;
+                return false;
+            }).length;
+        }
+
+        // Рендеринг фильтров категорий
+        function renderCategoryFilters() {
+            const categories = collectCategories();
+            const filtersContainer = document.getElementById('categoryGroups');
+            const filtersSection = document.getElementById('categoryFilters');
+
+            if (categories.cat_focus.length === 0 && categories.cat_topic.length === 0 && categories.cat_target.length === 0 && categories.cat_region.length === 0) {
+                filtersSection.style.display = 'none';
+                return;
+            }
+
+            filtersSection.style.display = 'block';
+
+            const groupLabels = {
+                cat_focus: 'Fokus',
+                cat_topic: 'Thema',
+                cat_target: 'Zielgruppe',
+                cat_region: 'Region'
+            };
+
+            filtersContainer.innerHTML = Object.keys(categories).map(categoryType => {
+                const categoryList = categories[categoryType];
+                if (categoryList.length === 0) return '';
+
+                return `
+                    <div class="category-group">
+                        <div class="category-group-label">${groupLabels[categoryType]}</div>
+                        <div class="category-checkboxes">
+                            ${categoryList.map(categoryValue => {
+                                const count = countNewsForCategory(categoryType, categoryValue);
+                                return `
+                                    <label class="checkbox-wrapper">
+                                        <input type="checkbox" 
+                                               class="category-checkbox" 
+                                               data-category-type="${categoryType}" 
+                                               data-category-value="${categoryValue}"
+                                               id="filter-${categoryType}-${categoryValue.replace(/\s+/g, '-')}">
+                                        <span class="checkbox-label">${categoryValue}</span>
+                                        <span class="category-count">${count}</span>
+                                    </label>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('') + `
+                <button class="reset-filters-btn" id="resetFiltersBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="1 4 1 10 7 10"></polyline>
+                        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                    </svg>
+                    Zurücksetzen
+                </button>
+            `;
+
+            // Добавляем слушатели событий для всех чекбоксов
+            document.querySelectorAll('.category-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', filterAndSort);
+            });
+
+            // Добавляем слушатель для кнопки сброса
+            document.getElementById('resetFiltersBtn').addEventListener('click', () => {
+                document.querySelectorAll('.category-checkbox').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                filterAndSort();
+            });
+        }
+
+        async function loadNews() {
+            const BLOB_URL = 'https://viktor.thws.education/news-api/news.json';
+            
+            try {
+                const response = await fetch(BLOB_URL);
+                if (!response.ok) throw new Error('Fehler beim Laden');
+                
+                let rawNews = await response.json();
+                
+                const threeMonthsAgo = new Date();
+                threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+
+                // Clean up and normalize categories
+                allNews = rawNews.map(item => {
+                    // Trim to avoid duplicates like "Arbeit & Fachkräfte "
+                    if (item.cat_topic) item.cat_topic = item.cat_topic.trim();
+                    if (item.cat_focus) item.cat_focus = item.cat_focus.trim();
+                    if (item.cat_target) item.cat_target = item.cat_target.trim();
+                    if (item.cat_region) item.cat_region = item.cat_region.trim();
+                    
+                    // Normalize "Arbeits & Fachkräfte" to "Arbeit & Fachkräfte"
+                    if (item.cat_topic === 'Arbeits & Fachkräfte') {
+                        item.cat_topic = 'Arbeit & Fachkräfte';
+                    }
+
+                    // Fix "Infrastruktur" appearing in both FOKUS and THEMA
+                    if (item.cat_focus === 'Infrastruktur') {
+                        item.cat_topic = 'Infrastruktur';
+                        item.cat_focus = '';
+                    }
+                    
+                    return item;
+                }).filter(item => {
+                    if (item.cat_focus === 'Events') {
+                        const itemDate = parseDate(item.date);
+                        return itemDate >= threeMonthsAgo;
+                    }
+                    return true;
+                });
+                
+                renderCategoryFilters();
+                renderNews(allNews);
+                updateResultsInfo(allNews.length);
+                
+                document.getElementById('loader').style.display = 'none';
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('loader').textContent = 'Fehler beim Laden der Nachrichten.';
+            }
+        }
+
+        function updateResultsInfo(count) {
+            const infoEl = document.getElementById('resultsInfo');
+            const countEl = document.getElementById('resultsCount');
+            if (!infoEl || !countEl) return;
+
+            infoEl.style.display = 'flex';
+
+            const label = count === 1 ? 'Ergebnis' : 'Ergebnisse';
+            countEl.textContent = `${count} ${label}`;
+        }
+
+        function renderNews(newsToRender) {
+            const grid = document.getElementById('newsGrid');
+            
+            if (newsToRender.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #718096;">Keine Ergebnisse gefunden.</div>';
+                return;
+            }
+
+            grid.innerHTML = newsToRender.map(item => {
+                const categories = [];
+                if (item.cat_focus) categories.push(`<span class="news-category cat-focus">${item.cat_focus}</span>`);
+                if (item.cat_topic) categories.push(`<span class="news-category cat-topic">${item.cat_topic}</span>`);
+                if (item.cat_target) categories.push(`<span class="news-category cat-target">${item.cat_target}</span>`);
+                if (item.cat_region) categories.push(`<span class="news-category cat-region">${item.cat_region}</span>`);
+                
+                return `
+                <div class="news-card">
+                    ${categories.length > 0 ? `<div class="news-categories">${categories.join('')}</div>` : ''}
+                    <div class="news-title">${item.title}</div>
+                    <p class="news-description">${item.description.substring(0, 160)}...</p>
+                    <div class="news-footer">
+                        <span class="news-date">${formatNewsDate(item.date)}</span>
+                        <a href="${item.link}" target="_blank" class="read-more">
+                            Details 
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            `;
+            }).join('');
+        }
+
+        // Получение выбранных категорий
+        function getSelectedCategories() {
+            const selected = {
+                cat_focus: [],
+                cat_topic: [],
+                cat_target: [],
+                cat_region: []
+            };
+
+            document.querySelectorAll('.category-checkbox:checked').forEach(checkbox => {
+                const categoryType = checkbox.getAttribute('data-category-type');
+                const categoryValue = checkbox.getAttribute('data-category-value');
+                if (selected[categoryType]) {
+                    selected[categoryType].push(categoryValue);
+                }
+            });
+
+            return selected;
+        }
+
+        // Проверка, соответствует ли новость выбранным категориям
+        function matchesCategoryFilter(item, selectedCategories) {
+            // Если ничего не выбрано, показываем все
+            const hasAnySelection = selectedCategories.cat_focus.length > 0 || 
+                                   selectedCategories.cat_topic.length > 0 || 
+                                   selectedCategories.cat_target.length > 0 ||
+                                   selectedCategories.cat_region.length > 0;
+            
+            if (!hasAnySelection) return true;
+
+            // Проверяем соответствие каждому типу категорий
+            // Внутри одного типа — ИЛИ (одна из выбранных)
+            const matchesFocus = selectedCategories.cat_focus.length === 0 || 
+                                (item.cat_focus && selectedCategories.cat_focus.includes(item.cat_focus));
+            
+            const matchesTopic = selectedCategories.cat_topic.length === 0 || 
+                                (item.cat_topic && selectedCategories.cat_topic.includes(item.cat_topic));
+            
+            const matchesTarget = selectedCategories.cat_target.length === 0 || 
+                                (item.cat_target && selectedCategories.cat_target.includes(item.cat_target));
+
+            const matchesRegion = selectedCategories.cat_region.length === 0 || 
+                                (item.cat_region && selectedCategories.cat_region.includes(item.cat_region));
+
+            // Между разными типами — И (пересечение):
+            // если тип не выбран (массив пустой), он не ограничивает выборку
+            return matchesFocus && matchesTopic && matchesTarget && matchesRegion;
+        }
+
+        const FILTER_STATE_KEY = 'newsFiltersStateV1';
+
+        function saveFilterState() {
+            try {
+                const searchInput = document.getElementById('searchInput');
+                const sortSelect = document.getElementById('sortSelect');
+                const selectedCategories = getSelectedCategories();
+
+                const state = {
+                    searchTerm: searchInput ? searchInput.value : '',
+                    sortOrder: sortSelect ? sortSelect.value : 'newest',
+                    selectedCategories
+                };
+
+                localStorage.setItem(FILTER_STATE_KEY, JSON.stringify(state));
+            } catch (e) {
+                // ignore storage errors (private mode etc.)
+            }
+        }
+
+        function restoreFilterState() {
+            try {
+                const raw = localStorage.getItem(FILTER_STATE_KEY);
+                if (!raw) return;
+
+                const state = JSON.parse(raw);
+                const searchInput = document.getElementById('searchInput');
+                const sortSelect = document.getElementById('sortSelect');
+
+                if (searchInput && typeof state.searchTerm === 'string') {
+                    searchInput.value = state.searchTerm;
+                }
+
+                if (sortSelect && typeof state.sortOrder === 'string') {
+                    sortSelect.value = state.sortOrder;
+                }
+
+                if (state.selectedCategories) {
+                    document.querySelectorAll('.category-checkbox').forEach(checkbox => {
+                        const categoryType = checkbox.getAttribute('data-category-type');
+                        const categoryValue = checkbox.getAttribute('data-category-value');
+                        const arr = state.selectedCategories[categoryType] || [];
+                        checkbox.checked = Array.isArray(arr) && arr.includes(categoryValue);
+                    });
+                }
+            } catch (e) {
+                // ignore broken state
+            }
+        }
+
+        // Логика фильтрации и сортировки
+        function filterAndSort() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const sortOrder = document.getElementById('sortSelect').value;
+            const selectedCategories = getSelectedCategories();
+
+            // 1. Фильтрация по тексту
+            let filtered = allNews.filter(item => 
+                item.title.toLowerCase().includes(searchTerm) || 
+                item.description.toLowerCase().includes(searchTerm)
+            );
+
+            // 2. Фильтрация по категориям
+            filtered = filtered.filter(item => matchesCategoryFilter(item, selectedCategories));
+
+            // 3. Сортировка
+            filtered.sort((a, b) => {
+                if (sortOrder === 'newest') return parseDate(b.date) - parseDate(a.date);
+                if (sortOrder === 'oldest') return parseDate(a.date) - parseDate(b.date);
+                if (sortOrder === 'title') return a.title.localeCompare(b.title);
+                return 0;
+            });
+
+            renderNews(filtered);
+            updateResultsInfo(filtered.length);
+            saveFilterState();
+        }
+
+        // Debounce для поиска, чтобы фильтрация не срабатывала на каждый ввод символа
+        let searchDebounceTimeout = null;
+
+        function handleSearchInput() {
+            if (searchDebounceTimeout) {
+                clearTimeout(searchDebounceTimeout);
+            }
+            searchDebounceTimeout = setTimeout(() => {
+                filterAndSort();
+            }, 300); // задержка 300 мс
+        }
+
+        // Слушатели событий
+        document.getElementById('searchInput').addEventListener('input', handleSearchInput);
+        document.getElementById('sortSelect').addEventListener('change', filterAndSort);
+
+        // Сворачивание/разворачивание сайдбара (как в newchat)
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadNews();
+
+            // Восстанавливаем состояние фильтров/поиска и применяем его
+            restoreFilterState();
+            filterAndSort();
+
+            const root = document.getElementById('newsRoot');
+            const sidebarToggleBtn = document.getElementById('sidebarToggle');
+            const expandSidebarBtn = document.getElementById('expandSidebarBtn');
+
+            if (root && sidebarToggleBtn) {
+                const saved = localStorage.getItem('newsSidebarCollapsed') === '1';
+                if (saved) root.classList.add('sidebar-collapsed');
+                sidebarToggleBtn.addEventListener('click', () => {
+                    root.classList.toggle('sidebar-collapsed');
+                    const collapsed = root.classList.contains('sidebar-collapsed');
+                    try { localStorage.setItem('newsSidebarCollapsed', collapsed ? '1' : '0'); } catch (err) {}
+                });
+            }
+
+            if (root && expandSidebarBtn) {
+                expandSidebarBtn.addEventListener('click', () => {
+                    root.classList.remove('sidebar-collapsed');
+                    try { localStorage.setItem('newsSidebarCollapsed', '0'); } catch (err) {}
+                });
+            }
+
+            const assistantLink = document.getElementById('assistantNavLink');
+            if (assistantLink) {
+                assistantLink.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    try {
+                        const res = await fetch('/api/check-auth', { credentials: 'same-origin' });
+                        const data = res.ok ? await res.json().catch(() => ({})) : {};
+                        if (data.authenticated) {
+                            window.location.href = assistantLink.getAttribute('href') || 'newchat.html';
+                        } else {
+                            window.location.href = '/login';
+                        }
+                    } catch (err) {
+                        window.location.href = '/login';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

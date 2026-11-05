@@ -1,0 +1,1459 @@
+<html lang="de" data-wf-domain="www.enefit.ai" data-wf-site="67769ab96d9c5332b7ceefdc">
+<head>
+    <meta charset="utf-8">
+    <title>Unternehmensregistrierung - enefit</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/css/enefit.b3bd0508f.min.css" rel="stylesheet" type="text/css">
+    <link href="css/mobile-responsive.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d2c010e595f61517badb6_enfit_Logo_32x32.png" rel="shortcut icon" type="image/x-icon">
+    
+    <style>
+        /* Стили для формы регистрации */
+        .registration-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            padding: 80px 0;
+        }
+        
+        .registration-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .registration-header {
+            background: linear-gradient(135deg, #dff45e 0%, #dff45e 100%);
+            color: #111111;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .registration-header h1, .registration-header p { color: #111111; }
+        
+        .registration-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="40" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .registration-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .registration-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .registration-form {
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+            justify-items: center;
+        }
+        /* Center all inputs/selects/textareas */
+        .registration-form .form-input,
+        .registration-form .form-select,
+        .registration-form .form-textarea {
+            max-width: 360px;
+            margin: 0 auto;
+        }
+        /* Labels left-aligned but constrained to input width and centered block */
+        .registration-form .form-label {
+            max-width: 360px;
+            margin: 0 auto 8px;
+            text-align: left;
+            display: block;
+        }
+        /* Constrain all groups and messages to centered width for symmetry */
+        .registration-form .form-group { width: 360px; max-width: 360px; }
+        .registration-form .form-group,
+        .registration-form .checkbox-group,
+        .registration-form .error-message,
+        .registration-form .success-message { max-width: 360px; margin-left: auto; margin-right: auto; }
+        /* Phone row fixed width and centered */
+        #phoneGroup > div { margin: 0 auto; width: 360px; }
+        /* Submit button centered with same width */
+        .registration-form .submit-button { display: block; max-width: 360px; margin-left: auto; margin-right: auto; }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #dff45e;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(223, 244, 94, 0.2);
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            cursor: pointer;
+        }
+        
+        .form-select:focus {
+            outline: none;
+            border-color: #dff45e;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(223, 244, 94, 0.2);
+        }
+        
+        .form-textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+        }
+        
+        .form-textarea:focus {
+            outline: none;
+            border-color: #dff45e;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(223, 244, 94, 0.2);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .checkbox-input {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            accent-color: #dff45e;
+        }
+        
+        .checkbox-label {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #666;
+        }
+        
+        .checkbox-label a {
+            color: #8aa833;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .checkbox-label a:hover {
+            text-decoration: underline;
+        }
+        
+        .submit-button {
+            width: 100%;
+            padding: 18px 30px;
+            background: linear-gradient(135deg, #dff45e 0%, #dff45e 100%);
+            color: #111111;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(223, 244, 94, 0.35);
+        }
+        
+        .submit-button:active {
+            transform: translateY(0);
+        }
+        
+        .submit-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .submit-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .submit-button:hover::before {
+            left: 100%;
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #e1e5e9;
+        }
+        
+        .form-footer p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .form-footer a {
+            color: #8aa833;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Скрываем футер на всех устройствах */
+        .footer3_component {
+            display: none !important;
+        }
+        
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            border-radius: 16px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: successSlideIn 0.6s ease-out;
+        }
+        
+        .success-message::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="success-grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="40" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23success-grain)"/></svg>');
+            opacity: 0.2;
+        }
+        
+        .success-message h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .success-message p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+            line-height: 1.6;
+        }
+        
+        .success-actions {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .success-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .success-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        @keyframes successSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .error-message {
+            display: none;
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .password-strength {
+            margin-top: 8px;
+            font-size: 0.8rem;
+        }
+        
+        .strength-bar {
+            height: 4px;
+            background: #e1e5e9;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        
+        .strength-fill {
+            height: 100%;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .strength-weak { background: #dc3545; width: 25%; }
+        .strength-fair { background: #ffc107; width: 50%; }
+        .strength-good { background: #17a2b8; width: 75%; }
+        .strength-strong { background: #28a745; width: 100%; }
+        
+        @media (max-width: 768px) {
+            .registration-section {
+                padding: 20px 0;
+                min-height: 100vh;
+            }
+            
+            .registration-container {
+                margin: 10px;
+                border-radius: 15px;
+                max-width: calc(100% - 20px);
+                background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+            }
+            
+            .registration-header {
+                padding: 25px 20px;
+                text-align: center;
+            }
+            
+            /* Перемещаем логотип над заголовком для мобильных */
+            .registration-header img {
+                position: static !important;
+                top: auto !important;
+                left: auto !important;
+                width: 60px !important;
+                height: auto !important;
+                margin: 0 auto 15px auto !important;
+                display: block !important;
+            }
+            
+            .registration-header h1 {
+                font-size: 1.8rem;
+                margin-bottom: 8px;
+            }
+            
+            .registration-header p {
+                font-size: 1rem;
+            }
+            
+            .registration-form {
+                padding: 25px 20px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            /* Улучшенные стили для мобильных полей */
+            .registration-form .form-input,
+            .registration-form .form-select,
+            .registration-form .form-textarea {
+                max-width: 100%;
+                width: 100%;
+                padding: 16px 20px;
+                font-size: 16px; /* Предотвращает зум на iOS */
+                border-radius: 8px;
+            }
+            
+            .registration-form .form-label {
+                max-width: 100%;
+                font-size: 0.9rem;
+                margin-bottom: 6px;
+            }
+            
+            .registration-form .form-group {
+                width: 100%;
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+            
+            .registration-form .checkbox-group {
+                max-width: 100%;
+                margin-bottom: 20px;
+                align-items: center;
+                gap: 10px;
+                justify-content: flex-start;
+            }
+            
+            /* Исправляем выравнивание галочек и текста для мобильных */
+            .registration-form .checkbox-input {
+                margin-top: 0;
+                flex-shrink: 0;
+                align-self: flex-start;
+                margin-top: 2px;
+            }
+            
+            .registration-form .checkbox-label {
+                text-align: left;
+                flex: 1;
+                line-height: 1.4;
+            }
+            
+            .registration-form .submit-button {
+                max-width: 100%;
+                width: 100%;
+                padding: 16px 20px;
+                font-size: 1rem;
+            }
+            
+            /* Улучшенный селектор страны для мобильных */
+            #phoneGroup > div {
+                width: 100%;
+                margin: 0;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .country-selector {
+                flex: none;
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .country-selector-trigger {
+                padding: 16px 20px;
+                font-size: 16px;
+                min-height: 52px;
+                width: 100%;
+            }
+            
+            .country-dropdown {
+                max-height: 250px;
+                min-width: 100%;
+                left: 0;
+                right: 0;
+                width: 100%;
+            }
+            
+            .country-search {
+                padding: 15px;
+            }
+            
+            .country-search-input {
+                padding: 12px 15px;
+                font-size: 16px;
+                min-width: auto;
+                width: 100%;
+            }
+            
+            .country-option {
+                padding: 12px 15px;
+                font-size: 15px;
+                gap: 12px;
+            }
+            
+            .country-flag {
+                font-size: 20px;
+                min-width: 30px;
+            }
+            
+            .country-code {
+                min-width: 45px;
+            }
+            
+            /* Поле телефона на полную ширину */
+            #phoneGroup input[type="tel"] {
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .success-message {
+                padding: 25px 20px;
+                margin: 20px 0;
+                border-radius: 12px;
+            }
+            
+            .success-message h3 {
+                font-size: 1.4rem;
+                margin-bottom: 12px;
+            }
+            
+            .success-message p {
+                font-size: 0.95rem;
+                margin-bottom: 20px;
+            }
+            
+            .success-button {
+                padding: 12px 24px;
+                font-size: 0.95rem;
+            }
+            
+            .form-footer {
+                margin-top: 25px;
+                padding-top: 25px;
+            }
+            
+            .form-footer p {
+                font-size: 0.85rem;
+                margin-bottom: 8px;
+            }
+            
+            
+            /* Изменяем цвета ссылок на черный для мобильных */
+            .form-footer a {
+                color: #000000 !important;
+            }
+            
+            .form-footer a:hover {
+                color: #333333 !important;
+            }
+        }
+        
+        /* Дополнительные стили для очень маленьких экранов */
+        @media (max-width: 480px) {
+            .registration-container {
+                margin: 5px;
+                border-radius: 12px;
+                max-width: calc(100% - 10px);
+                background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+            }
+            
+            .registration-header {
+                padding: 20px 15px;
+            }
+            
+            .registration-header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .registration-header p {
+                font-size: 0.9rem;
+            }
+            
+            .registration-form {
+                padding: 20px 15px;
+            }
+            
+            .registration-form .form-input,
+            .registration-form .form-select,
+            .registration-form .form-textarea {
+                padding: 14px 16px;
+                font-size: 16px;
+            }
+            
+            .registration-form .form-label {
+                font-size: 0.85rem;
+            }
+            
+            .registration-form .submit-button {
+                padding: 14px 16px;
+                font-size: 0.95rem;
+            }
+            
+            .country-selector-trigger {
+                padding: 14px 16px;
+                font-size: 15px;
+                min-height: 48px;
+            }
+            
+            .country-search-input {
+                padding: 10px 12px;
+                font-size: 15px;
+            }
+            
+            .country-option {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+            
+            .success-message {
+                padding: 20px 15px;
+            }
+            
+            .success-message h3 {
+                font-size: 1.2rem;
+            }
+            
+            .success-message p {
+                font-size: 0.9rem;
+            }
+            
+            .form-footer p {
+                font-size: 0.8rem;
+            }
+            
+            /* Дополнительные исправления для чекбоксов на маленьких экранах */
+            .registration-form .checkbox-group {
+                align-items: center;
+                justify-content: flex-start;
+            }
+            
+            .registration-form .checkbox-input {
+                margin-top: 0;
+                flex-shrink: 0;
+                align-self: flex-start;
+                margin-top: 2px;
+            }
+            
+            .registration-form .checkbox-label {
+                text-align: left;
+                flex: 1;
+                line-height: 1.4;
+            }
+        }
+        
+        /* Анимации */
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        /* Country Selector Styles */
+        .country-selector {
+            position: relative;
+            z-index: 1000;
+        }
+        
+        .country-selector-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 6px;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            min-height: 52px;
+        }
+        
+        .country-selector-trigger:hover {
+            border-color: #dff45e;
+            background: white;
+        }
+        
+        .country-selector-trigger.active {
+            border-color: #dff45e;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(223, 244, 94, 0.2);
+        }
+        
+        .selected-country {
+            flex: 1;
+            text-align: left;
+        }
+        
+        .country-arrow {
+            font-size: 12px;
+            color: #666;
+            transition: transform 0.3s ease;
+        }
+        
+        .country-selector-trigger.active .country-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .country-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 280px;
+            background: white;
+            border: 2px solid #dff45e;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            max-height: 300px;
+            overflow: hidden;
+        }
+        
+        .country-search {
+            padding: 15px;
+            border-bottom: 1px solid #e1e5e9;
+            background: #f8f9fa;
+        }
+        
+        .country-search-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e1e5e9;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            min-width: 250px;
+        }
+        
+        .country-search-input:focus {
+            outline: none;
+            border-color: #dff45e;
+            box-shadow: 0 0 0 2px rgba(223, 244, 94, 0.2);
+        }
+        
+        .country-list {
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        
+        .country-option {
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            border-bottom: 1px solid #f1f3f4;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            white-space: nowrap;
+        }
+        
+        .country-option:hover {
+            background: #f8f9fa;
+        }
+        
+        .country-option.selected {
+            background: rgba(223, 244, 94, 0.1);
+            color: #111111;
+        }
+        
+        .country-flag {
+            font-size: 20px;
+            flex-shrink: 0;
+            min-width: 30px;
+        }
+        
+        .country-code {
+            font-weight: 600;
+            color: #1a1a1a;
+            flex-shrink: 0;
+            min-width: 45px;
+        }
+        
+        .country-name {
+            flex: 1;
+            text-align: left;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* Scrollbar styling */
+        .country-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .country-list::-webkit-scrollbar-track {
+            background: #f1f3f4;
+        }
+        
+        .country-list::-webkit-scrollbar-thumb {
+            background: #dff45e;
+            border-radius: 3px;
+        }
+        
+        .country-list::-webkit-scrollbar-thumb:hover {
+            background: #c4e04e;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Навигация -->
+    <div class="page-wrapper">
+        <div class="global-styles w-embed">
+            <style>
+                body * { color: inherit; }
+                a, .w-input, .w-select, .w-tab-link, .w-nav-link, .w-slider-arrow-left, .w-slider-arrow-right, .w-dropdown-btn, .w-dropdown-toggle, .w-dropdown-link {
+                    color: inherit;
+                    text-decoration: inherit;
+                    font-size: inherit;
+                }
+                *[tabindex]:focus-visible, input[type="file"]:focus-visible {
+                    outline: 0.125rem solid #dff45e;
+                    outline-offset: 0.125rem;
+                }
+                .navbar { display: none !important; }
+            </style>
+        </div>
+        
+        
+        <!-- Основной контент -->
+        <main class="main-wrapper">
+            <section class="registration-section">
+                <div class="container-large">
+                    <div class="registration-container fade-in">
+                        <div class="registration-header">
+                            <img src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d69a81abfee6fe5c42891_enfit_Logo_Wortbildmarke_grau.avif" alt="enefit" style="position:absolute; top:12px; left:12px; width:48px; height:auto;">
+                            <h1 style="color:#111111;">Registrieren</h1>
+                            <p style="color:#111111;">Registrieren Sie sich um den Chatbot der enefit.ai nutzen zu können</p>
+                        </div>
+                        
+                        <div class="registration-form">
+                            <div class="error-message" id="errorMessage"></div>
+                            
+                            <form id="companyRegistrationForm" novalidate>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="companyName" class="form-label">Firmenname *</label>
+                                        <input type="text" id="companyName" name="companyName" class="form-input" required maxlength="60" style="max-width: 360px;">
+                                    </div>
+                                    
+                                    
+                                </div>
+                                
+                                <div class="form-group full-width">
+                                    <label for="contactPerson" class="form-label">Kontaktperson *</label>
+                                    <input type="text" id="contactPerson" name="contactPerson" class="form-input" required maxlength="60" style="max-width: 360px;">
+                                </div>
+                                
+                                <div class="form-group full-width">
+                                    <label for="email" class="form-label">E-Mail-Adresse *</label>
+                                    <input type="email" id="email" name="email" class="form-input" required inputmode="email" maxlength="100" placeholder="beispiel@firma.de" style="max-width: 360px;">
+                                </div>
+
+                                <div class="form-group full-width" id="phoneGroup">
+                                    <label for="phone" class="form-label">Telefonnummer (optional)</label>
+                                    <div style="display:flex; gap:10px; align-items:center;">
+                                        <div class="country-selector" style="flex:0 0 160px; position: relative;">
+                                            <div class="country-selector-trigger" id="countrySelectorTrigger">
+                                                <span class="selected-country" id="selectedCountry">+49</span>
+                                                <span class="country-arrow">▼</span>
+                                    </div>
+                                            <div class="country-dropdown" id="countryDropdown" style="display: none;">
+                                                <div class="country-search">
+                                                    <input type="text" id="countrySearch" placeholder="Land suchen..." class="country-search-input">
+                                                </div>
+                                                <div class="country-list" id="countryList">
+                                                    <!-- Countries will be populated by JavaScript -->
+                                                </div>
+                                            </div>
+                                            <input type="hidden" id="phoneCountry" name="phoneCountry" value="🇩🇪 +49 Deutschland">
+                                        </div>
+                                        <input type="tel" id="phone" name="phone" class="form-input" inputmode="tel" maxlength="20" placeholder="123 4567890" style="flex:1 1 auto;">
+                                    </div>
+                                    <div style="color:#666; font-size:12px; margin-top:6px;">Optional. Bitte geben Sie eine gültige Nummer an. Ländervorwahl wird automatisch hinzugefügt.</div>
+                                </div>
+                                
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="privacyPolicy" name="privacyPolicy" class="checkbox-input" required>
+                                    <label for="privacyPolicy" class="checkbox-label">
+                                        Ich akzeptiere die <a href="https://www.enefit.ai/datenschutz" target="_blank">Datenschutzerklärung</a> und stimme der Verarbeitung meiner Daten zu. *
+                                    </label>
+                                </div>
+                                
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="newsletter" name="newsletter" class="checkbox-input">
+                                    <label for="newsletter" class="checkbox-label">
+                                        Ich möchte den enefit-Newsletter mit Informationen zu Energieeffizienz und Events erhalten.
+                                    </label>
+                                </div>
+                                
+                                <button type="submit" class="submit-button" id="submitButton">
+                                    <div class="loading-spinner" id="loadingSpinner"></div>
+                                    <span id="submitText">Registrieren</span>
+                                </button>
+                            </form>
+                            
+                            <div class="success-message" id="successMessage">
+                                <h3>🎉 Registrierung erfolgreich!</h3>
+                                <p>Vielen Dank für Ihre Registrierung. Wir werden uns innerhalb von 24 Stunden bei Ihnen melden.</p>
+                                <div class="success-actions">
+                                    <a href="login.htm" class="success-button">Jetzt anmelden</a>
+                                </div>
+                            </div>
+                            
+                            <div class="form-footer">
+                                <p>Haben Sie bereits ein Konto? <a href="/login">Hier anmelden</a></p>
+                                <p>Fragen zur Registrierung? <a href="https://www.enefit.ai/kontakt">Kontaktieren Sie uns</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer3_component">
+            <div class="padding-global">
+                <div class="container-large">
+                    <div class="padding-vertical padding-xxlarge">
+                        <div class="padding-bottom padding-xxlarge">
+                            <div class="w-layout-grid footer3_top-wrapper">
+                                <div class="footer3_left-wrapper">
+                                    <div class="margin-bottom margin-medium">
+                                        <a href="#" class="footer3_logo-link w-nav-brand">
+                                            <img title="logo" loading="lazy" alt="" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d3534d45b959d82d50a2e_enfit_Logo_Wortbildmarke_anthrazit.avif" class="footer3_logo">
+                                        </a>
+                                    </div>
+                                    <div class="margin-bottom margin-medium">
+                                        <div class="footer3_details-wrapper">
+                                            <div class="margin-bottom margin-small">
+                                                <div class="text-size-medium">
+                                                    Technische Hochschule Würzburg-Schweinfurt<br>
+                                                    Ignaz-Schön-Str. 11<br>
+                                                    97421 Schweinfurt
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Здесь можно добавить дополнительные элементы футера, если нужно -->
+                            </div>
+                            <div class="line-divider"></div>
+                            <div class="padding-top padding-medium">
+                                <div class="footer3_bottom-wrapper">
+                                    <div class="text-size-tiny">© <span class="year">2025</span> enefit - THWS</div>
+                                    <div class="w-layout-grid footer3_legal-list">
+                                        <a href="https://www.xn--agentur-fr-internet-ebc.de/" class="text-size-tiny">made with 🖤 by agentur für internet</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script>
+        // Год в футере
+        document.addEventListener("DOMContentLoaded", function() {
+            const yrSpan = document.querySelector('.year');
+            if (yrSpan) {
+                yrSpan.textContent = new Date().getFullYear();
+            }
+
+            // Клик по логотипу (левый верхний угол)
+            const logoLink = document.querySelector('.navbar9_logo-link');
+            if (logoLink) {
+                logoLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = '/';
+                });
+            }
+
+            // Клик по иконке (svg перед 'Über enefit')
+            const navIcon = document.querySelector('.nav-link .icon-embed-xxsmall');
+            if (navIcon) {
+                navIcon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = '/';
+                });
+                // Также курсор pointer для иконки
+                navIcon.style.cursor = 'pointer';
+            }
+            
+            // Initialize country selector
+            initCountrySelector();
+        });
+
+        // Countries data
+        const countries = [
+            { flag: '🇩🇪', code: '+49', name: 'Deutschland', value: '🇩🇪 +49 Deutschland' },
+            { flag: '🇦🇹', code: '+43', name: 'Österreich', value: '🇦🇹 +43 Österreich' },
+            { flag: '🇨🇭', code: '+41', name: 'Schweiz', value: '🇨🇭 +41 Schweiz' },
+            { flag: '🇺🇸', code: '+1', name: 'USA', value: '🇺🇸 +1 USA' },
+            { flag: '🇬🇧', code: '+44', name: 'UK', value: '🇬🇧 +44 UK' },
+            { flag: '🇫🇷', code: '+33', name: 'Frankreich', value: '🇫🇷 +33 Frankreich' },
+            { flag: '🇮🇹', code: '+39', name: 'Italien', value: '🇮🇹 +39 Italien' },
+            { flag: '🇪🇸', code: '+34', name: 'Spanien', value: '🇪🇸 +34 Spanien' },
+            { flag: '🇳🇱', code: '+31', name: 'Niederlande', value: '🇳🇱 +31 Niederlande' },
+            { flag: '🇧🇪', code: '+32', name: 'Belgien', value: '🇧🇪 +32 Belgien' },
+            { flag: '🇸🇪', code: '+46', name: 'Schweden', value: '🇸🇪 +46 Schweden' },
+            { flag: '🇳🇴', code: '+47', name: 'Norwegen', value: '🇳🇴 +47 Norwegen' },
+            { flag: '🇩🇰', code: '+45', name: 'Dänemark', value: '🇩🇰 +45 Dänemark' },
+            { flag: '🇫🇮', code: '+358', name: 'Finnland', value: '🇫🇮 +358 Finnland' },
+            { flag: '🇵🇱', code: '+48', name: 'Polen', value: '🇵🇱 +48 Polen' },
+            { flag: '🇨🇿', code: '+420', name: 'Tschechien', value: '🇨🇿 +420 Tschechien' },
+            { flag: '🇭🇺', code: '+36', name: 'Ungarn', value: '🇭🇺 +36 Ungarn' },
+            { flag: '🇸🇰', code: '+421', name: 'Slowakei', value: '🇸🇰 +421 Slowakei' },
+            { flag: '🇸🇮', code: '+386', name: 'Slowenien', value: '🇸🇮 +386 Slowenien' },
+            { flag: '🇭🇷', code: '+385', name: 'Kroatien', value: '🇭🇷 +385 Kroatien' },
+            { flag: '🇷🇴', code: '+40', name: 'Rumänien', value: '🇷🇴 +40 Rumänien' },
+            { flag: '🇧🇬', code: '+359', name: 'Bulgarien', value: '🇧🇬 +359 Bulgarien' },
+            { flag: '🇬🇷', code: '+30', name: 'Griechenland', value: '🇬🇷 +30 Griechenland' },
+            { flag: '🇵🇹', code: '+351', name: 'Portugal', value: '🇵🇹 +351 Portugal' },
+            { flag: '🇮🇪', code: '+353', name: 'Irland', value: '🇮🇪 +353 Irland' },
+            { flag: '🇱🇺', code: '+352', name: 'Luxemburg', value: '🇱🇺 +352 Luxemburg' },
+            { flag: '🇲🇹', code: '+356', name: 'Malta', value: '🇲🇹 +356 Malta' },
+            { flag: '🇨🇾', code: '+357', name: 'Zypern', value: '🇨🇾 +357 Zypern' },
+            { flag: '🇪🇪', code: '+372', name: 'Estland', value: '🇪🇪 +372 Estland' },
+            { flag: '🇱🇻', code: '+371', name: 'Lettland', value: '🇱🇻 +371 Lettland' },
+            { flag: '🇱🇹', code: '+370', name: 'Litauen', value: '🇱🇹 +370 Litauen' },
+            { flag: '🇷🇺', code: '+7', name: 'Russland', value: '🇷🇺 +7 Russland' },
+            { flag: '🇺🇦', code: '+380', name: 'Ukraine', value: '🇺🇦 +380 Ukraine' },
+            { flag: '🇧🇾', code: '+375', name: 'Weißrussland', value: '🇧🇾 +375 Weißrussland' },
+            { flag: '🇲🇩', code: '+373', name: 'Moldawien', value: '🇲🇩 +373 Moldawien' },
+            { flag: '🇬🇪', code: '+995', name: 'Georgien', value: '🇬🇪 +995 Georgien' },
+            { flag: '🇦🇲', code: '+374', name: 'Armenien', value: '🇦🇲 +374 Armenien' },
+            { flag: '🇦🇿', code: '+994', name: 'Aserbaidschan', value: '🇦🇿 +994 Aserbaidschan' },
+            { flag: '🇹🇷', code: '+90', name: 'Türkei', value: '🇹🇷 +90 Türkei' },
+            { flag: '🇮🇱', code: '+972', name: 'Israel', value: '🇮🇱 +972 Israel' },
+            { flag: '🇱🇧', code: '+961', name: 'Libanon', value: '🇱🇧 +961 Libanon' },
+            { flag: '🇯🇴', code: '+962', name: 'Jordanien', value: '🇯🇴 +962 Jordanien' },
+            { flag: '🇸🇾', code: '+963', name: 'Syrien', value: '🇸🇾 +963 Syrien' },
+            { flag: '🇮🇶', code: '+964', name: 'Irak', value: '🇮🇶 +964 Irak' },
+            { flag: '🇮🇷', code: '+98', name: 'Iran', value: '🇮🇷 +98 Iran' },
+            { flag: '🇦🇫', code: '+93', name: 'Afghanistan', value: '🇦🇫 +93 Afghanistan' },
+            { flag: '🇵🇰', code: '+92', name: 'Pakistan', value: '🇵🇰 +92 Pakistan' },
+            { flag: '🇮🇳', code: '+91', name: 'Indien', value: '🇮🇳 +91 Indien' },
+            { flag: '🇧🇩', code: '+880', name: 'Bangladesch', value: '🇧🇩 +880 Bangladesch' },
+            { flag: '🇱🇰', code: '+94', name: 'Sri Lanka', value: '🇱🇰 +94 Sri Lanka' },
+            { flag: '🇳🇵', code: '+977', name: 'Nepal', value: '🇳🇵 +977 Nepal' },
+            { flag: '🇧🇹', code: '+975', name: 'Bhutan', value: '🇧🇹 +975 Bhutan' },
+            { flag: '🇲🇲', code: '+95', name: 'Myanmar', value: '🇲🇲 +95 Myanmar' },
+            { flag: '🇹🇭', code: '+66', name: 'Thailand', value: '🇹🇭 +66 Thailand' },
+            { flag: '🇻🇳', code: '+84', name: 'Vietnam', value: '🇻🇳 +84 Vietnam' },
+            { flag: '🇰🇭', code: '+855', name: 'Kambodscha', value: '🇰🇭 +855 Kambodscha' },
+            { flag: '🇱🇦', code: '+856', name: 'Laos', value: '🇱🇦 +856 Laos' },
+            { flag: '🇲🇾', code: '+60', name: 'Malaysia', value: '🇲🇾 +60 Malaysia' },
+            { flag: '🇸🇬', code: '+65', name: 'Singapur', value: '🇸🇬 +65 Singapur' },
+            { flag: '🇮🇩', code: '+62', name: 'Indonesien', value: '🇮🇩 +62 Indonesien' },
+            { flag: '🇵🇭', code: '+63', name: 'Philippinen', value: '🇵🇭 +63 Philippinen' },
+            { flag: '🇧🇷', code: '+55', name: 'Brasilien', value: '🇧🇷 +55 Brasilien' },
+            { flag: '🇦🇷', code: '+54', name: 'Argentinien', value: '🇦🇷 +54 Argentinien' },
+            { flag: '🇨🇱', code: '+56', name: 'Chile', value: '🇨🇱 +56 Chile' },
+            { flag: '🇵🇪', code: '+51', name: 'Peru', value: '🇵🇪 +51 Peru' },
+            { flag: '🇨🇴', code: '+57', name: 'Kolumbien', value: '🇨🇴 +57 Kolumbien' },
+            { flag: '🇻🇪', code: '+58', name: 'Venezuela', value: '🇻🇪 +58 Venezuela' },
+            { flag: '🇪🇨', code: '+593', name: 'Ecuador', value: '🇪🇨 +593 Ecuador' },
+            { flag: '🇧🇴', code: '+591', name: 'Bolivien', value: '🇧🇴 +591 Bolivien' },
+            { flag: '🇵🇾', code: '+595', name: 'Paraguay', value: '🇵🇾 +595 Paraguay' },
+            { flag: '🇺🇾', code: '+598', name: 'Uruguay', value: '🇺🇾 +598 Uruguay' },
+            { flag: '🇬🇾', code: '+592', name: 'Guyana', value: '🇬🇾 +592 Guyana' },
+            { flag: '🇸🇷', code: '+597', name: 'Suriname', value: '🇸🇷 +597 Suriname' },
+            { flag: '🇫🇷', code: '+33', name: 'Frankreich', value: '🇫🇷 +33 Frankreich' },
+            { flag: '🇨🇦', code: '+1', name: 'Kanada', value: '🇨🇦 +1 Kanada' },
+            { flag: '🇲🇽', code: '+52', name: 'Mexiko', value: '🇲🇽 +52 Mexiko' },
+            { flag: '🇨🇺', code: '+53', name: 'Kuba', value: '🇨🇺 +53 Kuba' },
+            { flag: '🇯🇲', code: '+1876', name: 'Jamaika', value: '🇯🇲 +1876 Jamaika' },
+            { flag: '🇭🇹', code: '+509', name: 'Haiti', value: '🇭🇹 +509 Haiti' },
+            { flag: '🇩🇴', code: '+1809', name: 'Dominikanische Republik', value: '🇩🇴 +1809 Dominikanische Republik' },
+            { flag: '🇵🇷', code: '+1787', name: 'Puerto Rico', value: '🇵🇷 +1787 Puerto Rico' },
+            { flag: '🇨🇳', code: '+86', name: 'China', value: '🇨🇳 +86 China' },
+            { flag: '🇯🇵', code: '+81', name: 'Japan', value: '🇯🇵 +81 Japan' },
+            { flag: '🇰🇷', code: '+82', name: 'Südkorea', value: '🇰🇷 +82 Südkorea' },
+            { flag: '🇹🇼', code: '+886', name: 'Taiwan', value: '🇹🇼 +886 Taiwan' },
+            { flag: '🇭🇰', code: '+852', name: 'Hong Kong', value: '🇭🇰 +852 Hong Kong' },
+            { flag: '🇲🇴', code: '+853', name: 'Macau', value: '🇲🇴 +853 Macau' },
+            { flag: '🇲🇳', code: '+976', name: 'Mongolei', value: '🇲🇳 +976 Mongolei' },
+            { flag: '🇰🇿', code: '+7', name: 'Kasachstan', value: '🇰🇿 +7 Kasachstan' },
+            { flag: '🇰🇬', code: '+996', name: 'Kirgisistan', value: '🇰🇬 +996 Kirgisistan' },
+            { flag: '🇹🇯', code: '+992', name: 'Tadschikistan', value: '🇹🇯 +992 Tadschikistan' },
+            { flag: '🇺🇿', code: '+998', name: 'Usbekistan', value: '🇺🇿 +998 Usbekistan' },
+            { flag: '🇹🇲', code: '+993', name: 'Turkmenistan', value: '🇹🇲 +993 Turkmenistan' },
+            { flag: '🇦🇺', code: '+61', name: 'Australien', value: '🇦🇺 +61 Australien' },
+            { flag: '🇳🇿', code: '+64', name: 'Neuseeland', value: '🇳🇿 +64 Neuseeland' },
+            { flag: '🇫🇯', code: '+679', name: 'Fidschi', value: '🇫🇯 +679 Fidschi' },
+            { flag: '🇵🇬', code: '+675', name: 'Papua-Neuguinea', value: '🇵🇬 +675 Papua-Neuguinea' },
+            { flag: '🇳🇨', code: '+687', name: 'Neukaledonien', value: '🇳🇨 +687 Neukaledonien' },
+            { flag: '🇵🇫', code: '+689', name: 'Französisch-Polynesien', value: '🇵🇫 +689 Französisch-Polynesien' },
+            { flag: '🇿🇦', code: '+27', name: 'Südafrika', value: '🇿🇦 +27 Südafrika' },
+            { flag: '🇪🇬', code: '+20', name: 'Ägypten', value: '🇪🇬 +20 Ägypten' },
+            { flag: '🇳🇬', code: '+234', name: 'Nigeria', value: '🇳🇬 +234 Nigeria' },
+            { flag: '🇰🇪', code: '+254', name: 'Kenia', value: '🇰🇪 +254 Kenia' },
+            { flag: '🇪🇹', code: '+251', name: 'Äthiopien', value: '🇪🇹 +251 Äthiopien' },
+            { flag: '🇹🇿', code: '+255', name: 'Tansania', value: '🇹🇿 +255 Tansania' },
+            { flag: '🇺🇬', code: '+256', name: 'Uganda', value: '🇺🇬 +256 Uganda' },
+            { flag: '🇰🇪', code: '+254', name: 'Kenia', value: '🇰🇪 +254 Kenia' },
+            { flag: '🇲🇦', code: '+212', name: 'Marokko', value: '🇲🇦 +212 Marokko' },
+            { flag: '🇹🇳', code: '+216', name: 'Tunesien', value: '🇹🇳 +216 Tunesien' },
+            { flag: '🇩🇿', code: '+213', name: 'Algerien', value: '🇩🇿 +213 Algerien' },
+            { flag: '🇱🇾', code: '+218', name: 'Libyen', value: '🇱🇾 +218 Libyen' },
+            { flag: '🇸🇩', code: '+249', name: 'Sudan', value: '🇸🇩 +249 Sudan' },
+            { flag: '🇸🇸', code: '+211', name: 'Südsudan', value: '🇸🇸 +211 Südsudan' },
+            { flag: '🇨🇫', code: '+236', name: 'Zentralafrikanische Republik', value: '🇨🇫 +236 Zentralafrikanische Republik' },
+            { flag: '🇹🇩', code: '+235', name: 'Tschad', value: '🇹🇩 +235 Tschad' },
+            { flag: '🇳🇪', code: '+227', name: 'Niger', value: '🇳🇪 +227 Niger' },
+            { flag: '🇧🇫', code: '+226', name: 'Burkina Faso', value: '🇧🇫 +226 Burkina Faso' },
+            { flag: '🇲🇱', code: '+223', name: 'Mali', value: '🇲🇱 +223 Mali' },
+            { flag: '🇸🇳', code: '+221', name: 'Senegal', value: '🇸🇳 +221 Senegal' },
+            { flag: '🇬🇲', code: '+220', name: 'Gambia', value: '🇬🇲 +220 Gambia' },
+            { flag: '🇬🇼', code: '+245', name: 'Guinea-Bissau', value: '🇬🇼 +245 Guinea-Bissau' },
+            { flag: '🇬🇳', code: '+224', name: 'Guinea', value: '🇬🇳 +224 Guinea' },
+            { flag: '🇨🇮', code: '+225', name: 'Elfenbeinküste', value: '🇨🇮 +225 Elfenbeinküste' },
+            { flag: '🇬🇭', code: '+233', name: 'Ghana', value: '🇬🇭 +233 Ghana' },
+            { flag: '🇹🇬', code: '+228', name: 'Togo', value: '🇹🇬 +228 Togo' },
+            { flag: '🇧🇯', code: '+229', name: 'Benin', value: '🇧🇯 +229 Benin' },
+            { flag: '🇨🇲', code: '+237', name: 'Kamerun', value: '🇨🇲 +237 Kamerun' },
+            { flag: '🇬🇶', code: '+240', name: 'Äquatorialguinea', value: '🇬🇶 +240 Äquatorialguinea' },
+            { flag: '🇬🇦', code: '+241', name: 'Gabun', value: '🇬🇦 +241 Gabun' },
+            { flag: '🇨🇬', code: '+242', name: 'Kongo', value: '🇨🇬 +242 Kongo' },
+            { flag: '🇨🇩', code: '+243', name: 'Demokratische Republik Kongo', value: '🇨🇩 +243 Demokratische Republik Kongo' },
+            { flag: '🇦🇴', code: '+244', name: 'Angola', value: '🇦🇴 +244 Angola' },
+            { flag: '🇿🇲', code: '+260', name: 'Sambia', value: '🇿🇲 +260 Sambia' },
+            { flag: '🇿🇼', code: '+263', name: 'Simbabwe', value: '🇿🇼 +263 Simbabwe' },
+            { flag: '🇧🇼', code: '+267', name: 'Botswana', value: '🇧🇼 +267 Botswana' },
+            { flag: '🇳🇦', code: '+264', name: 'Namibia', value: '🇳🇦 +264 Namibia' },
+            { flag: '🇱🇸', code: '+266', name: 'Lesotho', value: '🇱🇸 +266 Lesotho' },
+            { flag: '🇸🇿', code: '+268', name: 'Eswatini', value: '🇸🇿 +268 Eswatini' },
+            { flag: '🇲🇿', code: '+258', name: 'Mosambik', value: '🇲🇿 +258 Mosambik' },
+            { flag: '🇲🇼', code: '+265', name: 'Malawi', value: '🇲🇼 +265 Malawi' },
+            { flag: '🇿🇦', code: '+27', name: 'Südafrika', value: '🇿🇦 +27 Südafrika' }
+        ];
+
+        // Country selector functionality
+        let selectedCountry = countries[0];
+        let filteredCountries = [...countries];
+
+        // Initialize country selector
+        function initCountrySelector() {
+            const trigger = document.getElementById('countrySelectorTrigger');
+            const dropdown = document.getElementById('countryDropdown');
+            const searchInput = document.getElementById('countrySearch');
+            const countryList = document.getElementById('countryList');
+
+                         // Populate country list
+             function populateCountryList(countriesToShow) {
+                 countryList.innerHTML = '';
+                 countriesToShow.forEach(country => {
+                     const option = document.createElement('div');
+                     option.className = 'country-option';
+                     if (country.value === selectedCountry.value) {
+                         option.classList.add('selected');
+                     }
+                     option.innerHTML = `
+                         <span class="country-flag">${country.flag}</span>
+                         <span class="country-code">${country.code}</span>
+                         <span class="country-name">${country.name}</span>
+                     `;
+                     option.addEventListener('click', () => selectCountry(country));
+                     countryList.appendChild(option);
+                 });
+             }
+
+                         // Select country
+             function selectCountry(country) {
+                 selectedCountry = country;
+                 document.getElementById('selectedCountry').textContent = country.code;
+                 document.getElementById('phoneCountry').value = country.value;
+                 dropdown.style.display = 'none';
+                 trigger.classList.remove('active');
+                 // Reset search when selecting
+                 searchInput.value = '';
+                 filteredCountries = [...countries];
+                 selectedIndex = 0;
+             }
+
+                         // Toggle dropdown
+             trigger.addEventListener('click', (e) => {
+                 e.stopPropagation();
+                 const isOpen = dropdown.style.display === 'block';
+                 
+                 if (isOpen) {
+                     dropdown.style.display = 'none';
+                     trigger.classList.remove('active');
+                     // Reset search when closing
+                     searchInput.value = '';
+                     filteredCountries = [...countries];
+                     selectedIndex = 0;
+                 } else {
+                     dropdown.style.display = 'block';
+                     trigger.classList.add('active');
+                     searchInput.focus();
+                     populateCountryList(filteredCountries);
+                 }
+             });
+
+                         // Search functionality
+             searchInput.addEventListener('input', (e) => {
+                 const searchTerm = e.target.value.toLowerCase();
+                 filteredCountries = countries.filter(country => 
+                     country.name.toLowerCase().includes(searchTerm) ||
+                     country.code.includes(searchTerm)
+                 );
+                 selectedIndex = 0; // Reset selection when searching
+                 populateCountryList(filteredCountries);
+             });
+             
+             // Keyboard navigation
+             let selectedIndex = 0;
+             
+             searchInput.addEventListener('keydown', (e) => {
+                 const options = countryList.querySelectorAll('.country-option');
+                 
+                 switch(e.key) {
+                     case 'ArrowDown':
+                         e.preventDefault();
+                         selectedIndex = Math.min(selectedIndex + 1, options.length - 1);
+                         updateSelection(options);
+                         break;
+                     case 'ArrowUp':
+                         e.preventDefault();
+                         selectedIndex = Math.max(selectedIndex - 1, 0);
+                         updateSelection(options);
+                         break;
+                     case 'Enter':
+                         e.preventDefault();
+                         if (options[selectedIndex]) {
+                             const countryValue = options[selectedIndex].querySelector('.country-name').textContent;
+                             const country = countries.find(c => c.name === countryValue);
+                             if (country) {
+                                 selectCountry(country);
+                             }
+                         }
+                         break;
+                 }
+             });
+             
+             function updateSelection(options) {
+                 options.forEach((option, index) => {
+                     option.classList.remove('selected');
+                     if (index === selectedIndex) {
+                         option.classList.add('selected');
+                         option.scrollIntoView({ block: 'nearest' });
+                     }
+                 });
+             }
+
+                         // Close dropdown when clicking outside
+             document.addEventListener('click', (e) => {
+                 if (!trigger.contains(e.target) && !dropdown.contains(e.target)) {
+                     dropdown.style.display = 'none';
+                     trigger.classList.remove('active');
+                     // Reset search when closing
+                     searchInput.value = '';
+                     filteredCountries = [...countries];
+                     selectedIndex = 0;
+                 }
+             });
+             
+             // Close dropdown on Escape key
+             document.addEventListener('keydown', (e) => {
+                 if (e.key === 'Escape' && dropdown.style.display === 'block') {
+                     dropdown.style.display = 'none';
+                     trigger.classList.remove('active');
+                     // Reset search when closing
+                     searchInput.value = '';
+                     filteredCountries = [...countries];
+                     selectedIndex = 0;
+                 }
+             });
+
+                         // Initialize with first country
+             populateCountryList(countries);
+             
+             // Try to detect user's country
+             try {
+                 // Check if geolocation is available
+                 if (navigator.geolocation) {
+                     navigator.geolocation.getCurrentPosition(
+                         async (position) => {
+                             try {
+                                 const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&localityLanguage=de`);
+                                 const data = await response.json();
+                                 if (data.countryCode) {
+                                     const detectedCountry = countries.find(c => 
+                                         c.name.toLowerCase().includes(data.countryName?.toLowerCase()) ||
+                                         c.name.toLowerCase().includes(data.countryCode.toLowerCase())
+                                     );
+                                     if (detectedCountry) {
+                                         selectCountry(detectedCountry);
+                                     }
+                                 }
+                             } catch (e) {
+                                 // Silently fail if geolocation API fails
+                             }
+                         },
+                         () => {
+                             // Silently fail if geolocation is denied
+                         }
+                     );
+                 }
+             } catch (e) {
+                 // Silently fail if geolocation is not supported
+             }
+         }
+
+        // Валидация и отправка формы
+        const form = document.getElementById('companyRegistrationForm');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        const submitButton = document.getElementById('submitButton');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const submitText = document.getElementById('submitText');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+            submitButton.disabled = true;
+            loadingSpinner.style.display = 'inline-block';
+            submitText.textContent = 'Wird gesendet...';
+
+            // Собираем данные формы
+            const formData = new FormData(form);
+            const data = {};
+            formData.forEach((value, key) => data[key] = value);
+            
+            // Compose full phone with country code (optional)
+            let fullPhone = '';
+            if (data.phone && data.phone.trim()) {
+                fullPhone = selectedCountry.code + ' ' + data.phone.trim();
+            }
+
+            // Простая клиентская валидация (phone is optional)
+            if (!form.checkValidity()) {
+                errorMessage.textContent = 'Bitte füllen Sie alle Pflichtfelder korrekt aus.';
+                errorMessage.style.display = 'block';
+                submitButton.disabled = false;
+                loadingSpinner.style.display = 'none';
+                submitText.textContent = 'Registrieren';
+                form.classList.add('shake');
+                setTimeout(() => form.classList.remove('shake'), 500);
+                return;
+            }
+
+            // Отправка данных на сервер
+            try {
+                const response = await fetch('/api/submit-application', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        companyName: data.companyName,
+                        contactEmail: data.email,
+                        contactPhone: fullPhone.trim(),
+                        address: '',
+                        description: '',
+                        employees: '',
+                        website: '',
+                        contactPerson: data.contactPerson
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Скрываем форму и показываем сообщение об успехе
+                    form.style.display = 'none';
+                successMessage.style.display = 'block';
+                    
+                    // Прокручиваем к сообщению об успехе
+                    successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    console.log('Application submitted successfully:', result.applicationId);
+                } else {
+                    throw new Error('Server returned error');
+                }
+            } catch (err) {
+                console.error('Registration error:', err);
+                errorMessage.textContent = 'Fehler bei der Registrierung. Bitte versuchen Sie es später erneut.';
+                errorMessage.style.display = 'block';
+            } finally {
+                submitButton.disabled = false;
+                loadingSpinner.style.display = 'none';
+                submitText.textContent = 'Registrieren';
+            }
+        });
+    </script>
+</body>
+</html>

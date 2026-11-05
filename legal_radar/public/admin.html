@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Legal Radar</title>
+    <link rel="stylesheet" href="/legal_radar/public/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="radar-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        <path d="M2 12h20"></path>
+                    </svg>
+                </div>
+                <h2>Legal Radar</h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-item active" data-target="view-overview">
+                    Overview
+                </div>
+                <div class="nav-item" data-target="view-laws">
+                    Newsletters & Laws
+                </div>
+                <div class="nav-item" data-target="view-subscribers">
+                    Subscribers
+                </div>
+                <div class="nav-item" data-target="view-settings">
+                    Settings & Danger
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- OVERVIEW SECTION -->
+            <section id="view-overview" class="view-section active">
+                <div class="page-header">
+                    <h1 class="page-title">Dashboard Overview</h1>
+                    <div style="display: flex; gap: 1rem;">
+                        <button id="scanBtn" class="btn btn-primary">1. Scan Feeds</button>
+                        <button id="sendBtn" class="btn btn-primary" style="background: var(--success);">2. Send Newsletters</button>
+                    </div>
+                </div>
+
+                <div id="statusBanner" class="hidden" style="margin-bottom: 2rem; padding: 1rem; border-radius: 8px; background: rgba(16, 185, 129, 0.15); color: #059669; border: 1px solid rgba(16, 185, 129, 0.3);">
+                    <span id="statusMessage"></span>
+                    <div id="emailPreviewContainer" style="margin-top: 10px; display: flex; flex-direction: column; gap: 5px;"></div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Subscribers</h3>
+                        <div class="stat-value" id="statSubscribers">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Unsent Laws</h3>
+                        <div class="stat-value" id="statUnsent">0</div>
+                        <p style="color: var(--text-muted); font-size: 0.85rem;">Pending dispatch</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Processed Laws</h3>
+                        <div class="stat-value" id="statTotalLaws">0</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LAWS SECTION -->
+            <section id="view-laws" class="view-section">
+                <div class="page-header">
+                    <h1 class="page-title">Processed Laws</h1>
+                </div>
+                <div class="laws-grid" id="lawsGrid">
+                    <!-- Laws injected here -->
+                </div>
+            </section>
+
+            <!-- SUBSCRIBERS SECTION -->
+            <section id="view-subscribers" class="view-section">
+                <div class="page-header">
+                    <h1 class="page-title">Manage Subscribers</h1>
+                </div>
+                
+                <div class="data-table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Email Address</th>
+                                <th>Subscribed Industries</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="subscribersTableBody">
+                            <!-- Subscribers injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SETTINGS SECTION -->
+            <section id="view-settings" class="view-section">
+                <div class="page-header">
+                    <h1 class="page-title">Settings & System</h1>
+                </div>
+
+                <div style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+                    <h3 style="margin-bottom: 1.5rem; color: #8aa833;">Automated Scheduling</h3>
+                    <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 1rem; flex-wrap: wrap;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" id="autoEnabled" style="width: 1.2rem; height: 1.2rem; accent-color: var(--accent);">
+                            Enable Auto Scan & Email
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            Scan & Email Frequency
+                            <select id="cronExpression" style="padding: 0.5rem; border-radius: 6px; border: 1px solid rgba(223, 244, 94, 0.4); background: rgba(255,255,255,0.8); color: #1f2937;">
+                                <option value="0 0 * * 1">Weekly (Monday)</option>
+                                <option value="0 0 * * *">Daily at Midnight</option>
+                                <option value="0 * * * *">Every Hour</option>
+                                <option value="* * * * *">Every Minute (Testing)</option>
+                            </select>
+                        </label>
+                        <button id="saveSettingsBtn" class="btn btn-primary">Save Settings</button>
+                        <span id="settingsStatus" style="color: #059669; font-size: 0.9rem;" class="hidden">Saved successfully!</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">The system will automatically run according to the schedule. Old news from the RSS feeds will be automatically ignored to prevent duplicates.</p>
+                </div>
+
+                <!-- Danger Zone -->
+                <div class="danger-zone">
+                    <h3 style="color: var(--danger); margin-bottom: 1rem;">Danger Zone</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">This will permanently wipe all subscribers, parsed laws, and settings from the database. This action cannot be undone.</p>
+                    <button id="factoryResetBtn" class="btn btn-danger">Wipe Database (Factory Reset)</button>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Law Card Template -->
+    <template id="lawCardTemplate">
+        <div class="law-card">
+            <div class="tags-container card-tags"></div>
+            <a href="#" target="_blank" class="law-title"></a>
+            <p class="law-summary"></p>
+            <div style="margin-bottom: 10px;">
+                <a href="#" class="pdf-link" target="_blank" style="display: none; font-size: 0.85rem; color: #8aa833; text-decoration: none; align-items: center; gap: 4px; padding: 4px 8px; background: rgba(223, 244, 94, 0.2); border-radius: 4px; width: fit-content;">
+                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9.5 8.5v3H8v-3H6l3-4 3 4h-2.5zm4.5 4h-4v-1.5h4v1.5z"/></svg>
+                    Deep Analyzed via PDF
+                </a>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+                <span class="date-text" style="color: var(--text-muted); font-size: 0.85rem;"></span>
+                <span class="status-tag tag" style="background: rgba(16, 185, 129, 0.15); color: #059669;"></span>
+            </div>
+        </div>
+    </template>
+
+    <!-- Subscriber Row Template -->
+    <template id="subscriberRowTemplate">
+        <tr>
+            <td class="sub-email" style="font-weight: 500;"></td>
+            <td class="sub-categories">
+                <div class="tags-container cat-tags"></div>
+            </td>
+            <td>
+                <button class="btn btn-danger btn-small delete-sub-btn">Delete</button>
+            </td>
+        </tr>
+    </template>
+
+    <script src="/legal_radar/public/admin.js"></script>
+</body>
+</html>

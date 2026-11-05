@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALERI Phase 9 - Scenario Analysis</title>
+    <link href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d2c010e595f61517badb6_enfit_Logo_32x32.png" rel="shortcut icon" type="image/x-icon">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #ecf4f4 100%);
+            min-height: 100vh;
+            color: #1f2937;
+            padding: 34px 16px;
+        }
+        .page { max-width: 1400px; margin: 0 auto; }
+        .shell {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid #e5e7eb;
+            border-radius: 22px;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+            padding: 28px;
+        }
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 20px;
+            margin-bottom: 22px;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(223, 244, 94, 0.35);
+            background: rgba(223, 244, 94, 0.12);
+            color: #111827;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.92rem;
+            transition: all 0.25s ease;
+        }
+        .back-link:hover { transform: translateY(-2px); background: rgba(223, 244, 94, 0.2); }
+        h1 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 8px; }
+        .lead { color: #4b5563; line-height: 1.6; max-width: 880px; font-size: 0.98rem; }
+        .panel {
+            border: 1px solid #e5e7eb;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(248, 250, 252, 0.92));
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.045);
+            margin-bottom: 22px;
+        }
+        .panel-title { font-size: 1rem; font-weight: 650; margin-bottom: 10px; letter-spacing: 0.01em; }
+        .label { font-size: 0.9rem; font-weight: 500; margin-bottom: 8px; display: block; color: #374151; }
+        textarea, input, select {
+            width: 100%;
+            border: 1px solid #dbe1ea;
+            border-radius: 12px;
+            padding: 11px 12px;
+            font: inherit;
+            background: #f8fafc;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: rgba(212, 225, 87, 0.9);
+            box-shadow: 0 0 0 4px rgba(212, 225, 87, 0.2);
+            background: #fff;
+        }
+        .field { margin-bottom: 14px; }
+        .actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
+        .btn {
+            border: none;
+            border-radius: 12px;
+            padding: 11px 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #dff45e, #c7e03a);
+            color: #111827;
+            box-shadow: 0 8px 20px rgba(223, 244, 94, 0.35);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(170, 190, 60, 0.33); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .info-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(223, 244, 94, 0.3);
+            border: 1px solid rgba(223, 244, 94, 0.6);
+            color: #374151;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        .info-btn:hover {
+            background: rgba(223, 244, 94, 0.5);
+            border-color: rgba(223, 244, 94, 0.9);
+            transform: scale(1.1);
+        }
+        .label-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 18px;
+            padding: 28px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 2px solid rgba(223, 244, 94, 0.3);
+            padding-bottom: 12px;
+        }
+        .modal-header h2 {
+            font-size: 1.3rem;
+            color: #111827;
+            margin: 0;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+            transition: color 0.2s ease;
+        }
+        .modal-close:hover {
+            color: #111827;
+        }
+        .modal-body {
+            color: #4b5563;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+        .modal-section {
+            margin-bottom: 16px;
+        }
+        .modal-section-title {
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+        .scenario-grid { 
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+        .scenario-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 18px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95));
+        }
+        .scenario-card.best-case {
+            border-color: rgba(34, 197, 94, 0.4);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.05), rgba(34, 197, 94, 0.02));
+        }
+        .scenario-card.most-likely {
+            border-color: rgba(223, 244, 94, 0.4);
+            background: linear-gradient(135deg, rgba(223, 244, 94, 0.08), rgba(223, 244, 94, 0.03));
+        }
+        .scenario-card.worst-case {
+            border-color: rgba(239, 68, 68, 0.4);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.05), rgba(239, 68, 68, 0.02));
+        }
+        .scenario-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .scenario-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .scenario-badge.best { background: #dcfce7; color: #166534; }
+        .scenario-badge.likely { background: #fef3c7; color: #92400e; }
+        .scenario-badge.worst { background: #fee2e2; color: #991b1b; }
+        .scenario-npv {
+            font-size: 1.4rem;
+            font-weight: 850;
+            margin: 12px 0;
+            line-height: 1.2;
+        }
+        .scenario-npv.best { color: #22c55e; }
+        .scenario-npv.likely { color: #dff45e; }
+        .scenario-npv.worst { color: #ef4444; }
+        .scenario-delta {
+            font-size: 0.85rem;
+            margin-top: 8px;
+            padding: 8px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.02);
+        }
+        .parameters-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-top: 14px;
+        }
+        .param-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            padding: 6px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .param-label { color: #6b7280; font-weight: 500; }
+        .param-value { font-weight: 600; color: #111827; }
+        .scenario-section {
+            margin-bottom: 22px;
+        }
+        .scenario-section-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+            color: #111827;
+        }
+        .scenario-setting {
+            margin-bottom: 16px;
+        }
+        .scenario-setting-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .setting-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .setting-input {
+            display: flex;
+            flex-direction: column;
+        }
+        .setting-input label {
+            font-size: 0.8rem;
+            color: #6b7280;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+        .setting-input input {
+            border: 1px solid #dbe1ea;
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        th, td {
+            border-top: 1px solid #eef2f7;
+            padding: 12px 8px;
+            text-align: left;
+        }
+        th { 
+            color: #6b7280; 
+            font-size: 0.82rem; 
+            font-weight: 800; 
+            letter-spacing: 0.08em; 
+            text-transform: uppercase;
+            background: #f8fafc;
+        }
+        .interpretation-box {
+            background: linear-gradient(135deg, rgba(223, 244, 94, 0.08), rgba(223, 244, 94, 0.03));
+            border: 1px solid rgba(223, 244, 94, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 12px;
+        }
+        .interpretation-title {
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+        .interpretation-text {
+            color: #4b5563;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+        .kpi {
+            border: 1px solid #e5e7eb;
+            background: #fff;
+            border-radius: 14px;
+            padding: 12px;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.03);
+        }
+        .kpi h3 { font-size: 0.78rem; color: #6b7280; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+        .kpi .value { font-size: 1.2rem; font-weight: 850; color: #111827; }
+        .kpi .sub { margin-top: 3px; color: #6b7280; font-size: 0.86rem; }
+        .source-tag {
+            border: 1px solid #dbe2ea;
+            background: #f8fafc;
+            color: #334155;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 0.77rem;
+        }
+        .meta-row { 
+            margin-top: 10px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            flex-wrap: wrap; 
+            gap: 10px; 
+            color: #6b7280; 
+            font-size: 0.86rem; 
+        }
+        .load-section {
+            background: linear-gradient(135deg, #fef3c7 0%, #fef08a 100%);
+            border-color: #fcd34d;
+            border: 1px solid #fcd34d;
+        }
+        @media (max-width: 1200px) {
+            .scenario-grid { grid-template-columns: 1fr; }
+            .setting-group { grid-template-columns: 1fr; }
+            .parameters-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 22px 14px; }
+            .shell { padding: 22px 18px; }
+            .scenario-grid { gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <section class="shell">
+            <header class="topbar">
+                <div>
+                    <h1>VALERI Phase 9 - Scenario Analysis</h1>
+                    <p class="lead">
+                        Modellieren Sie Best-Case- und Worst-Case-Szenarien durch gleichzeitige Variation mehrerer Parameter.
+                        Vergleichen Sie extreme aber realistische Ergebnisse mit dem wahrscheinlichsten Fall.
+                    </p>
+                </div>
+                <a href="valeri-agent.html" class="back-link">Zurück zu Phasen</a>
+            </header>
+
+            <!-- Load Project Section -->
+            <section class="panel load-section">
+                <h2 class="panel-title" style="color: #92400e;">Projekt laden</h2>
+                <p style="color: #78350f; margin-bottom: 14px; font-size: 0.95rem;">Wählen Sie ein Projekt aus um mit der Szenarioanalyse zu beginnen.</p>
+                <div style="display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <label class="label" style="color: #92400e;">Verfügbare Projekte</label>
+                        <select id="resultSelector" style="width: 100%; padding: 10px; border: 1px solid #fcd34d; border-radius: 8px; background: white; color: #111827; font-size: 0.95rem;">
+                            <option value="">-- Wählen Sie ein Projekt --</option>
+                        </select>
+                    </div>
+                    <button id="loadPhase7Btn" type="button" style="padding: 10px 16px; background: linear-gradient(135deg, #fcd34d 0%, #fbbf24 100%); color: #92400e; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">
+                        Laden
+                    </button>
+                </div>
+                <div id="loadStatus" style="margin-top: 12px; padding: 10px; background: white; border-radius: 8px; color: #6b7280; font-size: 0.9rem; display: none;"></div>
+            </section>
+
+            <!-- Scenario Configuration Section -->
+            <section class="panel" id="configSection" style="display: none;">
+                <h2 class="panel-title">Szenario-Parameter konfigurieren</h2>
+                <p style="color: #6b7280; margin-bottom: 16px; font-size: 0.9rem;">Die Best-Case- und Worst-Case-Szenarios variieren alle relevanten Parameter gleichzeitig um realistische Extremfälle abzubilden.</p>
+
+                <!-- Scenario Settings Grid -->
+                <div class="scenario-grid" style="margin-bottom: 20px;">
+                    <!-- Best Case -->
+                    <div>
+                        <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; color: #22c55e;">🔺 Best-Case Szenario</h3>
+                        <div class="scenario-setting">
+                            <div class="scenario-setting-label">
+                                <span>Energiepreis (EUR/kWh)</span>
+                                <button type="button" class="info-btn" data-field="energyPrice">i</button>
+                            </div>
+                            <input type="number" id="bestEnergyPrice" step="0.001" placeholder="Min" value="0.15">
+                        </div>
+                        <div class="scenario-setting">
+                            <div class="scenario-setting-label">
+                                <span>Diskontierungssatz (%)</span>
+                                <button type="button" class="info-btn" data-field="discountRate">i</button>
+                            </div>
+                            <input type="number" id="bestDiscountRate" step="0.1" placeholder="Min" value="4">
+                        </div>
+                        <div class="scenario-setting">
+                            <div class="scenario-setting-label">
+                                <span>Energieeinsparung (kWh)</span>
+                                <button type="button" class="info-btn" data-field="energySavings">i</button>
+                            </div>
+                            <input type="number" id="bestEnergySavings" step="100" placeholder="Max">
+                        </div>
+                        <div class="scenario-setting">
+                            <div class="scenario-setting-label">
+                                <span>Preisertrend (% p.a.)</span>
+                                <button type="button" class="info-btn" data-field="priceTrend">i</button>
+                            </div>
+                            <input type="number" id="bestPriceTrend" step="0.1" placeholder="Max" value="5.0">
+                        </div>
+                        <div class="scenario-setting">
+                            <div class="scenario-setting-label">
+                                <span>Degradation (% p.a.)</span>
+                                <button type="button" class="info-btn" data-field="degradation">i</button>
+                            </div>
+                            <input type="number" id="bestDegradation" step="0.01" placeholder="Min" value="0.2">
+                        </div>
+                        <div class="scenario-setting">
+                            <div class="scenario-setting-label">
+                                <span>CAPEX (EUR)</span>
+                                <button type="button" class="info-btn" data-field="capex">i</button>
+                            </div>
+                            <input type="number" id="bestCapex" step="100" placeholder="Min">
+                        </div>
+                    </div>
+
+                    <!-- Most Likely (Phase 7) -->
+                    <div>
+                        <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; color: #dff45e;">⚖️ Wahrscheinlichster Fall</h3>
+                        <div class="scenario-setting">
+                            <label style="color: #6b7280; font-size: 0.9rem;">Energiepreis (EUR/kWh)</label>
+                            <input type="text" id="likelyEnergyPrice" readonly style="background: #f8fafc; cursor: not-allowed;">
+                        </div>
+                        <div class="scenario-setting">
+                            <label style="color: #6b7280; font-size: 0.9rem;">Diskontierungssatz (%)</label>
+                            <input type="text" id="likelyDiscountRate" readonly style="background: #f8fafc; cursor: not-allowed;">
+                        </div>
+                        <div class="scenario-setting">
+                            <label style="color: #6b7280; font-size: 0.9rem;">Energieeinsparung (kWh)</label>
+                            <input type="text" id="likelyEnergySavings" readonly style="background: #f8fafc; cursor: not-allowed;">
+                        </div>
+                        <div class="scenario-setting">
+                            <label style="color: #6b7280; font-size: 0.9rem;">Preisertrend (% p.a.)</label>
+                            <input type="text" id="likelyPriceTrend" readonly style="background: #f8fafc; cursor: not-allowed;">
+                        </div>
+                        <div class="scenario-setting">
+                            <label style="color: #6b7280; font-size: 0.9rem;">Degradation (% p.a.)</label>
+                            <input type="text" id="likelyDegradation" readonly style="background: #f8fafc; cursor: not-allowed;">
+                        </div>
+                        <div class="scenario-setting">
+                            <label style="color: #6b7280; font-size: 0.9rem;">CAPEX (EUR)</label>
+                            <input type="text" id="likelyCapex" readonly style="background: #f8fafc; cursor: not-allowed;">
+                        </div>
+                    </div>
+
+                    <!-- Worst Case -->
+                    <div>
+                        <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 12px; color: #ef4444;">🔻 Worst-Case Szenario</h3>
+                        <div class="scenario-setting">
+                            <div class="scenario-setting-label">
+                                <span>Energiepreis (EUR/kWh)</span>
+                                <button type="button" class="info-btn" data-field="energyPrice">i</button>
+                            </div>
+                            <input type="number" id="worstEnergyPrice" step="0.001" placeholder="Max" value="0.35">
+                        </div>
+                        <div class="scenario-setting">
+                            <div class="scenario-setting-label">
+                                <span>Diskontierungssatz (%)</span>
+                                <button type="button" class="info-btn" data-field="discountRate">i</button>
+                            </div>
+                            <input type="number" id="worstDiscountRate" step="0.1" placeholder="Max" value="12">
+                        </div>
+                        <div class="scenario-setting">
+                            <div class="scenario-setting-label">
+                                <span>Energieeinsparung (kWh)</span>
+                                <button type="button" class="info-btn" data-field="energySavings">i</button>
+                            </div>
+                            <input type="number" id="worstEnergySavings" step="100" placeholder="Min">
+                        </div>
+                        <div class="scenario-setting">
+                            <div class="scenario-setting-label">
+                                <span>Preisertrend (% p.a.)</span>
+                                <button type="button" class="info-btn" data-field="priceTrend">i</button>
+                            </div>
+                            <input type="number" id="worstPriceTrend" step="0.1" placeholder="Min" value="0.5">
+                        </div>
+                        <div class="scenario-setting">
+                            <div class="scenario-setting-label">
+                                <span>Degradation (% p.a.)</span>
+                                <button type="button" class="info-btn" data-field="degradation">i</button>
+                            </div>
+                            <input type="number" id="worstDegradation" step="0.01" placeholder="Max" value="1.5">
+                        </div>
+                        <div class="scenario-setting">
+                            <div class="scenario-setting-label">
+                                <span>CAPEX (EUR)</span>
+                                <button type="button" class="info-btn" data-field="capex">i</button>
+                            </div>
+                            <input type="number" id="worstCapex" step="100" placeholder="Max">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="analyzeBtn" class="btn btn-primary">Szenarioanalyse durchführen</button>
+                    <span id="analyzeStatus" style="color:#6b7280; font-size:0.9rem;"></span>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="resultsSection" style="display: none;">
+                <!-- Scenario Comparison Cards -->
+                <div class="scenario-grid" id="scenarioResults"></div>
+
+                <!-- Detailed Comparison Table -->
+                <section class="panel" id="comparisonTableWrap" style="display: none;">
+                    <h2 class="panel-title">Detaillierte Szenariogegenüberstellung</h2>
+                    <div style="overflow: auto;">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Best-Case</th>
+                                    <th>Wahrscheinlichster Fall</th>
+                                    <th>Worst-Case</th>
+                                    <th>Spannweite</th>
+                                </tr>
+                            </thead>
+                            <tbody id="comparisonBody"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Strategic Assessment -->
+                <section class="panel" id="assessmentWrap" style="display: none;">
+                    <h2 class="panel-title">Strategische Bewertung</h2>
+                    <div class="interpretation-box">
+                        <div class="interpretation-title">Szenarioanalyse Interpretation</div>
+                        <div class="interpretation-text" id="scenarioInterpretation"></div>
+                    </div>
+                    <div style="margin-top:14px;">
+                        <div class="panel-title">Quellen (Framework)</div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;">
+                            <span class="source-tag" title="Core principle">DIN_EN_17463_VALERI_CORE</span>
+                            <span class="source-tag" title="Scenario planning">ISO_1128_SCENARIO_ANALYSIS</span>
+                            <span class="source-tag" title="Risk assessment">ISO_31000_RISK_MANAGEMENT</span>
+                            <span class="source-tag" title="Investment decision">OECD_INVESTMENT_FRAMEWORK</span>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </section>
+    </main>
+
+    <!-- Info Modal -->
+    <div class="modal-overlay" id="infoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Parameterinformation</h2>
+                <button type="button" class="modal-close" onclick="closeInfoModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const $ = (id) => document.getElementById(id);
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectId = urlParams.get('projectId');
+
+        const loadPhase7Btn = $('loadPhase7Btn');
+        const resultSelector = $('resultSelector');
+        const loadStatus = $('loadStatus');
+        const configSection = $('configSection');
+        const analyzeBtn = $('analyzeBtn');
+        const analyzeStatus = $('analyzeStatus');
+        const resultsSection = $('resultsSection');
+
+        let baselineInputs = null;
+        let baselineCalculation = null;
+
+        // Field Explanations
+        const fieldExplanations = {
+            energyPrice: {
+                title: 'Energiepreis (EUR/kWh)',
+                description: 'Der aktuelle Energiepreis pro Kilowattstunde. Im Best-Case wird ein niedriger Preis angenommen (besserer Geschäftsfall mit niedrigen Kosten). Im Worst-Case ein hoher Preis (höhere Kosten, aber höherer Nutzen bei Einsparungen).',
+                where: 'Typischer Bereich: 0,15–0,35 EUR/kWh'
+            },
+            discountRate: {
+                title: 'Diskontierungssatz (WACC)',
+                description: 'Der zur Diskontierung verwendete Zinssatz. Im Best-Case niedriger WACC (günstige Finanzierung). Im Worst-Case höherer WACC (teurere Finanzierung).',
+                where: 'Typischer Bereich: 4–12% p.a.'
+            },
+            energySavings: {
+                title: 'Jährliche Energieeinsparung (kWh)',
+                description: 'Die erwartete jährliche Energieeinsparung. Im Best-Case höhere Einsparungen (bessere Performance). Im Worst-Case niedrigere Einsparungen (höhere Risiken, Betriebsfehler).',
+                where: 'Typische Variation: ±20% um Messunsicherheiten abzudecken'
+            },
+            priceTrend: {
+                title: 'Energiepreistrend (% p.a.)',
+                description: 'Die erwartete jährliche Steigerungsrate von Energiepreisen. Im Best-Case höheres Preiswachstum (bessere zukünftige Einsparungen). Im Worst-Case niedriges Wachstum.',
+                where: 'Typischer Bereich: 0,5–5,0% p.a.'
+            },
+            degradation: {
+                title: 'Technische Degradation (% p.a.)',
+                description: 'Der jährliche Effizienzverlust von Ausrüstungen. Im Best-Case niedrige Degradation (langfristige Performance). Im Worst-Case höhere Degradation (schnellerer Verschleiß).',
+                where: 'Typischer Bereich: 0,2–1,5% p.a.'
+            },
+            capex: {
+                title: 'Anfangsinvestition (EUR)',
+                description: 'Gesamte CAPEX-Kosten. Im Best-Case niedrigere Kosten (Kosteneinsparungen, Effizienzgewinne). Im Worst-Case höhere Kosten (Kostenumschwund, unerwartete Ausgaben).',
+                where: 'Typische Variation: ±10% um Kostenüberläufer und Einsparungen abzudecken'
+            }
+        };
+
+        function openInfoModal(fieldId) {
+            const info = fieldExplanations[fieldId];
+            if (!info) return;
+            
+            const modal = $('infoModal');
+            const title = $('modalTitle');
+            const body = $('modalBody');
+            
+            title.textContent = info.title;
+            body.innerHTML = `
+                <div class="modal-section">
+                    <div class="modal-section-title">Was ist das?</div>
+                    <p>${info.description}</p>
+                </div>
+                <div class="modal-section">
+                    <div class="modal-section-title">Typische Werte</div>
+                    <p>${info.where}</p>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        function closeInfoModal() {
+            const modal = $('infoModal');
+            modal.classList.remove('active');
+        }
+
+        $('infoModal').addEventListener('click', (e) => {
+            if (e.target.id === 'infoModal') {
+                closeInfoModal();
+            }
+        });
+
+        document.querySelectorAll('.info-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const fieldId = btn.dataset.field;
+                openInfoModal(fieldId);
+            });
+        });
+
+        function formatEUR(n) {
+            if (!Number.isFinite(n)) return '€0';
+            return '€' + n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        // Load Phase 7 results/projects - with mock data fallback
+        async function loadPhase7Results() {
+            try {
+                // Try to fetch real data, but fall back to allowing manual entry
+                try {
+                    const endpoint = projectId ? `/api/valeri/projects/${projectId}/scenarios` : '/api/valeri/phase7/user-results';
+                    const response = await fetch(endpoint);
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        resultSelector.innerHTML = '<option value="">-- Wählen Sie ein Ergebnis --</option>';
+                        
+                        if (projectId) {
+                            const scenarios = data.scenarios || [];
+                            scenarios.forEach(scenario => {
+                                const option = document.createElement('option');
+                                option.value = JSON.stringify({
+                                    type: 'project_scenario',
+                                    projectId: projectId,
+                                    scenarioId: scenario.scenarioId,
+                                    inputs: scenario.inputs,
+                                    calculation: scenario.calculation
+                                });
+                                const label = scenario.scenarioType === 'most_likely' ? 'Wahrscheinlichster Fall' : scenario.scenarioType;
+                                option.textContent = `${label} (${formatEUR(scenario.calculation.npv)})`;
+                                resultSelector.appendChild(option);
+                            });
+                        } else {
+                            const results = data.results || [];
+                            results.forEach(result => {
+                                const option = document.createElement('option');
+                                option.value = JSON.stringify({
+                                    type: 'individual_result',
+                                    inputs: result.inputs,
+                                    calculation: result.calculation
+                                });
+                                option.textContent = `${result.name} (${formatEUR(result.calculation.npv)})`;
+                                resultSelector.appendChild(option);
+                            });
+                        }
+                        return;
+                    }
+                } catch (e) {
+                    console.log('API not available, using manual entry mode');
+                }
+                
+                // Fallback: allow manual entry
+                resultSelector.innerHTML = '<option value="">-- Manuell eingeben oder laden --</option>';
+                loadStatus.innerHTML = '<strong>ℹ️ Tipp:</strong> Sie können auch Werte direkt eingeben oder ein Phase 7 Ergebnis manuell laden.';
+                loadStatus.style.display = 'block';
+                loadStatus.style.color = '#1f2937';
+                loadStatus.style.background = '#fef3c7';
+                loadStatus.style.border = '1px solid #fcd34d';
+                loadStatus.style.borderRadius = '8px';
+                loadStatus.style.padding = '10px';
+                
+            } catch (error) {
+                console.error('Error loading Phase 7 results:', error);
+                loadStatus.style.display = 'block';
+                loadStatus.textContent = '✗ Fehler beim Laden der Ergebnisse: ' + error.message;
+                loadStatus.style.color = '#991b1b';
+            }
+        }
+
+        // Load selected Phase 7 result
+        async function loadSelectedPhase7() {
+            const selectedValue = resultSelector.value;
+            if (!selectedValue) {
+                loadStatus.textContent = 'Bitte wählen Sie ein Ergebnis aus.';
+                loadStatus.style.display = 'block';
+                loadStatus.style.color = '#6b7280';
+                return;
+            }
+
+            try {
+                const result = JSON.parse(selectedValue);
+                baselineInputs = result.inputs;
+                baselineCalculation = result.calculation;
+
+                // Populate likely case fields
+                $('likelyEnergyPrice').value = (baselineInputs.energyPrice || 0.25).toFixed(3);
+                $('likelyDiscountRate').value = (baselineCalculation.wacc * 100 || 8).toFixed(2);
+                $('likelyEnergySavings').value = (baselineInputs.annualEnergySavedKwh || 1000).toFixed(0);
+                $('likelyPriceTrend').value = (baselineInputs.priceTrendPercent || 2.5).toFixed(2);
+                $('likelyDegradation').value = (baselineInputs.degradationPercentPa || 0.7).toFixed(3);
+                $('likelyCapex').value = (baselineCalculation.I0 || 10000).toFixed(0);
+
+                // Auto-populate Best and Worst case fields based on likely case
+                const baseEnergy = baselineInputs.annualEnergySavedKwh || 1000;
+                const baseCapex = baselineCalculation.I0 || 10000;
+                
+                $('bestEnergySavings').value = (baseEnergy * 1.2).toFixed(0);
+                $('worstEnergySavings').value = (baseEnergy * 0.8).toFixed(0);
+                $('bestCapex').value = (baseCapex * 0.9).toFixed(0);
+                $('worstCapex').value = (baseCapex * 1.1).toFixed(0);
+
+                loadStatus.innerHTML = `<strong>✓ Ergebnis geladen:</strong> NPV = ${formatEUR(baselineCalculation.npv)}, WACC = ${(baselineCalculation.wacc * 100).toFixed(2)}%`;
+                loadStatus.style.display = 'block';
+                loadStatus.style.color = '#166534';
+                loadStatus.style.background = '#f0fdf4';
+                loadStatus.style.borderColor = '#86efac';
+                loadStatus.style.border = '1px solid #86efac';
+                loadStatus.style.borderRadius = '8px';
+                loadStatus.style.padding = '10px';
+
+                configSection.style.display = 'block';
+            } catch (error) {
+                loadStatus.textContent = '✗ Fehler: ' + error.message;
+                loadStatus.style.display = 'block';
+                loadStatus.style.color = '#991b1b';
+            }
+        }
+
+        loadPhase7Btn.addEventListener('click', loadSelectedPhase7);
+        resultSelector.addEventListener('change', () => {
+            loadStatus.style.display = 'none';
+        });
+
+        // Client-side scenario calculation
+        function calculateScenarioNPV(inputs, scenarioParams, years) {
+            // Simple NPV calculation based on parameters
+            const energyPrice = scenarioParams.energyPrice || inputs.energyPrice || 0.25;
+            const wacc = scenarioParams.discountRate || (inputs.wacc || 0.08);
+            const annualSavings = scenarioParams.annualEnergySavedKwh || inputs.annualEnergySavedKwh || 1000;
+            const priceTrend = (scenarioParams.priceTrendPercent || inputs.priceTrendPercent || 2.5) / 100;
+            const degradation = (scenarioParams.degradationPercentPa || inputs.degradationPercentPa || 0.7) / 100;
+            const capex = scenarioParams.capex || inputs.capex || 10000;
+            
+            let npv = -capex;
+            for (let year = 1; year <= years; year++) {
+                const yearlyPrice = energyPrice * Math.pow(1 + priceTrend, year - 1);
+                const yearlyPerformance = annualSavings * Math.pow(1 - degradation, year - 1);
+                const yearlyBenefit = yearlyPrice * yearlyPerformance;
+                const discountFactor = Math.pow(1 + wacc, year);
+                npv += yearlyBenefit / discountFactor;
+            }
+            return npv;
+        }
+
+        // Scenario Analysis
+        analyzeBtn.addEventListener('click', async () => {
+            if (!baselineInputs) {
+                // Allow analysis without loaded baseline
+                baselineInputs = {
+                    energyPrice: parseFloat($('likelyEnergyPrice').value) || 0.25,
+                    wacc: parseFloat($('likelyDiscountRate').value) / 100 || 0.08,
+                    annualEnergySavedKwh: parseFloat($('likelyEnergySavings').value) || 1000,
+                    priceTrendPercent: parseFloat($('likelyPriceTrend').value) || 2.5,
+                    degradationPercentPa: parseFloat($('likelyDegradation').value) || 0.7,
+                    capex: parseFloat($('likelyCapex').value) || 10000
+                };
+                baselineCalculation = {
+                    npv: 0,
+                    wacc: baselineInputs.wacc,
+                    I0: baselineInputs.capex,
+                    lifespanYears: 20
+                };
+            }
+
+            analyzeBtn.disabled = true;
+            analyzeStatus.textContent = 'Analyse wird durchgeführt...';
+
+            try {
+                const years = baselineCalculation.lifespanYears || 20;
+                
+                // Best Case Parameters
+                const bestCaseParams = {
+                    energyPrice: parseFloat($('bestEnergyPrice').value) || 0.15,
+                    discountRate: parseFloat($('bestDiscountRate').value) / 100 || 0.04,
+                    annualEnergySavedKwh: parseFloat($('bestEnergySavings').value) || baselineInputs.annualEnergySavedKwh || 1000,
+                    priceTrendPercent: parseFloat($('bestPriceTrend').value) || 5.0,
+                    degradationPercentPa: parseFloat($('bestDegradation').value) || 0.2,
+                    capex: parseFloat($('bestCapex').value) || (baselineInputs.capex * 0.9) || 9000
+                };
+
+                // Most Likely (Phase 7)
+                const mostLikelyParams = {
+                    energyPrice: baselineInputs.energyPrice || 0.25,
+                    discountRate: baselineCalculation.wacc || 0.08,
+                    annualEnergySavedKwh: baselineInputs.annualEnergySavedKwh || 1000,
+                    priceTrendPercent: baselineInputs.priceTrendPercent || 2.5,
+                    degradationPercentPa: baselineInputs.degradationPercentPa || 0.7,
+                    capex: baselineCalculation.I0 || 10000
+                };
+
+                // Worst Case Parameters
+                const worstCaseParams = {
+                    energyPrice: parseFloat($('worstEnergyPrice').value) || 0.35,
+                    discountRate: parseFloat($('worstDiscountRate').value) / 100 || 0.12,
+                    annualEnergySavedKwh: parseFloat($('worstEnergySavings').value) || (baselineInputs.annualEnergySavedKwh * 0.8) || 800,
+                    priceTrendPercent: parseFloat($('worstPriceTrend').value) || 0.5,
+                    degradationPercentPa: parseFloat($('worstDegradation').value) || 1.5,
+                    capex: parseFloat($('worstCapex').value) || (baselineInputs.capex * 1.1) || 11000
+                };
+
+                // Calculate NPVs
+                const bestNpv = calculateScenarioNPV(baselineInputs, bestCaseParams, years);
+                const mostLikelyNpv = calculateScenarioNPV(baselineInputs, mostLikelyParams, years);
+                const worstNpv = calculateScenarioNPV(baselineInputs, worstCaseParams, years);
+
+                // Prepare results
+                const data = {
+                    scenarios: [
+                        {
+                            type: 'best-case',
+                            npv: bestNpv,
+                            delta: bestNpv - mostLikelyNpv,
+                            parameters: [
+                                { name: 'Energiepreis', value: '€' + bestCaseParams.energyPrice.toFixed(3) + '/kWh' },
+                                { name: 'WACC', value: (bestCaseParams.discountRate * 100).toFixed(2) + '%' },
+                                { name: 'Einsparungen', value: bestCaseParams.annualEnergySavedKwh.toFixed(0) + ' kWh' },
+                                { name: 'Preisertrend', value: bestCaseParams.priceTrendPercent.toFixed(2) + '%' },
+                                { name: 'Degradation', value: bestCaseParams.degradationPercentPa.toFixed(2) + '%' },
+                                { name: 'CAPEX', value: '€' + bestCaseParams.capex.toFixed(0) }
+                            ]
+                        },
+                        {
+                            type: 'most-likely',
+                            npv: mostLikelyNpv,
+                            delta: 0,
+                            parameters: [
+                                { name: 'Energiepreis', value: '€' + mostLikelyParams.energyPrice.toFixed(3) + '/kWh' },
+                                { name: 'WACC', value: (mostLikelyParams.discountRate * 100).toFixed(2) + '%' },
+                                { name: 'Einsparungen', value: mostLikelyParams.annualEnergySavedKwh.toFixed(0) + ' kWh' },
+                                { name: 'Preisertrend', value: mostLikelyParams.priceTrendPercent.toFixed(2) + '%' },
+                                { name: 'Degradation', value: mostLikelyParams.degradationPercentPa.toFixed(2) + '%' },
+                                { name: 'CAPEX', value: '€' + mostLikelyParams.capex.toFixed(0) }
+                            ]
+                        },
+                        {
+                            type: 'worst-case',
+                            npv: worstNpv,
+                            delta: worstNpv - mostLikelyNpv,
+                            parameters: [
+                                { name: 'Energiepreis', value: '€' + worstCaseParams.energyPrice.toFixed(3) + '/kWh' },
+                                { name: 'WACC', value: (worstCaseParams.discountRate * 100).toFixed(2) + '%' },
+                                { name: 'Einsparungen', value: worstCaseParams.annualEnergySavedKwh.toFixed(0) + ' kWh' },
+                                { name: 'Preisertrend', value: worstCaseParams.priceTrendPercent.toFixed(2) + '%' },
+                                { name: 'Degradation', value: worstCaseParams.degradationPercentPa.toFixed(2) + '%' },
+                                { name: 'CAPEX', value: '€' + worstCaseParams.capex.toFixed(0) }
+                            ]
+                        }
+                    ],
+                    comparisonTable: [
+                        {
+                            parameter: 'Energiepreis (EUR/kWh)',
+                            bestCase: '€' + bestCaseParams.energyPrice.toFixed(3),
+                            mostLikely: '€' + mostLikelyParams.energyPrice.toFixed(3),
+                            worstCase: '€' + worstCaseParams.energyPrice.toFixed(3),
+                            span: '€' + (worstCaseParams.energyPrice - bestCaseParams.energyPrice).toFixed(3)
+                        },
+                        {
+                            parameter: 'Diskontierungssatz (%)',
+                            bestCase: (bestCaseParams.discountRate * 100).toFixed(2) + '%',
+                            mostLikely: (mostLikelyParams.discountRate * 100).toFixed(2) + '%',
+                            worstCase: (worstCaseParams.discountRate * 100).toFixed(2) + '%',
+                            span: ((worstCaseParams.discountRate - bestCaseParams.discountRate) * 100).toFixed(2) + '%'
+                        },
+                        {
+                            parameter: 'NPV Szenario',
+                            bestCase: formatEUR(bestNpv),
+                            mostLikely: formatEUR(mostLikelyNpv),
+                            worstCase: formatEUR(worstNpv),
+                            span: formatEUR(bestNpv - worstNpv)
+                        }
+                    ],
+                    interpretation: `Die Szenarioanalyse zeigt die extrem aber realistischen Grenzen des Investitionsergebnisses an. ` +
+                        `Im Best-Case erreichen Sie einen NPV von ${formatEUR(bestNpv)} (${((bestNpv / mostLikelyNpv - 1) * 100).toFixed(1)}% über dem wahrscheinlichsten Fall). ` +
+                        `Im Worst-Case sinkt der NPV auf ${formatEUR(worstNpv)} (${((worstNpv / mostLikelyNpv - 1) * 100).toFixed(1)}% unter dem wahrscheinlichsten Fall). ` +
+                        `Die Gesamtspannweite beträgt ${formatEUR(bestNpv - worstNpv)}. Das Projekt zeigt eine ${Math.abs(worstNpv) > Math.abs(bestNpv) ? 'hohe' : 'moderate'} Risikosensitivität.`
+                };
+
+                displayResults(data);
+                analyzeStatus.textContent = 'Fertig.';
+            } catch (error) {
+                analyzeStatus.textContent = '';
+                alert('Fehler: ' + (error.message || 'Szenarioanalyse fehlgeschlagen'));
+            } finally {
+                analyzeBtn.disabled = false;
+            }
+        });
+
+        function displayResults(data) {
+            // Display scenario cards
+            displayScenarioCards(data.scenarios);
+            
+            // Display comparison table
+            displayComparisonTable(data.comparisonTable);
+            
+            // Display interpretation
+            displayInterpretation(data.interpretation);
+
+            $('comparisonTableWrap').style.display = 'block';
+            $('assessmentWrap').style.display = 'block';
+            resultsSection.style.display = 'block';
+            
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function displayScenarioCards(scenarios) {
+            const container = $('scenarioResults');
+            container.innerHTML = '';
+
+            scenarios.forEach((scenario, idx) => {
+                const card = document.createElement('div');
+                card.className = 'scenario-card';
+                
+                let cardClass = '';
+                let badge = '';
+                let title = '';
+                let color = '';
+                
+                if (scenario.type === 'best-case') {
+                    cardClass = 'best-case';
+                    badge = '<span class="scenario-badge best">Best-Case</span>';
+                    title = '🔺 Best-Case Szenario';
+                    color = 'best';
+                } else if (scenario.type === 'most-likely') {
+                    cardClass = 'most-likely';
+                    badge = '<span class="scenario-badge likely">Wahrscheinlich</span>';
+                    title = '⚖️ Wahrscheinlichster Fall';
+                    color = 'likely';
+                } else {
+                    cardClass = 'worst-case';
+                    badge = '<span class="scenario-badge worst">Worst-Case</span>';
+                    title = '🔻 Worst-Case Szenario';
+                    color = 'worst';
+                }
+                
+                card.className = `scenario-card ${cardClass}`;
+                
+                let paramHTML = '';
+                scenario.parameters.forEach(param => {
+                    paramHTML += `
+                        <div class="param-row">
+                            <span class="param-label">${param.name}</span>
+                            <span class="param-value">${param.value}</span>
+                        </div>
+                    `;
+                });
+                
+                card.innerHTML = `
+                    <div class="scenario-title">
+                        ${title}
+                        ${badge}
+                    </div>
+                    <div class="scenario-npv ${color}">${formatEUR(scenario.npv)}</div>
+                    <div class="scenario-delta">
+                        <strong>vs. Basis:</strong> ${scenario.delta >= 0 ? '+' : ''}${formatEUR(scenario.delta)}
+                    </div>
+                    <div class="parameters-grid" style="grid-template-columns: 1fr;">
+                        ${paramHTML}
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        function displayComparisonTable(comparisonData) {
+            const body = $('comparisonBody');
+            body.innerHTML = '';
+
+            comparisonData.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${row.parameter}</strong></td>
+                    <td>${row.bestCase}</td>
+                    <td>${row.mostLikely}</td>
+                    <td>${row.worstCase}</td>
+                    <td style="font-weight: 600; background: #f8fafc;">${row.span}</td>
+                `;
+                body.appendChild(tr);
+            });
+        }
+
+        function displayInterpretation(interpretation) {
+            $('scenarioInterpretation').textContent = interpretation;
+        }
+
+        // Load results on page load
+        loadPhase7Results();
+    </script>
+</body>
+</html>

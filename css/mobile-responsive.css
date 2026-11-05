@@ -1,0 +1,1713 @@
+/* Mobile Responsive CSS for Enefit Website */
+
+/* Общие улучшения для мобильных устройств */
+* {
+    box-sizing: border-box;
+}
+
+/* Дополнительные исправления для совместимости с браузерами */
+@media screen and (max-width: 768px) {
+    /* Исправления для viewport и безопасных зон */
+    body {
+        /* Предотвращаем горизонтальную прокрутку */
+        overflow-x: hidden;
+        /* Улучшаем рендеринг на мобильных */
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+    }
+    
+    /* Исправления для позиционирования элементов */
+    .mobile-menu-toggle,
+    .mobile-menu-close,
+    .mobile-sidebar-close {
+        /* Принудительное позиционирование */
+        position: fixed !important;
+        /* Улучшения для touch устройств */
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        /* Предотвращаем выделение текста */
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    
+    /* Исправления для мобильной секции профиля */
+    .mobile-profile-section {
+        /* Принудительное позиционирование */
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        /* Улучшения для безопасных зон */
+        padding-left: max(16px, env(safe-area-inset-left, 16px)) !important;
+        padding-right: max(16px, env(safe-area-inset-right, 16px)) !important;
+        padding-bottom: max(16px, env(safe-area-inset-bottom, 16px)) !important;
+    }
+    
+    /* Дополнительные стили для страницы регистрации компании */
+    .registration-section {
+        /* Улучшения для мобильных устройств */
+        padding: 20px 0 !important;
+        min-height: 100vh;
+        /* Предотвращаем горизонтальную прокрутку */
+        overflow-x: hidden;
+    }
+    
+    .registration-container {
+        /* Улучшенные отступы для мобильных */
+        margin: 10px !important;
+        border-radius: 15px !important;
+        max-width: calc(100% - 20px) !important;
+        /* Улучшения для touch устройств */
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    
+    .registration-form {
+        /* Улучшенные отступы */
+        padding: 25px 20px !important;
+    }
+    
+    .registration-form .form-input,
+    .registration-form .form-select,
+    .registration-form .form-textarea {
+        /* Улучшения для мобильных полей */
+        max-width: 100% !important;
+        width: 100% !important;
+        padding: 16px 20px !important;
+        font-size: 16px !important; /* Предотвращает зум на iOS */
+        border-radius: 8px !important;
+        /* Улучшения для touch устройств */
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    
+    .registration-form .form-label {
+        /* Улучшенные стили для лейблов */
+        max-width: 100% !important;
+        font-size: 0.9rem !important;
+        margin-bottom: 6px !important;
+    }
+    
+    .registration-form .form-group {
+        /* Улучшенные стили для групп полей */
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 20px !important;
+    }
+    
+    .registration-form .checkbox-group {
+        /* Улучшенные стили для чекбоксов */
+        max-width: 100% !important;
+        margin-bottom: 20px !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+    
+    .registration-form .submit-button {
+        /* Улучшенные стили для кнопки отправки */
+        max-width: 100% !important;
+        width: 100% !important;
+        padding: 16px 20px !important;
+        font-size: 1rem !important;
+        /* Улучшения для touch устройств */
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    
+    /* Улучшенный селектор страны для мобильных */
+    #phoneGroup > div {
+        width: 100% !important;
+        margin: 0 !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+    
+    .country-selector {
+        flex: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .country-selector-trigger {
+        padding: 16px 20px !important;
+        font-size: 16px !important;
+        min-height: 52px !important;
+        width: 100% !important;
+        /* Улучшения для touch устройств */
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    
+    .country-dropdown {
+        max-height: 250px !important;
+        min-width: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+    }
+    
+    .country-search-input {
+        padding: 12px 15px !important;
+        font-size: 16px !important;
+        min-width: auto !important;
+        width: 100% !important;
+        /* Улучшения для touch устройств */
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    
+    /* Поле телефона на полную ширину */
+    #phoneGroup input[type="tel"] {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* Дополнительные стили для админской панели dashboard */
+    .dashboard-container {
+        /* Улучшения для мобильных устройств */
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+    
+    .mobile-menu-toggle {
+        /* Улучшения для кнопки мобильного меню */
+        position: fixed !important;
+        top: max(15px, env(safe-area-inset-top, 15px)) !important;
+        left: max(15px, env(safe-area-inset-left, 15px)) !important;
+        z-index: 1001 !important;
+        background: #dff45e !important;
+        color: #1a1a1a !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 12px 16px !important;
+        cursor: pointer !important;
+        font-weight: 600 !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+        transition: all 0.3s ease !important;
+        /* Улучшения для touch устройств */
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        min-width: 60px;
+        min-height: 44px;
+        font-size: 14px !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    .mobile-menu-toggle:active {
+        transform: translateY(0) !important;
+        background: #b8d43e !important;
+    }
+    
+    .mobile-menu-overlay {
+        /* Улучшения для оверлея */
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: rgba(0, 0, 0, 0.5) !important;
+        z-index: 999 !important;
+        display: none !important;
+    }
+    
+    .sidebar {
+        /* Улучшения для сайдбара на мобильных */
+        position: fixed !important;
+        top: 0 !important;
+        left: -100% !important;
+        width: 280px !important;
+        max-width: 85vw !important; /* Максимальная ширина для маленьких экранов */
+        height: 100vh !important;
+        height: 100dvh !important; /* Dynamic viewport height для мобильных браузеров */
+        z-index: 1000 !important;
+        transition: transform 0.3s ease !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch !important; /* Плавная прокрутка на iOS */
+        /* Исправления для Safari и Chrome */
+        -webkit-transform: translateX(-100%) !important;
+        -moz-transform: translateX(-100%) !important;
+        -ms-transform: translateX(-100%) !important;
+        transform: translateX(-100%) !important;
+    }
+    
+    .sidebar.open {
+        -webkit-transform: translateX(0) !important;
+        -moz-transform: translateX(0) !important;
+        -ms-transform: translateX(0) !important;
+        transform: translateX(0) !important;
+    }
+    
+    .main-content {
+        /* Улучшения для основного контента */
+        margin-left: 0 !important;
+        padding: 20px 15px !important;
+        width: 100% !important;
+    }
+    
+    .stats-grid {
+        /* Улучшения для сетки статистики */
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+        margin-bottom: 30px !important;
+    }
+    
+    .stat-card {
+        /* Улучшения для карточек статистики */
+        padding: 20px !important;
+        border-radius: 12px !important;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08) !important;
+    }
+    
+    .stat-value {
+        /* Улучшения для значений статистики */
+        font-size: 1.5rem !important;
+        font-weight: 700 !important;
+    }
+    
+    .header {
+        /* Улучшения для заголовка */
+        flex-direction: column !important;
+        gap: 15px !important;
+        align-items: flex-start !important;
+        margin-bottom: 20px !important;
+        padding-bottom: 15px !important;
+    }
+    
+    .page-title {
+        /* Улучшения для заголовка страницы */
+        font-size: 1.5rem !important;
+        font-weight: 700 !important;
+    }
+    
+    .header-actions {
+        /* Улучшения для действий в заголовке */
+        width: 100% !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+    
+    .btn {
+        /* Улучшения для кнопок */
+        padding: 12px 16px !important;
+        font-size: 14px !important;
+        width: 100% !important;
+        justify-content: center !important;
+        border-radius: 8px !important;
+        /* Улучшения для touch устройств */
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        min-height: 44px;
+    }
+    
+    .section-header {
+        /* Улучшения для заголовка секции */
+        flex-direction: column !important;
+        gap: 15px !important;
+        align-items: flex-start !important;
+        padding: 20px !important;
+    }
+    
+    .section-title {
+        /* Улучшения для заголовка секции */
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+    }
+    
+    .search-box {
+        /* Улучшения для поисковой строки */
+        width: 100% !important;
+        padding: 12px 15px !important;
+        border-radius: 8px !important;
+    }
+    
+    .search-box input {
+        /* Улучшения для поля поиска */
+        width: 100% !important;
+        font-size: 16px !important; /* Предотвращает зум на iOS */
+        padding: 8px 12px !important;
+    }
+    
+    .companies-table {
+        /* Улучшения для таблиц */
+        width: 100% !important;
+        border-collapse: collapse !important;
+        font-size: 12px !important;
+    }
+    
+    .companies-table th,
+    .companies-table td {
+        /* Улучшения для ячеек таблицы */
+        padding: 10px 8px !important;
+        text-align: left !important;
+        border-bottom: 1px solid #ecf0f1 !important;
+    }
+    
+    .companies-table th:nth-child(3),
+    .companies-table td:nth-child(3),
+    .companies-table th:nth-child(4),
+    .companies-table td:nth-child(4),
+    .companies-table th:nth-child(5),
+    .companies-table td:nth-child(5) {
+        /* Скрываем некоторые колонки на мобильных */
+        display: none !important;
+    }
+    
+    .status-badge {
+        /* Улучшения для бейджей статуса */
+        padding: 3px 8px !important;
+        border-radius: 20px !important;
+        font-size: 10px !important;
+        font-weight: 500 !important;
+    }
+    
+    .btn-sm {
+        /* Улучшения для маленьких кнопок */
+        padding: 6px 10px !important;
+        font-size: 11px !important;
+        margin: 2px !important;
+        min-height: 32px;
+    }
+    
+    .modal-content {
+        /* Улучшения для модальных окон */
+        margin: 10% auto !important;
+        padding: 20px !important;
+        width: 95% !important;
+        max-width: none !important;
+        border-radius: 15px !important;
+    }
+    
+    .modal-actions {
+        /* Улучшения для действий в модальных окнах */
+        flex-direction: column !important;
+        gap: 10px !important;
+        margin-top: 20px !important;
+    }
+    
+    .modal-actions .btn {
+        /* Улучшения для кнопок в модальных окнах */
+        width: 100% !important;
+    }
+    
+    .admin-info {
+        /* Улучшения для информации об админе */
+        padding: 12px 20px !important;
+        margin-bottom: 15px !important;
+        border-radius: 10px !important;
+    }
+    
+    .admin-avatar {
+        /* Улучшения для аватара админа */
+        width: 35px !important;
+        height: 35px !important;
+        font-size: 16px !important;
+        border-radius: 50% !important;
+    }
+    
+    .admin-details h4 {
+        /* Улучшения для имени админа */
+        font-size: 13px !important;
+        margin-bottom: 2px !important;
+    }
+    
+    .admin-details p {
+        /* Улучшения для роли админа */
+        font-size: 11px !important;
+        opacity: 0.8 !important;
+    }
+    
+    .nav-link {
+        /* Улучшения для ссылок навигации */
+        padding: 10px 12px !important;
+        font-size: 13px !important;
+        border-radius: 8px !important;
+        /* Улучшения для touch устройств */
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        min-height: 44px;
+    }
+    
+    .nav-icon {
+        /* Улучшения для иконок навигации */
+        width: 18px !important;
+        height: 18px !important;
+    }
+}
+
+/* Дополнительные стили для очень маленьких экранов */
+@media screen and (max-width: 480px) {
+    .sidebar {
+        /* Полная ширина для очень маленьких экранов */
+        width: 100vw !important;
+        max-width: 100vw !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        /* Исправления для Safari и Chrome на маленьких экранах */
+        -webkit-transform: translateX(-100%) !important;
+        -moz-transform: translateX(-100%) !important;
+        -ms-transform: translateX(-100%) !important;
+        transform: translateX(-100%) !important;
+    }
+    
+    .sidebar.open {
+        -webkit-transform: translateX(0) !important;
+        -moz-transform: translateX(0) !important;
+        -ms-transform: translateX(0) !important;
+        transform: translateX(0) !important;
+    }
+    
+    .mobile-menu-toggle {
+        /* Улучшения для кнопки на очень маленьких экранах */
+        top: max(10px, env(safe-area-inset-top, 10px)) !important;
+        left: max(10px, env(safe-area-inset-left, 10px)) !important;
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+    }
+}
+
+/* Улучшения для touch устройств */
+@media (hover: none) and (pointer: coarse) {
+    button, a, input, select, textarea {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    
+    .button:hover,
+    .nav-link:hover {
+        transform: none !important;
+    }
+    
+    .button:active,
+    .nav-link:active {
+        transform: scale(0.98) !important;
+    }
+}
+
+/* Адаптивность для планшетов */
+@media screen and (max-width: 991px) {
+    /* Навигация */
+    .navbar-menu {
+        padding: 20px;
+    }
+    
+    .nav-menu {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .nav-link {
+        padding: 12px 16px;
+        font-size: 16px;
+    }
+    
+    /* Основной контент */
+    .container-large {
+        padding: 0 20px;
+    }
+    
+    .padding-section-large {
+        padding: 60px 20px;
+    }
+    
+    .padding-section-medium {
+        padding: 40px 20px;
+    }
+    
+    /* Сетки */
+    .w-layout-grid {
+        grid-template-columns: 1fr !important;
+        gap: 30px !important;
+    }
+    
+    /* Кнопки */
+    .button-group {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .button-group .button {
+        width: 100%;
+        text-align: center;
+    }
+    
+    /* Изображения */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* Логотипы партнеров */
+    .home_logo_list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 20px;
+        align-items: center;
+    }
+    
+    /* Статистика */
+    .home_stats_list {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    /* Футер */
+    .footer3_top-wrapper {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+}
+
+/* Адаптивность для мобильных устройств */
+@media screen and (max-width: 767px) {
+    /* Навигация */
+    .navbar9_logo {
+        max-width: 120px;
+    }
+    
+    .navbar-menu {
+        padding: 15px;
+    }
+    
+    .nav-menu {
+        gap: 10px;
+    }
+    
+    .nav-link {
+        padding: 10px 14px;
+        font-size: 15px;
+    }
+    
+    /* Основной контент */
+    .container-large {
+        padding: 0 15px;
+    }
+    
+    .padding-section-large {
+        padding: 40px 15px;
+    }
+    
+    .padding-section-medium {
+        padding: 30px 15px;
+    }
+    
+    /* Заголовки */
+    .heading-style-h1 {
+        font-size: 2.5rem;
+        line-height: 1.2;
+    }
+    
+    .heading-style-h2 {
+        font-size: 2rem;
+        line-height: 1.3;
+    }
+    
+    .heading-style-h3 {
+        font-size: 1.5rem;
+        line-height: 1.4;
+    }
+    
+    .text-size-medium {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+    
+    /* Логотипы университетов */
+    .hochschulogos {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+    
+    .logos-start {
+        max-width: 150px;
+        height: auto;
+    }
+    
+    /* Кнопки */
+    .button {
+        padding: 12px 20px;
+        font-size: 16px;
+    }
+    
+    /* Формы */
+    .w-input,
+    .w-select,
+    .w-textarea {
+        padding: 12px 16px;
+        font-size: 16px;
+    }
+    
+    /* Таблицы */
+    .w-table {
+        font-size: 14px;
+    }
+    
+    .w-table th,
+    .w-table td {
+        padding: 8px 6px;
+    }
+}
+
+/* Адаптивность для маленьких мобильных устройств */
+@media screen and (max-width: 479px) {
+    /* Навигация */
+    .navbar9_logo {
+        max-width: 100px;
+    }
+    
+    .navbar-menu {
+        padding: 10px;
+    }
+    
+    .nav-menu {
+        gap: 8px;
+    }
+    
+    .nav-link {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    
+    /* Основной контент */
+    .container-large {
+        padding: 0 10px;
+    }
+    
+    .padding-section-large {
+        padding: 30px 10px;
+    }
+    
+    .padding-section-medium {
+        padding: 20px 10px;
+    }
+    
+    /* Заголовки */
+    .heading-style-h1 {
+        font-size: 2rem;
+    }
+    
+    .heading-style-h2 {
+        font-size: 1.75rem;
+    }
+    
+    .heading-style-h3 {
+        font-size: 1.25rem;
+    }
+    
+    /* Кнопки */
+    .button {
+        padding: 10px 16px;
+        font-size: 15px;
+    }
+    
+    /* Формы */
+    .w-input,
+    .w-select,
+    .w-textarea {
+        padding: 10px 14px;
+        font-size: 16px;
+    }
+    
+    /* Логотипы партнеров */
+    .home_logo_list {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 15px;
+    }
+    
+    /* Статистика */
+    .home_stats_item {
+        text-align: center;
+    }
+    
+    .home_stats_number {
+        font-size: 2rem;
+    }
+}
+
+/* Улучшения для ландшафтной ориентации на мобильных */
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    .padding-section-large {
+        padding: 30px 20px;
+    }
+    
+    .padding-section-medium {
+        padding: 20px 20px;
+    }
+    
+    .home_hero-header_content {
+        gap: 20px;
+    }
+    
+    .heading-style-h1 {
+        font-size: 2rem;
+    }
+    
+    .heading-style-h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Улучшения для устройств с высоким DPI */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .navbar9_logo,
+    .footer3_logo,
+    .home_logo_logo {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Улучшения для устройств с темной темой */
+@media (prefers-color-scheme: dark) {
+    /* Если пользователь предпочитает темную тему, можно добавить соответствующие стили */
+}
+
+/* Улучшения для устройств с уменьшенным движением */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Улучшения для устройств с высоким контрастом */
+@media (prefers-contrast: high) {
+    .button,
+    .nav-link,
+    .form-input {
+        border-width: 2px;
+    }
+    
+    .text-size-medium {
+        font-weight: 600;
+    }
+}
+
+/* Улучшения для печати */
+@media print {
+    .navbar,
+    .footer3_component,
+    .button,
+    .nav-link {
+        display: none !important;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .container-large {
+        max-width: none !important;
+        padding: 0 !important;
+    }
+}
+
+/* Адаптивность для Dashboard */
+@media screen and (max-width: 991px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding: 15px 0;
+    }
+    
+    .sidebar-header {
+        padding: 0 20px 20px;
+    }
+    
+    .admin-info {
+        padding: 12px 20px;
+        margin: 0 20px 15px;
+    }
+    
+    .nav-menu {
+        padding: 0 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .nav-item {
+        margin-bottom: 0;
+        flex: 1;
+        min-width: 150px;
+    }
+    
+    .nav-link {
+        padding: 10px 12px;
+        font-size: 14px;
+        justify-content: center;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .chart-container {
+        height: 300px;
+    }
+    
+    .table-container {
+        overflow-x: auto;
+    }
+    
+    .data-table {
+        font-size: 14px;
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: 8px 6px;
+        white-space: nowrap;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .sidebar {
+        padding: 10px 0;
+    }
+    
+    .sidebar-header {
+        padding: 0 15px 15px;
+    }
+    
+    .admin-info {
+        padding: 10px 15px;
+        margin: 0 15px 10px;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .nav-menu {
+        padding: 0 15px;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .nav-item {
+        flex: none;
+        min-width: auto;
+    }
+    
+    .nav-link {
+        padding: 8px 10px;
+        font-size: 13px;
+        justify-content: flex-start;
+    }
+    
+    .main-content {
+        padding: 15px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .chart-container {
+        height: 250px;
+    }
+    
+    .header-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .search-box {
+        width: 100%;
+    }
+    
+    .btn {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 479px) {
+    .sidebar-header {
+        padding: 0 10px 10px;
+    }
+    
+    .admin-info {
+        padding: 8px 10px;
+        margin: 0 10px 8px;
+    }
+    
+    .nav-menu {
+        padding: 0 10px;
+    }
+    
+    .nav-link {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+    
+    .main-content {
+        padding: 10px;
+    }
+    
+    .stats-grid {
+        gap: 10px;
+    }
+    
+    .chart-container {
+        height: 200px;
+    }
+    
+    .btn {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+}
+
+/* Адаптивность для форм */
+@media screen and (max-width: 767px) {
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .form-label {
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+    
+    .form-input,
+    .form-select,
+    .form-textarea {
+        padding: 12px 14px;
+        font-size: 16px;
+        border-radius: 8px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .form-col {
+        width: 100%;
+    }
+    
+    .checkbox-group,
+    .radio-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .form-actions .btn {
+        width: 100%;
+    }
+}
+
+/* Адаптивность для таблиц */
+@media screen and (max-width: 767px) {
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .table-responsive table {
+        min-width: 600px;
+    }
+    
+    .table-responsive th,
+    .table-responsive td {
+        padding: 8px 6px;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+    
+    .table-actions {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .table-actions .btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+}
+
+/* Адаптивность для модальных окон */
+@media screen and (max-width: 767px) {
+    .modal {
+        margin: 20px;
+        width: calc(100% - 40px);
+        max-width: none;
+    }
+    
+    .modal-header {
+        padding: 15px 20px;
+    }
+    
+    .modal-body {
+        padding: 20px;
+    }
+    
+    .modal-footer {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .modal-footer .btn {
+        width: 100%;
+    }
+}
+
+/* Адаптивность для карточек */
+@media screen and (max-width: 767px) {
+    .card {
+        margin-bottom: 20px;
+    }
+    
+    .card-header {
+        padding: 15px 20px;
+    }
+    
+    .card-body {
+        padding: 20px;
+    }
+    
+    .card-footer {
+        padding: 15px 20px;
+    }
+    
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+/* Адаптивность для навигационных элементов */
+@media screen and (max-width: 767px) {
+    .breadcrumb {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+    
+    .breadcrumb-item {
+        font-size: 14px;
+    }
+    
+    .pagination {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+    
+    .pagination .btn {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
+
+/* Улучшения для устройств с высоким DPI */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .icon,
+    .logo,
+    .avatar {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Улучшения для устройств с темной темой */
+@media (prefers-color-scheme: dark) {
+    /* Если пользователь предпочитает темную тему, можно добавить соответствующие стили */
+}
+
+/* Улучшения для устройств с уменьшенным движением */
+@media (prefers-reduced-motion: reduce) {
+    .modal,
+    .dropdown,
+    .tooltip {
+        transition: none !important;
+    }
+}
+
+/* Улучшения для устройств с высоким контрастом */
+@media (prefers-contrast: high) {
+    .btn,
+    .form-input,
+    .table th,
+    .table td {
+        border-width: 2px;
+    }
+    
+    .text-muted {
+        color: #000 !important;
+        font-weight: 600;
+    }
+}
+
+/* ===== СПЕЦИАЛЬНЫЕ СТИЛИ ДЛЯ СТРАНИЦЫ INFO ===== */
+
+/* Мобильная адаптация для страницы info */
+@media screen and (max-width: 767px) {
+    /* Hero Section */
+    .home_hero-header_content {
+        grid-template-columns: 1fr !important;
+        gap: 30px !important;
+        text-align: center !important;
+    }
+    
+    .home_hero-header_content-left {
+        order: 2 !important;
+    }
+    
+    .home_hero-header_image-wrapper {
+        order: 1 !important;
+        margin-bottom: 20px !important;
+        display: block !important;
+        visibility: visible !important;
+    }
+    
+    .home_hero-header_image {
+        max-width: 100% !important;
+        height: auto !important;
+        border-radius: 12px !important;
+        display: block !important;
+        visibility: visible !important;
+    }
+    
+    /* Заголовки */
+    .heading-style-h1 {
+        font-size: 2.2rem !important;
+        line-height: 1.2 !important;
+        margin-bottom: 20px !important;
+    }
+    
+    .heading-style-h2 {
+        font-size: 1.8rem !important;
+        line-height: 1.3 !important;
+        margin-bottom: 15px !important;
+    }
+    
+    /* Диаграмма */
+    .diagram-container {
+        margin: 30px 0 !important;
+        padding: 0 10px !important;
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+    }
+    
+    .diagram-container img {
+        width: 100% !important;
+        height: auto !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+        display: block !important;
+        visibility: visible !important;
+        max-width: 100% !important;
+    }
+    
+    /* Process Flow - Step-by-Step */
+    .process-flow {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+        margin: 30px 0 !important;
+        display: grid !important;
+        visibility: visible !important;
+        width: 100% !important;
+    }
+    
+    .process-step {
+        padding: 20px !important;
+        margin-bottom: 15px !important;
+        border-radius: 12px !important;
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+    }
+    
+    .step-number {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 16px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .step-title {
+        font-size: 18px !important;
+        margin-bottom: 12px !important;
+    }
+    
+    .step-description {
+        font-size: 14px !important;
+        line-height: 1.5 !important;
+    }
+    
+    /* Knowledge Base Section */
+    .knowledge-section {
+        padding: 25px 15px !important;
+        margin: 30px 0 !important;
+        border-radius: 15px !important;
+    }
+    
+    .knowledge-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+        margin-top: 25px !important;
+    }
+    
+    .knowledge-item {
+        padding: 20px !important;
+        border-radius: 10px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .knowledge-icon {
+        width: 35px !important;
+        height: 35px !important;
+        font-size: 18px !important;
+        margin-bottom: 12px !important;
+    }
+    
+    /* CTA Section */
+    .cta7_component {
+        padding: 30px 15px !important;
+        text-align: center !important;
+    }
+    
+    .cta7_content {
+        max-width: 100% !important;
+    }
+    
+    /* Кнопки */
+    .button-group {
+        flex-direction: column !important;
+        gap: 15px !important;
+        align-items: center !important;
+    }
+    
+    .button-group .button {
+        width: 100% !important;
+        max-width: 280px !important;
+        padding: 14px 20px !important;
+        font-size: 16px !important;
+    }
+    
+    /* Assistant Button */
+    .assistant-button {
+        margin-left: 0 !important;
+        margin-top: 10px !important;
+        width: 100% !important;
+        max-width: 280px !important;
+        justify-content: center !important;
+    }
+    
+    .mobile-assistant-button {
+        display: block !important;
+        width: 100% !important;
+        max-width: 280px !important;
+        margin: 15px auto !important;
+    }
+    
+    /* Language Toggle */
+    .language-toggle {
+        margin-left: 0 !important;
+        margin-top: 10px !important;
+        padding: 10px 15px !important;
+        font-size: 14px !important;
+    }
+    
+    /* Навигация */
+    .navbar9_menu-right {
+        flex-direction: column !important;
+        gap: 10px !important;
+        align-items: center !important;
+    }
+    
+    .navbutonsmobil {
+        flex-direction: column !important;
+        gap: 10px !important;
+        align-items: center !important;
+        margin-top: 15px !important;
+    }
+    
+    .navbutonsmobil .button {
+        width: 100% !important;
+        max-width: 200px !important;
+    }
+    
+    /* Отступы */
+    .padding-section-large {
+        padding: 30px 15px !important;
+    }
+    
+    .margin-bottom.margin-xlarge {
+        margin-bottom: 25px !important;
+    }
+    
+    .margin-top.margin-medium {
+        margin-top: 20px !important;
+    }
+    
+    /* Принудительное отображение всех секций */
+    .section_home_stats {
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+    }
+    
+    .section_content23 {
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+    }
+    
+    .section_cta7 {
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+    }
+    
+    .home_stats_component {
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+    }
+    
+    .knowledge-section {
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+    }
+    
+    .cta7_component {
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+    }
+    
+    /* Принудительное отображение всех изображений */
+    img {
+        display: block !important;
+        visibility: visible !important;
+        max-width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* Убеждаемся что все контейнеры видны */
+    .container-large {
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+    }
+    
+    .padding-global {
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+    }
+    
+    .padding-section-large {
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+    }
+}
+
+/* Очень маленькие экраны */
+@media screen and (max-width: 479px) {
+    /* Hero Section */
+    .heading-style-h1 {
+        font-size: 1.8rem !important;
+    }
+    
+    .heading-style-h2 {
+        font-size: 1.5rem !important;
+    }
+    
+    /* Process Steps */
+    .process-step {
+        padding: 15px !important;
+    }
+    
+    .step-title {
+        font-size: 16px !important;
+    }
+    
+    .step-description {
+        font-size: 13px !important;
+    }
+    
+    /* Knowledge Items */
+    .knowledge-item {
+        padding: 15px !important;
+    }
+    
+    .knowledge-icon {
+        width: 30px !important;
+        height: 30px !important;
+        font-size: 16px !important;
+    }
+    
+    /* Кнопки */
+    .button-group .button {
+        padding: 12px 16px !important;
+        font-size: 15px !important;
+    }
+    
+    .assistant-button {
+        padding: 12px 16px !important;
+        font-size: 14px !important;
+    }
+    
+    /* Диаграмма */
+    .diagram-container {
+        margin: 20px 0 !important;
+        padding: 0 5px !important;
+    }
+    
+    /* Отступы */
+    .padding-section-large {
+        padding: 20px 10px !important;
+    }
+    
+    .knowledge-section {
+        padding: 20px 10px !important;
+    }
+    
+    .cta7_component {
+        padding: 20px 10px !important;
+    }
+    
+    /* Дополнительные стили для очень маленьких экранов */
+    .section_home_stats,
+    .section_content23,
+    .section_cta7 {
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+    }
+    
+    .process-flow,
+    .knowledge-grid {
+        display: grid !important;
+        visibility: visible !important;
+        width: 100% !important;
+    }
+    
+    .diagram-container {
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+    }
+    
+    .home_hero-header_image-wrapper {
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+    }
+}
+
+/* Ландшафтная ориентация на мобильных */
+@media screen and (max-width: 767px) and (orientation: landscape) {
+    .home_hero-header_content {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 20px !important;
+        align-items: center !important;
+    }
+    
+    .home_hero-header_content-left {
+        order: 1 !important;
+        text-align: left !important;
+    }
+    
+    .home_hero-header_image-wrapper {
+        order: 2 !important;
+    }
+    
+    .heading-style-h1 {
+        font-size: 1.8rem !important;
+    }
+    
+    .heading-style-h2 {
+        font-size: 1.5rem !important;
+    }
+    
+    .process-flow {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px !important;
+    }
+    
+    .knowledge-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px !important;
+    }
+}
+
+/* Улучшения для touch устройств */
+@media (hover: none) and (pointer: coarse) {
+    .process-step:hover,
+    .knowledge-item:hover {
+        transform: none !important;
+    }
+    
+    .process-step:active,
+    .knowledge-item:active {
+        transform: scale(0.98) !important;
+    }
+    
+    .assistant-button:active,
+    .mobile-assistant-button:active {
+        transform: scale(0.95) !important;
+    }
+}
+
+/* Улучшения для устройств с уменьшенным движением */
+@media (prefers-reduced-motion: reduce) {
+    .process-step,
+    .knowledge-item,
+    .assistant-button,
+    .mobile-assistant-button {
+        transition: none !important;
+        animation: none !important;
+    }
+    
+    .assistant-button::before {
+        display: none !important;
+    }
+}
+
+/* ===== КНОПКА ДОМИКА ДЛЯ МОБИЛЬНЫХ ===== */
+
+/* Стили для кнопки домика */
+.home-button {
+    background: linear-gradient(135deg, #dff45e, #c7e03a) !important;
+    color: #1f2937 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    text-decoration: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 2px 8px rgba(223, 244, 94, 0.3) !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    -webkit-tap-highlight-color: transparent !important;
+    touch-action: manipulation !important;
+}
+
+.home-button:hover {
+    background: linear-gradient(135deg, #e8f55a, #dff45e) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(223, 244, 94, 0.4) !important;
+    color: #1f2937 !important;
+    text-decoration: none !important;
+}
+
+.home-button:active {
+    transform: translateY(0) !important;
+}
+
+.home-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 24px !important;
+    height: 24px !important;
+}
+
+.home-icon svg {
+    width: 100% !important;
+    height: 100% !important;
+    fill: currentColor !important;
+}
+
+/* Мобильные стили для кнопки домика */
+@media screen and (max-width: 767px) {
+    .home-button {
+        display: flex !important;
+        visibility: visible !important;
+        position: relative !important;
+        z-index: 1001 !important;
+        background: linear-gradient(135deg, #dff45e, #c7e03a) !important;
+        color: #1f2937 !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 8px 12px !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        text-decoration: none !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 2px 8px rgba(223, 244, 94, 0.3) !important;
+        min-width: 44px !important;
+        min-height: 44px !important;
+        -webkit-tap-highlight-color: transparent !important;
+        touch-action: manipulation !important;
+    }
+    
+    .home-button:hover {
+        background: linear-gradient(135deg, #e8f55a, #dff45e) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(223, 244, 94, 0.4) !important;
+        color: #1f2937 !important;
+        text-decoration: none !important;
+    }
+    
+    .home-button:active {
+        transform: translateY(0) !important;
+    }
+    
+    .home-icon {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 24px !important;
+        height: 24px !important;
+    }
+    
+    .home-icon svg {
+        width: 100% !important;
+        height: 100% !important;
+        fill: currentColor !important;
+    }
+}
+
+/* Очень маленькие экраны */
+@media screen and (max-width: 479px) {
+    .home-button {
+        min-width: 40px !important;
+        min-height: 40px !important;
+        padding: 6px 10px !important;
+    }
+    
+    .home-icon {
+        width: 20px !important;
+        height: 20px !important;
+    }
+} 

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>enefit - Anmeldung</title>
+  <link href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d2c010e595f61517badb6_enfit_Logo_32x32.png" rel="shortcut icon" type="image/x-icon">
+  <link href="css/mobile-responsive.css" rel="stylesheet" type="text/css">
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+    body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            padding: 80px 0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .login-section {
+            min-height: 100vh;
+            padding: 80px 0;
+        }
+        
+        .login-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .login-header {
+            background: linear-gradient(135deg, #dff45e 0%, #dff45e 100%);
+            color: #111111;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="40" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .login-header h1, .login-header p { 
+            color: #111111; 
+            position: relative;
+            z-index: 1;
+        }
+        
+        .login-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .login-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .login-form {
+            padding: 40px;
+            text-align: center;
+        }
+
+        /* Адаптивность для мобильных устройств */
+        @media screen and (max-width: 768px) {
+            .login-section {
+                padding: 20px 0;
+                min-height: 100vh;
+            }
+            
+            .login-container {
+                margin: 10px;
+                border-radius: 15px;
+                max-width: calc(100% - 20px);
+            }
+            
+            .login-header {
+                padding: 25px 20px;
+                text-align: center;
+            }
+            
+            .login-header img {
+                position: static !important;
+                top: auto !important;
+                left: auto !important;
+                width: 60px !important;
+                height: auto !important;
+                margin: 0 auto 15px auto !important;
+                display: block !important;
+            }
+            
+            .login-header h1 {
+                font-size: 1.8rem;
+                margin-bottom: 8px;
+            }
+            
+            .login-header p {
+                font-size: 1rem;
+            }
+            
+            .login-form {
+                padding: 25px 20px;
+            }
+            
+            .form-group {
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+            
+            .form-input {
+                padding: 16px 20px;
+                font-size: 16px;
+                border-radius: 8px;
+            }
+            
+            .login-button {
+                max-width: 100%;
+                padding: 16px 20px;
+                font-size: 1rem;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .login-container {
+                margin: 5px;
+                border-radius: 12px;
+                max-width: calc(100% - 10px);
+            }
+            
+            .login-header {
+                padding: 20px 15px;
+            }
+            
+            .login-header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .login-header p {
+                font-size: 0.9rem;
+            }
+            
+            .login-form {
+                padding: 20px 15px;
+            }
+            
+            .form-input {
+                padding: 14px 16px;
+                font-size: 16px;
+            }
+            
+            .login-button {
+                padding: 14px 16px;
+                font-size: 0.95rem;
+            }
+        }
+        
+        /* Улучшения для touch устройств */
+        @media (hover: none) and (pointer: coarse) {
+            .form-input:focus {
+                transform: scale(1.02);
+            }
+            
+            .login-button:active {
+                transform: scale(0.98);
+            }
+        }
+
+
+
+        .form-group {
+            margin-bottom: 25px;
+            max-width: 360px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+            text-align: left;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #dff45e;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(223, 244, 94, 0.2);
+        }
+
+        .form-input::placeholder {
+            color: #6b7280;
+        }
+
+        .login-button {
+            width: 100%;
+            max-width: 360px;
+            padding: 18px 30px;
+            background: linear-gradient(135deg, #dff45e 0%, #dff45e 100%);
+            color: #111111;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(223, 244, 94, 0.35);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .login-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .login-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .login-button:hover::before {
+            left: 100%;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(26, 26, 26, 0.3);
+            border-top: 2px solid #1a1a1a;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 12px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            display: none;
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            max-width: 360px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            max-width: 360px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #e1e5e9;
+        }
+
+        .login-footer p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .login-footer a {
+            color: #8aa833;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .register-section {
+            margin-bottom: 20px;
+        }
+
+        .register-section p {
+            margin-bottom: 12px;
+        }
+
+        .register-button {
+            display: inline-block;
+            padding: 12px 28px;
+            background: #fff;
+            color: #111 !important;
+            border: 2px solid #dff45e;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none !important;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .register-button:hover {
+            background: #dff45e;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(223, 244, 94, 0.3);
+        }
+
+        .other-links {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed #e1e5e9;
+        }
+
+        /* Animation for form elements */
+        .form-group {
+            animation: slideUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Fade in animation */
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+  </style>
+</head>
+<body>
+    <section class="login-section">
+        <div class="login-container fade-in">
+            <div class="login-header">
+                <img src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d69a81abfee6fe5c42891_enfit_Logo_Wortbildmarke_grau.avif" alt="enefit" style="position:absolute; top:12px; left:12px; width:48px; height:auto;">
+                <h1>Anmeldung</h1>
+                <p>Login-Bereich zum Chatbot der enefit.ai</p>
+            </div>
+            
+            <div class="login-form">
+
+
+
+    <form id="loginForm">
+            <div class="form-group">
+                <label for="username" class="form-label">Benutzername</label>
+                <input type="text" id="username" name="username" class="form-input" placeholder="Benutzername eingeben" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Passwort</label>
+                <input type="password" id="password" name="password" class="form-input" placeholder="Passwort eingeben" required>
+            </div>
+
+            <button type="submit" class="login-button" id="loginButton">
+                <div class="loading-spinner" id="loadingSpinner"></div>
+                <span id="loginText">Anmelden</span>
+            </button>
+    </form>
+
+    <div class="error-message" id="errorMessage">
+      Anmeldung fehlgeschlagen. Bitte überprüfen Sie Ihre Anmeldedaten.
+    </div>
+
+        <div class="success-message" id="successMessage">
+            Anmeldung erfolgreich! Sie werden weitergeleitet...
+        </div>
+
+                <div class="login-footer">
+                    <div class="register-section">
+                        <p>Haben Sie noch kein Konto?</p>
+                        <a href="company-registration.html" class="register-button" title="Registrierung erforderlich, damit Unbefugte keinen Zugriff auf den Chat erhalten und Token verbrauchen.">Registrieren</a>
+                    </div>
+                    <div class="other-links">
+                        <p><a href="info.html">Wie der Chatbot funktioniert</a></p>
+                        <p><a href="/start">Demo-Zugang</a></p>
+                        <p><a href="https://www.enefit.ai/">Zurück zur Website</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  <script>
+
+        const form = document.getElementById('loginForm');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const loginButton = document.getElementById('loginButton');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const loginText = document.getElementById('loginText');
+
+        form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+            loginButton.disabled = true;
+            loadingSpinner.style.display = 'inline-block';
+            loginText.textContent = 'Wird angemeldet...';
+
+            const formData = new FormData(form);
+            const data = {
+                username: formData.get('username'),
+                password: formData.get('password')
+            };
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    successMessage.textContent = result.message;
+                    successMessage.style.display = 'block';
+                    
+                    // Redirect based on server response
+                    setTimeout(() => {
+                        if (result.redirectTo) {
+                            window.location.href = result.redirectTo;
+                        } else {
+                            window.location.href = '/dashboard';
+                        }
+                    }, 1000);
+      } else {
+                    errorMessage.textContent = result.error || 'Anmeldung fehlgeschlagen';
+                    errorMessage.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                errorMessage.textContent = 'Verbindungsfehler. Bitte versuchen Sie es später erneut.';
+                errorMessage.style.display = 'block';
+            } finally {
+                loginButton.disabled = false;
+                loadingSpinner.style.display = 'none';
+                loginText.textContent = 'Anmelden';
+            }
+        });
+
+        // Check if user is already logged in
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('/api/check-auth');
+                const result = await response.json();
+                
+                if (result.authenticated) {
+                    // Redirect based on user role
+                    if (result.user.role === 'admin') {
+                        window.location.href = '/dashboard';
+                    } else {
+                        window.location.href = '/accesspoint';
+                    }
+                }
+            } catch (error) {
+                console.log('Auth check failed:', error);
+      }
+    });
+  </script>
+</body>
+</html> 

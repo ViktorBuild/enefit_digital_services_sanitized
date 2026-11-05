@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe - Legal Radar</title>
+    <link rel="stylesheet" href="/legal_radar/public/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .public-main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .subscription-container {
+            width: 100%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(223, 244, 94, 0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+        }
+        .text-center {
+            text-align: center;
+        }
+        .subscription-container h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #1f2937;
+            font-weight: 700;
+        }
+        .subscription-container p {
+            color: #6b7280;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+        }
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(223, 244, 94, 0.3);
+            border-radius: 12px;
+            color: #1f2937;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: rgba(223, 244, 94, 0.6);
+            box-shadow: 0 0 0 4px rgba(223, 244, 94, 0.1);
+        }
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            padding: 0.75rem;
+            background: rgba(248, 250, 252, 0.8);
+            border: 1px solid rgba(223, 244, 94, 0.2);
+            border-radius: 8px;
+            transition: all 0.2s;
+            color: #1f2937;
+            font-weight: 500;
+        }
+        .checkbox-label:hover {
+            background: rgba(223, 244, 94, 0.1);
+            border-color: rgba(223, 244, 94, 0.4);
+        }
+        .checkbox-label input {
+            width: 1.2rem;
+            height: 1.2rem;
+            accent-color: #8aa833;
+        }
+        .btn-block {
+            width: 100%;
+            justify-content: center;
+            padding: 1rem;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            background: linear-gradient(135deg, #dff45e, #c7e03a);
+            border: none;
+            border-radius: 12px;
+            color: #1f2937;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(223, 244, 94, 0.3);
+        }
+        .btn-block:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(223, 244, 94, 0.4);
+        }
+        #successMessage {
+            color: #059669;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: center;
+            display: none;
+            font-weight: 600;
+        }
+        
+        body, html {
+            height: 100%;
+            overflow-y: auto !important; /* Allow scroll on small screens */
+        }
+        .public-layout {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .glass-header {
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+        .header-content {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin: 0;
+            letter-spacing: -0.02em;
+        }
+        .header-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .lang-btn, .back-btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 12px;
+            color: #4b5563;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(223, 244, 94, 0.3);
+            background: rgba(223, 244, 94, 0.1);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .lang-btn:hover, .back-btn:hover {
+            background: rgba(223, 244, 94, 0.25);
+            color: #1f2937;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(223, 244, 94, 0.2);
+        }
+        
+        /* --- Radar Component Styles --- */
+        .radar-selection-container {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            background: rgba(248, 250, 252, 0.5);
+            border: 1px solid rgba(223, 244, 94, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        @media (max-width: 500px) {
+            .radar-selection-container {
+                flex-direction: column;
+            }
+        }
+        .radar-wrapper {
+            flex: 0 0 160px;
+            position: relative;
+        }
+        .radar-svg {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 0 10px rgba(138, 168, 51, 0.2));
+            overflow: visible;
+        }
+        .radar-grid {
+            fill: none;
+            stroke: rgba(138, 168, 51, 0.3);
+            stroke-width: 1;
+        }
+        .radar-slice {
+            fill: rgba(138, 168, 51, 0.05);
+            stroke: rgba(138, 168, 51, 0.5);
+            stroke-width: 1.5;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .radar-slice:hover {
+            fill: rgba(223, 244, 94, 0.4);
+        }
+        .radar-slice.active {
+            fill: rgba(138, 168, 51, 0.85);
+            stroke: rgba(138, 168, 51, 1);
+        }
+        .radar-sweep-container {
+            animation: radar-spin 4s linear infinite;
+            pointer-events: none;
+            transform-origin: 0 0;
+        }
+        .radar-sweep {
+            fill: url(#sweep-grad);
+            stroke: none;
+        }
+        @keyframes radar-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .radar-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex: 1;
+        }
+        .radar-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+            background: transparent;
+            border: 1px solid transparent;
+        }
+        .radar-legend-item:hover {
+            background: rgba(223, 244, 94, 0.1);
+            border-color: rgba(223, 244, 94, 0.3);
+        }
+        .radar-legend-color {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            border: 2px solid rgba(138, 168, 51, 0.5);
+            background: rgba(255,255,255,0.8);
+            transition: all 0.3s;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .radar-legend-item input:checked + .radar-legend-color {
+            background: #8aa833;
+            border-color: #8aa833;
+        }
+        .radar-legend-item input:checked + .radar-legend-color::after {
+            content: '';
+            width: 5px;
+            height: 9px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            margin-bottom: 2px;
+        }
+        .legend-text {
+            font-size: 0.9rem;
+            color: #374151;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="public-layout">
+        <header class="glass-header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="radar-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            <path d="M2 12h20"></path>
+                        </svg>
+                    </div>
+                    <h1>Legal Radar</h1>
+                </div>
+                <div class="header-controls">
+                    <a href="/accesspoint.html" class="back-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                        <span data-lang-de="Zurück" data-lang-en="Back">Zurück</span>
+                    </a>
+                    <button class="lang-btn" id="langToggle">EN</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="public-main">
+            <div class="subscription-container text-center">
+                <h2 data-lang-de="Gesetzesänderungen im Blick" data-lang-en="Stay Ahead of German Laws">Gesetzesänderungen im Blick</h2>
+                <p data-lang-de="Erhalten Sie personalisierte Benachrichtigungen über neue Gesetze für Ihre Branche." data-lang-en="Get personalized alerts for newly published laws tailored to your company's industry.">Erhalten Sie personalisierte Benachrichtigungen über neue Gesetze für Ihre Branche.</p>
+            
+                <form id="subscribeForm">
+                    <div class="form-group">
+                        <label class="form-label" for="email" data-lang-de="E-Mail-Adresse" data-lang-en="Work Email">E-Mail-Adresse</label>
+                        <input type="email" id="email" class="form-control" data-lang-placeholder-de="ihre@firma.de" data-lang-placeholder-en="you@company.com" placeholder="ihre@firma.de" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" data-lang-de="Wählen Sie Ihre Branchen" data-lang-en="Select your industries">Wählen Sie Ihre Branchen</label>
+                        <div class="radar-selection-container">
+                            <div class="radar-wrapper">
+                                <svg viewBox="-110 -110 220 220" class="radar-svg">
+                                    <defs>
+                                        <radialGradient id="radar-glow" cx="50%" cy="50%" r="50%">
+                                            <stop offset="0%" stop-color="rgba(223, 244, 94, 0.1)" />
+                                            <stop offset="100%" stop-color="rgba(138, 168, 51, 0.0)" />
+                                        </radialGradient>
+                                        <linearGradient id="sweep-grad" x1="0%" y1="0%" x2="100%" y2="0%" gradientTransform="rotate(90)">
+                                            <stop offset="0%" stop-color="rgba(138, 168, 51, 0)" />
+                                            <stop offset="100%" stop-color="rgba(138, 168, 51, 0.4)" />
+                                        </linearGradient>
+                                    </defs>
+                                    
+                                    <circle cx="0" cy="0" r="100" fill="url(#radar-glow)" />
+                                    <!-- Grid -->
+                                    <circle cx="0" cy="0" r="33" class="radar-grid" />
+                                    <circle cx="0" cy="0" r="66" class="radar-grid" />
+                                    <circle cx="0" cy="0" r="100" class="radar-grid" />
+                                    
+                                    <!-- Slices (5 categories = 72deg each) -->
+                                    <path d="M 0 0 L 0 -100 A 100 100 0 0 1 95.1 -30.9 Z" class="radar-slice" data-index="0" />
+                                    <path d="M 0 0 L 95.1 -30.9 A 100 100 0 0 1 58.8 80.9 Z" class="radar-slice" data-index="1" />
+                                    <path d="M 0 0 L 58.8 80.9 A 100 100 0 0 1 -58.8 80.9 Z" class="radar-slice" data-index="2" />
+                                    <path d="M 0 0 L -58.8 80.9 A 100 100 0 0 1 -95.1 -30.9 Z" class="radar-slice" data-index="3" />
+                                    <path d="M 0 0 L -95.1 -30.9 A 100 100 0 0 1 0 -100 Z" class="radar-slice" data-index="4" />
+                                    
+                                    <!-- Sweep Animation (approx 60 deg arc) -->
+                                    <g class="radar-sweep-container">
+                                        <path d="M 0 0 L 0 -100 A 100 100 0 0 1 86.6 -50 Z" class="radar-sweep" />
+                                        <line x1="0" y1="0" x2="86.6" y2="-50" stroke="rgba(138, 168, 51, 0.8)" stroke-width="2" />
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="radar-legend">
+                                <label class="radar-legend-item" data-index="0">
+                                    <input type="checkbox" name="category" value="Manufacturing & Production" style="display:none;">
+                                    <span class="radar-legend-color"></span>
+                                    <span class="legend-text" data-lang-de="Produktion & Fertigung" data-lang-en="Manufacturing & Production">Produktion & Fertigung</span>
+                                </label>
+                                <label class="radar-legend-item" data-index="1">
+                                    <input type="checkbox" name="category" value="IT, Data Centers & Telecommunications" style="display:none;">
+                                    <span class="radar-legend-color"></span>
+                                    <span class="legend-text" data-lang-de="IT, Rechenzentren & Telekommunikation" data-lang-en="IT, Data Centers & Telecommunications">IT, Rechenzentren & Telekommunikation</span>
+                                </label>
+                                <label class="radar-legend-item" data-index="2">
+                                    <input type="checkbox" name="category" value="Logistics, Transport & Warehousing" style="display:none;">
+                                    <span class="radar-legend-color"></span>
+                                    <span class="legend-text" data-lang-de="Logistik, Transport & Lagerung" data-lang-en="Logistics, Transport & Warehousing">Logistik, Transport & Lagerung</span>
+                                </label>
+                                <label class="radar-legend-item" data-index="3">
+                                    <input type="checkbox" name="category" value="Real Estate, Buildings & Construction" style="display:none;">
+                                    <span class="radar-legend-color"></span>
+                                    <span class="legend-text" data-lang-de="Immobilien, Gebäude & Bauwesen" data-lang-en="Real Estate, Buildings & Construction">Immobilien, Gebäude & Bauwesen</span>
+                                </label>
+                                <label class="radar-legend-item" data-index="4">
+                                    <input type="checkbox" name="category" value="Energy, Utilities & Circular Economy" style="display:none;">
+                                    <span class="radar-legend-color"></span>
+                                    <span class="legend-text" data-lang-de="Energie, Versorgung & Kreislaufwirtschaft" data-lang-en="Energy, Utilities & Circular Economy">Energie, Versorgung & Kreislaufwirtschaft</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="primary-btn btn-block" id="submitBtn">
+                        <span class="btn-text" data-lang-de="Jetzt abonnieren" data-lang-en="Subscribe to Alerts">Jetzt abonnieren</span>
+                        <span class="loader hidden"></span>
+                    </button>
+                </form>
+
+                <div id="successMessage">
+                    Erfolgreich abonniert! Weiterleitung...
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/legal_radar/public/app.js"></script>
+</body>
+</html>

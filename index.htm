@@ -1,0 +1,617 @@
+<html data-wf-domain="www.enefit.ai" data-wf-page="67769aba6d9c5332b7cef02a" data-wf-site="67769ab96d9c5332b7ceefdc" lang="de" data-wf-locale="de-DE" class=" w-mod-js w-mod-ix"><head><style>.wf-force-outline-none[tabindex="-1"]:focus{outline:none;}</style><meta charset="utf-8"><title>enefit - Leitfäden für Energieeffizienz &amp; Emissionsminderung</title><meta content="width=device-width, initial-scale=1" name="viewport"><link href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/css/enefit.b3bd0508f.min.css" rel="stylesheet" type="text/css">
+<link href="css/mobile-responsive.css" rel="stylesheet" type="text/css"><script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script><link href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d2c010e595f61517badb6_enfit_Logo_32x32.png" rel="shortcut icon" type="image/x-icon"><link href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d2c07494e98942fec7677_enfit_Logo_256x256.png" rel="apple-touch-icon"><meta name="google-site-verification" content="7_ww3PbBs5sWa6UdJhmMs2TXAe0sesHmIVdXI0D_sNo">
+
+
+  <style>
+    body {
+      hyphens: auto;
+      -webkit-hyphens: auto; /* Für Safari */
+      -ms-hyphens: auto; /* Für ältere Versionen von Internet Explorer */
+    }
+    
+    /* Мобильная кнопка ассистента */
+    .mobile-assistant-button {
+      display: none;
+      background: linear-gradient(135deg, #4d65ff, #3546b1);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(77, 101, 255, 0.3);
+      margin: 10px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .mobile-assistant-button:hover {
+      background: linear-gradient(135deg, #6c7fff, #4d65ff);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(77, 101, 255, 0.4);
+    }
+    
+    .mobile-assistant-button::before {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: skewX(-30deg);
+      animation: shine 3s infinite;
+      filter: blur(5px);
+    }
+    
+    @keyframes shine {
+      0% {
+        left: -100%;
+        opacity: 0;
+      }
+      20% {
+        left: 100%;
+        opacity: 0.6;
+      }
+      100% {
+        left: 100%;
+        opacity: 0;
+      }
+    }
+    
+    /* Адаптивность для мобильных устройств */
+    @media screen and (max-width: 991px) {
+      .assistant-button {
+        display: none;
+      }
+      
+      .mobile-assistant-button {
+        display: block;
+      }
+      
+      .navbutonsmobil {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+      }
+      
+      .home_hero-header_content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      
+      .home_hero-header_content-left {
+        order: 2;
+      }
+      
+      .home_hero-header_image-wrapper {
+        order: 1;
+      }
+      
+      .home_hero-header_image {
+        max-width: 100%;
+        height: auto;
+      }
+      
+      .button-group {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .button-group .button {
+        width: 100%;
+        text-align: center;
+      }
+      
+      .home_stats_list {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      
+      .home_logo_list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 20px;
+        align-items: center;
+      }
+      
+      .home_logo_logo {
+        max-width: 100%;
+        height: auto;
+      }
+      
+      .content23_content-wrapper {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      
+      .content23_image-wrapper img {
+        max-width: 100%;
+        height: auto;
+      }
+      
+      .cta7_component .button-group {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .cta7_component .button-group .button {
+        width: 100%;
+        text-align: center;
+      }
+    }
+    
+    @media screen and (max-width: 767px) {
+      .navbar9_logo {
+        max-width: 120px;
+      }
+      
+      .padding-section-large {
+        padding: 60px 20px;
+      }
+      
+      .padding-section-medium {
+        padding: 40px 20px;
+      }
+      
+      .container-large {
+        padding: 0 20px;
+      }
+      
+      .heading-style-h1 {
+        font-size: 2.5rem;
+        line-height: 1.2;
+      }
+      
+      .heading-style-h2 {
+        font-size: 2rem;
+        line-height: 1.3;
+      }
+      
+      .heading-style-h3 {
+        font-size: 1.5rem;
+        line-height: 1.4;
+      }
+      
+      .text-size-medium {
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+      
+      .hochschulogos {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+      }
+      
+      .logos-start {
+        max-width: 150px;
+        height: auto;
+      }
+    }
+    
+    @media screen and (max-width: 479px) {
+      .padding-section-large {
+        padding: 40px 15px;
+      }
+      
+      .padding-section-medium {
+        padding: 30px 15px;
+      }
+      
+      .container-large {
+        padding: 0 15px;
+      }
+      
+      .heading-style-h1 {
+        font-size: 2rem;
+      }
+      
+      .heading-style-h2 {
+        font-size: 1.75rem;
+      }
+      
+      .heading-style-h3 {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+</head><body>
+
+<style>
+  
+  /* Navbar Page Transition */
+
+@view-transition {
+		navigation: auto;
+  	/*transition-duration: 500ms;*/
+}
+
+.navbar {
+		view-transition-name: navbar;
+}
+
+  .nav-link.w--current .nav-link-bg {
+	view-transition-name: nav-link-current-bg;
+}
+  
+  .nav-link.w--current .nav-link-bg {
+	opacity: 100%;
+}
+ 
+/* Стили для особой кнопки Ассистента */
+.assistant-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 15px;
+  background: linear-gradient(135deg, #4d65ff, #3546b1);
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(77, 101, 255, 0.3);
+  text-decoration: none;
+  overflow: hidden;
+  z-index: 1;
+  margin-left: 10px;
+}
+
+.assistant-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(77, 101, 255, 0.4);
+}
+
+.assistant-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #6c7fff, #4d65ff);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.assistant-button:hover::before {
+  opacity: 1;
+}
+
+.assistant-button-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.assistant-button-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.assistant-button-text {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.assistant-button::after {
+  content: "→";
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+
+.assistant-button:hover::after {
+  transform: translateX(3px);
+}
+
+@media screen and (max-width: 991px) {
+  .assistant-button {
+    display: none;
+  }
+}
+
+/* Стили для мобильной кнопки ассистента */
+.mobile-assistant-button {
+  background: linear-gradient(135deg, #4d65ff, #3546b1);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.mobile-assistant-button:hover {
+  background: linear-gradient(135deg, #6c7fff, #4d65ff);
+}
+
+.mobile-assistant-button::before {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: skewX(-30deg);
+  animation: shine 3s infinite;
+  filter: blur(5px);
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+    opacity: 0;
+  }
+  20% {
+    left: 100%;
+    opacity: 0.6;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+ /* 
+
+  
+  .nav-link.w--current {
+  	view-transition-name: nav-current:
+} 
+*/
+
+</style>
+
+<div class="page-wrapper"><div class="global-styles w-embed"><style>
+
+/* Ensure all elements inherit the color from its parent */
+body * {
+    color: inherit;
+}
+
+a,
+.w-input,
+.w-select,
+.w-tab-link,
+.w-nav-link,
+.w-slider-arrow-left,
+.w-slider-arrow-right,
+.w-dropdown-btn,
+.w-dropdown-toggle,
+.w-dropdown-link {
+  color: inherit;
+  text-decoration: inherit;
+  font-size: inherit;
+}
+
+/* Focus state style for keyboard navigation for the focusable elements */
+*[tabindex]:focus-visible,
+  input[type="file"]:focus-visible {
+   outline: 0.125rem solid #4d65ff;
+   outline-offset: 0.125rem;
+}
+
+/* Get rid of top margin on first element in any rich text element */
+.w-richtext > :not(div):first-child, .w-richtext > div:first-child > :first-child {
+  margin-top: 0 !important;
+}
+
+/* Get rid of bottom margin on last element in any rich text element */
+.w-richtext>:last-child, .w-richtext ol li:last-child, .w-richtext ul li:last-child {
+	margin-bottom: 0 !important;
+}
+
+/* Prevent all click and hover interaction with an element */
+.pointer-events-off {
+	pointer-events: none;
+}
+
+/* Enables all click and hover interaction with an element */
+.pointer-events-on {
+  pointer-events: auto;
+}
+
+/* Create a class of .div-square which maintains a 1:1 dimension of a div */
+.div-square::after {
+	content: "";
+	display: block;
+	padding-bottom: 100%;
+}
+
+/* Make sure containers never lose their center alignment */
+.container-medium,.container-small, .container-large {
+	margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+
+/* Apply "..." after 3 lines of text */
+.text-style-3lines {
+	display: -webkit-box;
+	overflow: hidden;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+}
+
+/* Apply "..." after 2 lines of text */
+.text-style-2lines {
+	display: -webkit-box;
+	overflow: hidden;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+
+/* Adds inline flex display */
+.display-inlineflex {
+  display: inline-flex;
+}
+
+/* These classes are never overwritten */
+.hide {
+  display: none !important;
+}
+
+@media screen and (max-width: 991px) {
+    .hide, .hide-tablet {
+        display: none !important;
+    }
+}
+  @media screen and (max-width: 767px) {
+    .hide-mobile-landscape{
+      display: none !important;
+    }
+}
+  @media screen and (max-width: 479px) {
+    .hide-mobile{
+      display: none !important;
+    }
+}
+ 
+.margin-0 {
+  margin: 0rem !important;
+}
+  
+.padding-0 {
+  padding: 0rem !important;
+}
+
+.spacing-clean {
+padding: 0rem !important;
+margin: 0rem !important;
+}
+
+.margin-top {
+  margin-right: 0rem !important;
+  margin-bottom: 0rem !important;
+  margin-left: 0rem !important;
+}
+
+.padding-top {
+  padding-right: 0rem !important;
+  padding-bottom: 0rem !important;
+  padding-left: 0rem !important;
+}
+  
+.margin-right {
+  margin-top: 0rem !important;
+  margin-bottom: 0rem !important;
+  margin-left: 0rem !important;
+}
+
+.padding-right {
+  padding-top: 0rem !important;
+  padding-bottom: 0rem !important;
+  padding-left: 0rem !important;
+}
+
+.margin-bottom {
+  margin-top: 0rem !important;
+  margin-right: 0rem !important;
+  margin-left: 0rem !important;
+}
+
+.padding-bottom {
+  padding-top: 0rem !important;
+  padding-right: 0rem !important;
+  padding-left: 0rem !important;
+}
+
+.margin-left {
+  margin-top: 0rem !important;
+  margin-right: 0rem !important;
+  margin-bottom: 0rem !important;
+}
+  
+.padding-left {
+  padding-top: 0rem !important;
+  padding-right: 0rem !important;
+  padding-bottom: 0rem !important;
+}
+  
+.margin-horizontal {
+  margin-top: 0rem !important;
+  margin-bottom: 0rem !important;
+}
+
+.padding-horizontal {
+  padding-top: 0rem !important;
+  padding-bottom: 0rem !important;
+}
+
+.margin-vertical {
+  margin-right: 0rem !important;
+  margin-left: 0rem !important;
+}
+  
+.padding-vertical {
+  padding-right: 0rem !important;
+  padding-left: 0rem !important;
+}
+
+/* Apply "..." at 100% width */
+.truncate-width { 
+		width: 100%; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+}
+/* Removes native scrollbar */
+.no-scrollbar {
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none; 
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+--------------------------------------------------------
+
+
+  
+/* 
+ body .transition {display: block} 
+.w-editor .transition {display: none;}
+.no-scroll-transition {overflow: hidden; position: relative;}
+  */
+
+
+</style></div><div fs-scrolldisable-element="smart-nav" data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar w-nav"><div class="navbar-element"><a href="/" aria-current="page" class="navbar9_logo-link w-nav-brand w--current" aria-label="home"><img title="logo" loading="lazy" alt="Logo Enefit Gray" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d69a81abfee6fe5c42891_enfit_Logo_Wortbildmarke_grau.avif" class="navbar9_logo"></a><nav role="navigation" class="navbar-menu w-nav-menu"><div class="nav-menu"><div class="nav-link-background"></div><a title="startseite" href="/home" aria-current="page" class="nav-link w-inline-block w--current"><div class="icon-embed-xxsmall relative w-embed"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--ic" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8z"></path></svg></div><div class="nav-link-bg"></div></a><a title="über-enefit" href="uber-enefit.html" class="nav-link w-inline-block"><div class="text-size-mobil-menu">Über enefit</div><div class="nav-link-bg"></div></a><a title="events" href="events.html" class="nav-link w-inline-block"><div class="text-size-mobil-menu">Events &amp; Netzwerk</div><div class="nav-link-bg"></div></a><a title="info" href="info.html" class="nav-link w-inline-block"><div class="text-size-mobil-menu">How It Works</div><div class="nav-link-bg"></div></a><a title="download" href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d38e3fe7582b44bea4dfe_Vorlage_THWS_ENEFIT_Kooperationsvereinbarung.pdf" target="_blank" class="nav-link w-inline-block"><div class="div-nav-item-wrapper"><div class="text-size-mobil-menu">Kooperationsvertrag</div><div class="icon-embed-xxsmall-2 w-embed"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--ic" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M5 20h14v-2H5zM19 9h-4V3H9v6H5l7 7z"></path></svg></div></div><div class="nav-link-bg"></div></a><a title="login" href="login.htm" class="assistant-button"><div class="assistant-button-icon"><img src="image.png" alt="AI Assistant"></div><div class="assistant-button-text">Zum Enefit Assistant</div></a><div class="navbutonsmobil">
+  <a href="kontakt.html" class="button text-size-medium burgermen w-button">Werde Kooperationspartner ➔</a>
+  <a href="kontakt.html" class="button is-secondary text-size-medium white w-button">Kontakt</a>
+  <a href="login.htm" class="button is-secondary text-size-medium white w-button">Login</a>
+  <a href="login.htm" class="mobile-assistant-button">Zum Enefit Assistant</a>
+</div></div></nav><div class="navbar9_menu-right"><div class="nav-menu"><a title="kontakt" href="kontakt.html" class="nav-link w-inline-block"><div class="text-size-mobil-menu">Kontakt</div><div class="nav-link-bg"></div></a></div></div><div class="navbar9_menu-button w-nav-button" style="-webkit-user-select: text;" aria-label="menu" role="button" tabindex="0" aria-controls="w-nav-overlay-0" aria-haspopup="menu" aria-expanded="false"><div class="menu-icon5"><div class="menu-icon1_line-top"></div><div class="menu-icon1_line-middle"><div class="menu-icon1_line-middle-inner"></div></div><div class="menu-icon1_line-bottom"></div></div></div></div><div class="w-nav-overlay" data-wf-ignore="" id="w-nav-overlay-0"></div></div><main class="main-wrapper"><header class="section_home_hero-header"><div style="opacity: 1; transform: translate3d(0px, 0rem, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;" class="padding-global"><div class="container-large"><div class="padding-section-large"><div class="home_hero-header_component"><div class="w-layout-grid home_hero-header_content"><div class="home_hero-header_content-left"><div class="margin-bottom margin-small"><h1 class="heading-style-h1"><span class="text-span">Leitfäden &amp; Technologietransfer für<br></span><span class="text-span-2">Energieeffizienz &amp; Emissionsminderung</span></h1></div><p class="text-size-medium">Optimieren Sie Ihre Prozesse und gestalten Sie Ihre Zukunft nachhaltiger. Das enefit-Projekt unterstützt KMUs dabei, das Energieeffizienzgesetz und den EU Green Deal erfolgreich umzusetzen. Mit KI-gestützten Tools bieten wir personalisierte Roadmaps für mehr Energieeffizienz und Klimaschutz.</p><div class="margin-top margin-medium"><div class="button-group"><a title="über-enefit" href="uber-enefit.html" class="button hover-glow w-inline-block"><div class="button-text">Über enefit</div></a><a title="events" href="events.html" class="button no-bg w-inline-block"><div class="button-text slide" style="color: rgb(49, 49, 49);">Events &amp; Netzwerk</div><div class="button-bg" style="width: 0%;"></div></a></div></div></div><div class="home_hero-header_image-wrapper"><img class="home_hero-header_image" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d3cd715b4b1e3c2fb5a17_Illustration-enefit-Header.avif" alt="Illustration Multiple Step Factory" sizes="(max-width: 991px) 100vw, 45vw" title="illustration" loading="eager" srcset="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d3cd715b4b1e3c2fb5a17_Illustration-enefit-Header-p-500.avif 500w, https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d3cd715b4b1e3c2fb5a17_Illustration-enefit-Header-p-800.avif 800w, https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d3cd715b4b1e3c2fb5a17_Illustration-enefit-Header-p-1080.avif 1080w, https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d3cd715b4b1e3c2fb5a17_Illustration-enefit-Header.avif 2000w"></div></div><div class="hochschulogos"><img class="logos-start" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d6944f68fce37d415d306_EFRE_Logo.avif" alt="Efre Logo Gray-Yellow" sizes="(max-width: 479px) 27vw, (max-width: 767px) 14vw, 11vw" title="logo" loading="lazy" srcset="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d6944f68fce37d415d306_EFRE_Logo-p-500.png 500w, https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d6944f68fce37d415d306_EFRE_Logo.avif 2600w"><img src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d694471816c353c36ae95_thws%20Logo.avif" loading="lazy" title="logo" alt="Insys.thws Logo Gray" class="logos-start"></div></div></div></div></div></header><section class="section_home_stats"><div style="opacity: 1; transform: translate3d(0px, 0rem, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;" class="padding-global"><div class="container-large"><div class="padding-section-large"><div class="home_stats_component"><div class="w-layout-grid home_stats_list"><div class="home_stats_item"><div class="margin-bottom margin-large"><h2 class="heading-style-h3">Workshops &amp; Events</h2></div><div class="home_stats_item-content"><div class="home_stats_number">6/Jahr</div><div class="stats-block"><p class="text-size-medium">Praxisnahe <br>Unterstützung vor Ort.</p></div></div></div><div class="home_stats_item"><div class="margin-bottom margin-large"><h2 class="heading-style-h3">Technologie - Roadmaps</h2></div><div class="home_stats_item-content"><div class="home_stats_number">↑</div><div class="stats-block"><p class="text-size-medium">Individuelle Lösungen für Ihre Anforderungen.</p></div></div></div><div class="home_stats_item"><div class="margin-bottom margin-large"><h2 class="heading-style-h3">Ressourcen - Tools und Guides</h2></div><div class="home_stats_item-content"><div class="home_stats_number">↑</div><div class="stats-block"><p class="text-size-medium">Zugang zu den Leitfäden, Studien &amp; Tools.</p></div></div></div><div class="home_stats_item"><div class="margin-bottom margin-large"><h2 class="heading-style-h3">Projektpartner &amp; Netzwerke</h2></div><div class="home_stats_item-content"><div class="home_stats_number">12</div><div class="stats-block"><p class="text-size-medium">Gemeinsam für eine nachhaltige Zukunft.</p></div></div></div></div></div></div></div></div></section><section class="section_home_logo margin-vertical margin-xlarge"><div style="opacity: 1; transform: translate3d(0px, 0rem, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;" class="padding-global"><div class="slide-scroll-up"><div class="container-large"><div class="padding-section-medium"><div class="home_logo_component"><div class="home_logo_content"><div class="margin-bottom margin-medium"><div class="max-width-large"><h2 class="heading-style-h3">Unsere Projekt- &amp; Kooperationspartner:</h2></div><a title="partner" data-w-id="4baf7194-a8fd-d6bd-906e-fd6874a7a6f9" href="kontakt.html" class="button-swipe w-inline-block"><div class="button-swipe-circle"><div style="transform: translate3d(0rem, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;" class="button-swipe-icon">➔</div></div><div style="color:rgb(49,49,49)" class="button-swipe-text">werden Sie Partner</div><div style="width: 0%;" class="button-swipe-bg"></div></a></div><div class="home_logo_list"><img title="logo" loading="lazy" alt="" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/67a3262112fdddcaae491bdf_logo_Stadtwerke-Schweinfurt.png" class="home_logo_logo"><img title="logo" loading="lazy" alt="" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/67a32621472ef0837a2a03e0_Logo_Kritzner.png" class="home_logo_logo"><img class="home_logo_logo vr" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/67a32621168a590bfeecafa1_logo_vr-energieservice.png" alt="" sizes="(max-width: 767px) 90vw, 519.015625px" title="logo" loading="lazy" srcset="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/67a32621168a590bfeecafa1_logo_vr-energieservice-p-500.png 500w, https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/67a32621168a590bfeecafa1_logo_vr-energieservice-p-800.png 800w, https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/67a32621168a590bfeecafa1_logo_vr-energieservice-p-1080.png 1080w, https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/67a32621168a590bfeecafa1_logo_vr-energieservice.png 1330w"><img class="home_logo_logo" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/67a326215cda63d6eeb441b8_logo_Trips.png" alt="" sizes="(max-width: 767px) 119.875px, 159.828125px" title="logo" loading="lazy" srcset="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/67a326215cda63d6eeb441b8_logo_Trips-p-500.png 500w, https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/67a326215cda63d6eeb441b8_logo_Trips.png 502w"><img title="logo" loading="lazy" alt="" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/67a326215209db31fda50100_logo_tetranes.png" class="home_logo_logo"><img title="logo" loading="lazy" alt="" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/67a32621b14653db314f87f5_logo_mo%CC%88hringer.png" class="home_logo_logo"><img title="logo" loading="lazy" alt="" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/67a32621be90004c73f78533_logo_tero-carbon.png" class="home_logo_logo"><img title="logo" loading="lazy" alt="" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/67a32621508668b852f10825_Logo_optING.png" class="home_logo_logo"><img title="logo" loading="lazy" alt="" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/67a32621defad2882af3e598_logo_seho.png" class="home_logo_logo"><img title="logo" loading="lazy" alt="" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/67a32621ae25640a60648d54_logo_plan.bee.png" class="home_logo_logo"><img title="logo" loading="lazy" alt="Rausch Technology Logo Gray" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/67812978ce50dd6d52940939_rausch_technologies.avif" class="home_logo_logo"><img title="logo" loading="lazy" alt="" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/67a32621d6432609bd591928_logo_mu%CC%88nch.png" class="home_logo_logo"></div></div></div></div></div></div></div></section><section class="section_content23"><div style="opacity: 1; transform: translate3d(0px, 0rem, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;" class="padding-global"><div class="slide-scroll-up"><div class="container-large"><div class="wei-er-bg"><div class="content23_component"><div class="margin-bottom margin-xxlarge"><div class="w-layout-grid content23_content-wrapper"><div id="w-node-_5c99bb63-3e61-1e73-c847-fbf146bf0648-b7cef02a" class="content23_content-left"><div class="eyebrow text-size-tiny">Projekt des THWS/INSYS</div><h2 class="heading-style-h2">Was ist das enefit-Projekt?</h2><div class="button-group hor-flip"><a title="über-enefit" href="uber-enefit.html" class="button hover-glow w-inline-block"><div class="button-text">Über enefit</div></a><a title="events" href="events.html" class="button no-bg w-inline-block"><div class="button-text slide" style="color: rgb(49, 49, 49);">Events &amp; Netzwerk</div><div class="button-bg" style="width: 0%;"></div></a></div></div><div id="w-node-_5c99bb63-3e61-1e73-c847-fbf146bf064b-b7cef02a" class="content23_content-right"><div class="margin-bottom margin-xxlarge"><div class="text-size-medium">Das Projekt enefit ist eine Initiative des Instituts für Nachhaltige Energiesysteme (INSYS) an der Technische Hochschule Würzburg-Schweinfurt (THWS). <br><br>Das Projekt zielt darauf ab, kleine und mittlere Unternehmen in Mainfranken bei der Umsetzung von Energieeffizienz- und Dekarbonisierungsmaßnahmen zu unterstützen. Dazu fördern wir gezielt die Vernetzung und strategische Zusammenarbeit zwischen verschiedenen Akteuren in der Region. Gleichzeitig werden KI-Lösungen und datenbasierte Analysewerkzeuge entwickelt und erprobt, um Unternehmen gezielt bei der Ermittlung ihrer Anforderungen zu unterstützen sowie energieeffiziente Handlungsmöglichkeiten aufzuzeigen.</div></div></div></div></div><div class="content23_image-wrapper"><a href="#" class="w-inline-block w-lightbox" aria-label="open lightbox" aria-haspopup="dialog"><img src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677fe7d34b2bd7498c647f69_97d0c8e37287c8fdea7ad39b50ba7015_Hausdiagram-enefit.avif" alt="Illustration Tree Diagram" sizes="(max-width: 479px) 80vw, (max-width: 767px) 84vw, (max-width: 991px) 85vw, 86vw" title="diagram" loading="lazy" srcset="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677fe7d34b2bd7498c647f69_97d0c8e37287c8fdea7ad39b50ba7015_Hausdiagram-enefit-p-500.avif 500w, https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677fe7d34b2bd7498c647f69_97d0c8e37287c8fdea7ad39b50ba7015_Hausdiagram-enefit-p-800.avif 800w, https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677fe7d34b2bd7498c647f69_97d0c8e37287c8fdea7ad39b50ba7015_Hausdiagram-enefit-p-1080.avif 1080w, https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677fe7d34b2bd7498c647f69_97d0c8e37287c8fdea7ad39b50ba7015_Hausdiagram-enefit.avif 2200w"><script type="application/json" class="w-json">{
+  "items": [
+    {
+      "_id": "677fe7d34b2bd7498c647f69",
+      "origFileName": "Hausdiagram-enefit.png",
+      "fileName": "Hausdiagram-enefit.png",
+      "fileSize": 219631,
+      "height": 1414,
+      "url": "https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677fe7d34b2bd7498c647f69_Hausdiagram-enefit.png",
+      "width": 2000,
+      "caption": "Hausdiagram enefit",
+      "type": "image"
+    }
+  ],
+  "group": ""
+}</script></a></div></div></div></div></div></div></section><section class="section_cta7"><div class="padding-global" style="opacity: 1; transform: translate3d(0px, 0rem, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;"><div class="container-large"><div class="padding-section-large cta"><div class="cta7_component"><div class="cta7_content"><div class="max-width-large"><div class="margin-bottom margin-xsmall"><h2 class="heading-style-h2 kooperationspartner">Werden Sie jetzt Projekt- &amp; Kooperationspartner</h2></div></div><div id="w-node-ceb78802-4815-187f-da4e-9fe8dd46ad65-dd46ad59" class="button-group is-right"><a title="partner" data-w-id="58f67633-3b15-869a-ec2a-7738ccd03c13" href="kontakt.html" class="button-swipe w-inline-block"><div class="button-swipe-circle"><div class="button-swipe-icon" style="transform: translate3d(0rem, 0px, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;">➔</div></div><div class="button-swipe-text" style="color: rgb(49, 49, 49);">Partner werden</div><div class="button-swipe-bg" style="width: 0%;"></div></a><a title="download" href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d38e3fe7582b44bea4dfe_Vorlage_THWS_ENEFIT_Kooperationsvereinbarung.pdf" class="button no-bg w-inline-block"><div class="button-text slide" style="color: rgb(49, 49, 49);">Download Kooperationsvertrag</div><div class="button-bg" style="width: 0%;"></div></a></div></div><div class="logo-cta"><div class="logo-eu"><img src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d75cf3a04a483eb5c56cd_eu%20logo%20.avif" loading="lazy" title="logo" alt="Kofinanziert EU Logo Blue" class="image-2"></div></div></div></div></div></div></section></main><footer class="footer3_component"><div class="padding-global" style="opacity: 1; transform: translate3d(0px, 0rem, 0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;"><div class="container-large"><div class="padding-vertical padding-xxlarge"><div class="padding-bottom padding-xxlarge"><div class="w-layout-grid footer3_top-wrapper"><div class="footer3_left-wrapper"><div class="margin-bottom margin-medium"><a href="#" class="footer3_logo-link w-nav-brand"><img title="logo" loading="lazy" alt="" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d3534d45b959d82d50a2e_enfit_Logo_Wortbildmarke_anthrazit.avif" class="footer3_logo"></a></div><div class="margin-bottom margin-medium"><div class="footer3_details-wrapper"><div class="margin-bottom margin-small"><div class="text-size-medium">Technische Hochschule Würzburg-Schweinfurt<br>Ignaz-Schön-Str. 11<br>97421 Schweinfurt</div></div></div></div></div><div id="w-node-e11a97f9-60a4-0400-dcc0-232adfd7598a-dfd75964" class="w-layout-grid footer3_menu-wrapper"><img class="image-4" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d6944f68fce37d415d306_EFRE_Logo.avif" alt="Efre Logo Gray-Yellow" sizes="(max-width: 2600px) 100vw, 2600px" title="logo" id="w-node-e8941722-29ab-5b65-ef2a-b0ef2077c5fd-dfd75964" loading="lazy" srcset="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d6944f68fce37d415d306_EFRE_Logo-p-500.png 500w, https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d6944f68fce37d415d306_EFRE_Logo.avif 2600w"><img src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d694471816c353c36ae95_thws%20Logo.avif" loading="lazy" id="w-node-_40dec7d2-b066-aa7f-f79b-aa25d71351a2-dfd75964" title="logo" alt="Insys.thws Logo Gray" class="image-4"><img src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d75cf3a04a483eb5c56cd_eu%20logo%20.avif" loading="lazy" id="w-node-dcb205db-4487-a6f2-5ff6-744067410ec8-dfd75964" title="logo" alt="Kofinanziert EU Logo Blue" class="image-4"><div id="w-node-e11a97f9-60a4-0400-dcc0-232adfd7598b-dfd75964" class="footer3_link-list"></div><div id="w-node-e11a97f9-60a4-0400-dcc0-232adfd75996-dfd75964" class="footer3_link-list"><a title="startseite" href="/home" aria-current="page" class="text-size-medium w--current">Startseite</a><a title="über-enefit" href="uber-enefit.html" class="text-size-medium">Über enefit</a><a title="events" href="events.html" class="text-size-medium">Events & Netzwerk</a><a title="info" href="info.html" class="text-size-medium">How It Works</a></div><div id="w-node-efbf9aae-eebc-8a4b-42a6-c3696cc427d3-dfd75964" class="footer3_link-list"><a title="kontakt" href="kontakt.html" class="text-size-medium">Kontakt</a><a title="impressum" href="impressum.html" class="text-size-medium">Impressum</a><a title="datenschutzvereinbarung" href="datenschutz.html" class="text-size-medium">Datenschutzvereinbarung</a></div></div></div></div><div class="line-divider"></div><div class="padding-top padding-medium"><div class="footer3_bottom-wrapper"><div class="text-size-tiny">© <span class="year">2025</span> enefit - THWS</div><div class="w-layout-grid footer3_legal-list"><a title="afi" href="https://www.xn--agentur-fr-internet-ebc.de/" class="text-size-tiny">made with ︎🖤 by agentur für internet</a></div></div></div></div></div></div><div class="w-embed w-script"><!-- F'in sweet Webflow Hacks -->
+<script>
+// when the DOM is ready
+document.addEventListener("DOMContentLoaded", function() { 
+  // get the the span element
+  const yrSpan = document.querySelector('.year');
+  // get the current year
+  const currentYr = new Date().getFullYear();
+  // set the year span element's text to the current year
+  yrSpan.textContent = currentYr;
+});
+</script>      
+
+
+

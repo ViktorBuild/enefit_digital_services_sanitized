@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALERI Access Point - enefit</title>
+    <link href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d2c010e595f61517badb6_enfit_Logo_32x32.png" rel="shortcut icon" type="image/x-icon">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #ecf4f4 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #1f2937;
+        }
+        .page { max-width: 1240px; margin: 0 auto; }
+        .hero {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 22px;
+            border: 1px solid rgba(223, 244, 94, 0.25);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            padding: 34px;
+            margin-bottom: 28px;
+        }
+        .hero-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .hero h1 {
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            margin-bottom: 10px;
+        }
+        .hero p {
+            color: #6b7280;
+            max-width: 760px;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: rgba(223, 244, 94, 0.1);
+            border: 1px solid rgba(223, 244, 94, 0.35);
+            border-radius: 12px;
+            text-decoration: none;
+            color: #1f2937;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.25s ease;
+        }
+        .back-link:hover { transform: translateY(-2px); background: rgba(223, 244, 94, 0.2); }
+        .phase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 22px;
+        }
+        .phase-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.92));
+            border: 2px solid rgba(223, 244, 94, 0.28);
+            border-radius: 18px;
+            padding: 24px;
+            text-align: left;
+            cursor: pointer;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .phase-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #dff45e, #c7e03a);
+            opacity: 0.9;
+        }
+        .phase-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(223, 244, 94, 0.6);
+            box-shadow: 0 18px 42px rgba(223, 244, 94, 0.22);
+        }
+        .phase-label {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #4b5563;
+            margin-bottom: 10px;
+        }
+        .phase-card h2 {
+            font-size: 1.2rem;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+        .phase-card p {
+            color: #4b5563;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+        }
+        .phase-cta {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #111827;
+            background: rgba(223, 244, 94, 0.24);
+            border: 1px solid rgba(223, 244, 94, 0.4);
+            padding: 7px 10px;
+            border-radius: 999px;
+        }
+        .phase-card.inactive {
+            background: linear-gradient(135deg, rgba(229, 231, 235, 0.96), rgba(243, 244, 246, 0.92));
+            border-color: rgba(209, 213, 219, 0.28);
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .phase-card.inactive::before {
+            background: linear-gradient(90deg, #d1d5db, #9ca3af);
+        }
+        .phase-card.inactive h2 {
+            color: #6b7280;
+        }
+        .phase-card.inactive p {
+            color: #9ca3af;
+        }
+        .phase-card.inactive .phase-label {
+            color: #9ca3af;
+        }
+        .phase-card.inactive .phase-cta {
+            background: rgba(209, 213, 219, 0.24);
+            border-color: rgba(209, 213, 219, 0.4);
+            color: #6b7280;
+        }
+        .phase-card.inactive:hover {
+            transform: none;
+            border-color: rgba(209, 213, 219, 0.28);
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.05);
+        }
+        @media (max-width: 768px) {
+            body { padding: 22px 14px; }
+            .hero { padding: 22px 18px; }
+            .phase-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <section class="hero">
+            <div class="hero-top">
+                <div>
+                    <h1>VALERI Access Point</h1>
+                    <p>
+                        Zentrale Einstiegsseite fuer das 11-Phasen-Framework nach VALERI (DIN EN 17463).
+                        Waehlen Sie eine Phase, um den jeweiligen Schritt strukturiert zu bearbeiten.
+                    </p>
+                </div>
+                <a href="agents.html" class="back-link">Zurueck zu Agents</a>
+            </div>
+        </section>
+
+        <section class="phase-grid">
+            <button type="button" data-phase="1" class="phase-card">
+                <span class="phase-label">Phase 1</span>
+                <h2>Identification of Benefits &amp; Burdens</h2>
+                <p>Identify all effects (energy flow, financial, and other impacts) connected to the investment.</p>
+                <span class="phase-cta">Open Phase</span>
+            </button>
+
+            <button type="button" data-phase="2" class="phase-card">
+                <span class="phase-label">Phase 2</span>
+                <h2>Quantifizierung der Effekte</h2>
+                <p>Quantifizieren Sie die identifizierten Effekte soweit möglich (kWh, Stunden, Einheiten).</p>
+                <span class="phase-cta">Phase Öffnen</span>
+            </button>
+
+            <button type="button" data-phase="3" class="phase-card inactive">
+                <span class="phase-label">Phase 3</span>
+                <h2>Monetization &amp; Qualitative Evaluation</h2>
+                <p>Convert quantities to monetary values or evaluate non-monetary effects qualitatively.</p>
+                <span class="phase-cta">Open Phase</span>
+            </button>
+
+            <button type="button" data-phase="4" class="phase-card inactive">
+                <span class="phase-label">Phase 4</span>
+                <h2>Determination of Timing</h2>
+                <p>Define duration, specific timing of cash flows, and the overall time horizon (e.g., 20 years).</p>
+                <span class="phase-cta">Open Phase</span>
+            </button>
+
+            <button type="button" data-phase="5" class="phase-card inactive">
+                <span class="phase-label">Phase 5</span>
+                <h2>Risk Consideration</h2>
+                <p>Account for potential technological or market risks through risk premiums or surcharges.</p>
+                <span class="phase-cta">Open Phase</span>
+            </button>
+
+            <button type="button" data-phase="6" class="phase-card inactive">
+                <span class="phase-label">Phase 6</span>
+                <h2>Reference Interest Rate</h2>
+                <p>Determine the WACC (Weighted Average Cost of Capital) based on equity and debt shares.</p>
+                <span class="phase-cta">Open Phase</span>
+            </button>
+
+            <button type="button" data-phase="7" class="phase-card">
+                <span class="phase-label">Phase 7</span>
+                <h2>Valuation (NPV Calculation)</h2>
+                <p>Map all flows to a timeline and discount them to calculate the Net Present Value.</p>
+                <span class="phase-cta">Open Phase</span>
+            </button>
+
+            <button type="button" data-phase="8" class="phase-card">
+                <span class="phase-label">Phase 8</span>
+                <h2>Sensitivity Analysis</h2>
+                <p>Test how individual uncertain parameters (like energy prices) impact the NPV.</p>
+                <span class="phase-cta">Open Phase</span>
+            </button>
+
+            <button type="button" data-phase="9" class="phase-card">
+                <span class="phase-label">Phase 9</span>
+                <h2>Scenario Analysis</h2>
+                <p>Model Best-Case and Worst-Case scenarios by varying multiple parameters simultaneously.</p>
+                <span class="phase-cta">Open Phase</span>
+            </button>
+
+            <button type="button" data-phase="10" class="phase-card inactive">
+                <span class="phase-label">Phase 10</span>
+                <h2>Strategic Assessment</h2>
+                <p>Evaluate the project based on NPV, risk vs. strategy, and non-monetizable "tie-breaker" factors.</p>
+                <span class="phase-cta">Open Phase</span>
+            </button>
+
+            <button type="button" data-phase="11" class="phase-card inactive">
+                <span class="phase-label">Phase 11</span>
+                <h2>Transparent Reporting</h2>
+                <p>Generate a final report including the basis of calculation, scenario tables, and a decision proposal.</p>
+                <span class="phase-cta">Open Phase</span>
+            </button>
+        </section>
+    </main>
+
+    <script>
+        const phaseCards = document.querySelectorAll(".phase-card");
+
+        phaseCards.forEach((card) => {
+            card.addEventListener("click", () => {
+                const phase = card.dataset.phase;
+                if (phase === "1") {
+                    window.location.href = "/valeri/phase-1";
+                    return;
+                }
+                if (phase === "2") {
+                    // For phase 2, we need projectId query parameter
+                    alert('Bitte wählen Sie zuerst ein Projekt aus Phase 1.');
+                    window.location.href = "/valeri/phase-1";
+                    return;
+                }
+                if (phase === "7") {
+                    window.location.href = "/valeri/phase-7";
+                    return;
+                }
+                if (phase === "8") {
+                    window.location.href = "phase8.html";
+                    return;
+                }
+                if (phase === "9") {
+                    window.location.href = "phase9.html";
+                    return;
+                }
+                console.log(`VALERI phase ${phase} selected`);
+                alert(`Phase ${phase} selected. Logic hook will be connected here.`);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html data-wf-domain="www.enefit.ai" data-wf-page="info" data-wf-site="67769ab96d9c5332b7ceefdc" lang="de" data-wf-locale="de-DE" class="w-mod-js w-mod-ix">
+<head>
+<style>.wf-force-outline-none[tabindex="-1"]:focus{outline:none;}</style>
+<meta charset="utf-8">
+<title>Wie KMU News funktioniert - KI-Assistent Technologie</title>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/css/enefit.b3bd0508f.min.css" rel="stylesheet" type="text/css">
+<link href="css/mobile-responsive.css" rel="stylesheet" type="text/css">
+<script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+<link href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d2c010e595f61517badb6_enfit_Logo_32x32.png" rel="shortcut icon" type="image/x-icon">
+<link href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d2c07494e98942fec7677_enfit_Logo_256x256.png" rel="apple-touch-icon">
+
+<style>
+body {
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+}
+
+/* Enhanced Assistant Button */
+.assistant-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #dff45e, #c7e03a, #b8d42a);
+  border-radius: 12px;
+  color: #1f2937;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 25px rgba(223, 244, 94, 0.3);
+  text-decoration: none;
+  overflow: hidden;
+  z-index: 1;
+  margin-left: 10px;
+  border: 2px solid transparent;
+  animation: pulse-glow 2s infinite;
+}
+
+.assistant-button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 15px 35px rgba(223, 244, 94, 0.4);
+  background: linear-gradient(135deg, #e8f55a, #dff45e, #c7e03a);
+  border-color: rgba(31, 41, 55, 0.2);
+}
+
+.assistant-button:active {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(223, 244, 94, 0.5);
+}
+
+.assistant-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+  z-index: -1;
+}
+
+.assistant-button:hover::before {
+  left: 100%;
+}
+
+.assistant-button-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(31, 41, 55, 0.1);
+  border-radius: 50%;
+  padding: 4px;
+  transition: all 0.3s ease;
+}
+
+.assistant-button:hover .assistant-button-icon {
+  background: rgba(31, 41, 55, 0.2);
+  transform: rotate(360deg);
+}
+
+.assistant-button-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.assistant-button-text {
+  font-size: 14px;
+  white-space: nowrap;
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 8px 25px rgba(223, 244, 94, 0.3);
+  }
+  50% {
+    box-shadow: 0 8px 25px rgba(223, 244, 94, 0.5);
+  }
+}
+
+/* Mobile assistant button */
+.mobile-assistant-button {
+  display: none;
+  background: linear-gradient(135deg, #dff45e, #c7e03a, #b8d42a);
+  color: #1f2937;
+  padding: 12px 20px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 25px rgba(223, 244, 94, 0.3);
+  margin: 10px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+  animation: pulse-glow 2s infinite;
+}
+
+.mobile-assistant-button:hover {
+  background: linear-gradient(135deg, #e8f55a, #dff45e, #c7e03a);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 15px 35px rgba(223, 244, 94, 0.4);
+  border-color: rgba(31, 41, 55, 0.2);
+}
+
+.mobile-assistant-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+  z-index: -1;
+}
+
+.mobile-assistant-button:hover::before {
+  left: 100%;
+}
+
+/* Language Toggle Button */
+.language-toggle {
+  background: linear-gradient(135deg, #4d65ff, #3546b1);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 10px;
+  box-shadow: 0 2px 8px rgba(77, 101, 255, 0.3);
+}
+
+.language-toggle:hover {
+  background: linear-gradient(135deg, #6c7fff, #4d65ff);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(77, 101, 255, 0.4);
+}
+
+.language-toggle:active {
+  transform: translateY(0);
+}
+
+/* Home Button for Mobile */
+.home-button {
+  background: linear-gradient(135deg, #dff45e, #c7e03a);
+  color: #1f2937;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(223, 244, 94, 0.3);
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.home-button:hover {
+  background: linear-gradient(135deg, #e8f55a, #dff45e);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(223, 244, 94, 0.4);
+  color: #1f2937;
+  text-decoration: none;
+}
+
+.home-button:active {
+  transform: translateY(0);
+}
+
+.home-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.home-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+/* Process flow styling */
+ .process-flow {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   gap: 30px;
+   margin: 40px 0;
+ }
+
+.process-step {
+  background: linear-gradient(135deg, #f8f9ff, #ffffff);
+  border: 2px solid #e8ecff;
+  border-radius: 16px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.process-step:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(77, 101, 255, 0.15);
+  border-color: #4d65ff;
+}
+
+.process-step::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4d65ff, #6c7fff);
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #4d65ff, #3546b1);
+  color: white;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.step-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 15px;
+}
+
+.step-description {
+  color: #4a5568;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+/* Knowledge base section */
+.knowledge-section {
+  background: linear-gradient(135deg, #f7fafc, #edf2f7);
+  border-radius: 20px;
+  padding: 40px;
+  margin: 40px 0;
+}
+
+ .knowledge-grid {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   gap: 25px;
+   margin-top: 30px;
+ }
+
+.knowledge-item {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.knowledge-item:hover {
+  transform: translateY(-3px);
+}
+
+.knowledge-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #4d65ff, #6c7fff);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  color: white;
+  font-size: 20px;
+}
+
+/* Responsive design */
+@media screen and (max-width: 991px) {
+  .process-flow {
+    grid-template-columns: 1fr;
+  }
+  
+  .knowledge-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .process-step {
+    padding: 20px;
+  }
+  
+  .knowledge-section {
+    padding: 30px 20px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .process-step {
+    padding: 15px;
+  }
+  
+  .step-title {
+    font-size: 18px;
+  }
+  
+  .step-description {
+    font-size: 14px;
+  }
+  
+  /* Дополнительные мобильные стили */
+  .home_hero-header_content {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+    text-align: center !important;
+  }
+  
+  .home_hero-header_content-left {
+    order: 2 !important;
+  }
+  
+  .home_hero-header_image-wrapper {
+    order: 1 !important;
+    margin-bottom: 20px !important;
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+  }
+  
+  .home_hero-header_image {
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  
+  .diagram-container {
+    margin: 30px 0 !important;
+    padding: 0 10px !important;
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+  }
+  
+  .diagram-container img {
+    width: 100% !important;
+    height: auto !important;
+    border-radius: 8px !important;
+    display: block !important;
+    visibility: visible !important;
+    max-width: 100% !important;
+  }
+  
+  /* Принудительное отображение всех секций */
+  .section_home_stats,
+  .section_content23,
+  .section_cta7 {
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+  }
+  
+  .process-flow {
+    display: grid !important;
+    visibility: visible !important;
+    width: 100% !important;
+  }
+  
+  .knowledge-grid {
+    display: grid !important;
+    visibility: visible !important;
+    width: 100% !important;
+  }
+  
+  .button-group {
+    flex-direction: column !important;
+    gap: 15px !important;
+    align-items: center !important;
+  }
+  
+  .button-group .button {
+    width: 100% !important;
+    max-width: 280px !important;
+  }
+  
+  .assistant-button {
+    margin-left: 0 !important;
+    margin-top: 10px !important;
+    width: 100% !important;
+    max-width: 280px !important;
+    justify-content: center !important;
+  }
+  
+  .mobile-assistant-button {
+    display: block !important;
+    width: 100% !important;
+    max-width: 280px !important;
+    margin: 15px auto !important;
+  }
+  
+  .language-toggle {
+    margin-left: 0 !important;
+    margin-top: 10px !important;
+  }
+  
+  /* Home Button Mobile Styles */
+  .home-button {
+    display: flex !important;
+    visibility: visible !important;
+    position: relative !important;
+    z-index: 1001 !important;
+    background: linear-gradient(135deg, #dff45e, #c7e03a) !important;
+    color: #1f2937 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    text-decoration: none !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 2px 8px rgba(223, 244, 94, 0.3) !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    -webkit-tap-highlight-color: transparent !important;
+    touch-action: manipulation !important;
+  }
+  
+  .home-button:hover {
+    background: linear-gradient(135deg, #e8f55a, #dff45e) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(223, 244, 94, 0.4) !important;
+    color: #1f2937 !important;
+    text-decoration: none !important;
+  }
+  
+  .home-button:active {
+    transform: translateY(0) !important;
+  }
+  
+  .home-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 24px !important;
+    height: 24px !important;
+  }
+  
+  .home-icon svg {
+    width: 100% !important;
+    height: 100% !important;
+    fill: currentColor !important;
+  }
+  
+  .navbar9_menu-right {
+    flex-direction: column !important;
+    gap: 10px !important;
+    align-items: center !important;
+  }
+  
+  .navbutonsmobil {
+    flex-direction: column !important;
+    gap: 10px !important;
+    align-items: center !important;
+    margin-top: 15px !important;
+  }
+  
+  .navbutonsmobil .button {
+    width: 100% !important;
+    max-width: 200px !important;
+  }
+  
+  /* Принудительное отображение всех изображений */
+  img {
+    display: block !important;
+    visibility: visible !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  
+  /* Убеждаемся что все контейнеры видны */
+  .container-large {
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+  }
+  
+  .padding-global {
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+  }
+  
+  .padding-section-large {
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+  }
+  
+  .home_stats_component {
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+  }
+  
+  .knowledge-section {
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+  }
+  
+  .cta7_component {
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+  }
+}
+
+/* Дополнительные стили для очень маленьких экранов */
+@media screen and (max-width: 479px) {
+  .section_home_stats,
+  .section_content23,
+  .section_cta7 {
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+  }
+  
+  .process-flow,
+  .knowledge-grid {
+    display: grid !important;
+    visibility: visible !important;
+    width: 100% !important;
+  }
+  
+  .diagram-container {
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+  }
+  
+  .home_hero-header_image-wrapper {
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+  }
+  
+  .home_hero-header_image {
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  
+  img {
+    display: block !important;
+    visibility: visible !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  
+  /* Home Button for very small screens */
+  .home-button {
+    min-width: 40px !important;
+    min-height: 40px !important;
+    padding: 6px 10px !important;
+  }
+  
+  .home-icon {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="page-wrapper">
+  <div class="global-styles w-embed">
+    <style>
+      body * {
+        color: inherit;
+      }
+      
+      a, .w-input, .w-select, .w-tab-link, .w-nav-link, .w-slider-arrow-left, .w-slider-arrow-right, .w-dropdown-btn, .w-dropdown-toggle, .w-dropdown-link {
+        color: inherit;
+        text-decoration: inherit;
+        font-size: inherit;
+      }
+      
+      *[tabindex]:focus-visible, input[type="file"]:focus-visible {
+        outline: 0.125rem solid #4d65ff;
+        outline-offset: 0.125rem;
+      }
+      
+      .w-richtext > :not(div):first-child, .w-richtext > div:first-child > :first-child {
+        margin-top: 0 !important;
+      }
+      
+      .w-richtext>:last-child, .w-richtext ol li:last-child, .w-richtext ul li:last-child {
+        margin-bottom: 0 !important;
+      }
+      
+      .pointer-events-off {
+        pointer-events: none;
+      }
+      
+      .pointer-events-on {
+        pointer-events: auto;
+      }
+      
+      .container-medium, .container-small, .container-large {
+        margin-right: auto !important;
+        margin-left: auto !important;
+      }
+      
+      .hide {
+        display: none !important;
+      }
+      
+      @media screen and (max-width: 991px) {
+        .hide, .hide-tablet {
+          display: none !important;
+        }
+      }
+      
+      @media screen and (max-width: 767px) {
+        .hide-mobile-landscape {
+          display: none !important;
+        }
+      }
+      
+      @media screen and (max-width: 479px) {
+        .hide-mobile {
+          display: none !important;
+        }
+      }
+    </style>
+  </div>
+
+  <!-- Navigation -->
+  <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar w-nav">
+    <div class="navbar-element">
+       <a href="https://enefit.ai" class="navbar9_logo-link w-nav-brand" aria-label="home">
+        <img title="logo" loading="lazy" alt="Logo Enefit Gray" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d69a81abfee6fe5c42891_enfit_Logo_Wortbildmarke_grau.avif" class="navbar9_logo">
+      </a>
+      <nav role="navigation" class="navbar-menu w-nav-menu">
+        <div class="nav-menu">
+          <div class="nav-link-background"></div>
+           <a title="home" href="https://enefit.ai" class="nav-link w-inline-block">
+            <div class="icon-embed-xxsmall relative w-embed">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--ic" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8z"></path>
+              </svg>
+            </div>
+            <div class="nav-link-bg"></div>
+          </a>
+           <a title="about-enefit" href="https://www.enefit.ai/uber-enefit" class="nav-link w-inline-block">
+             <div class="text-size-mobil-menu">Über Enefit</div>
+             <div class="nav-link-bg"></div>
+           </a>
+           <a title="events" href="https://www.enefit.ai/events" class="nav-link w-inline-block">
+             <div class="text-size-mobil-menu">Events & Netzwerk</div>
+             <div class="nav-link-bg"></div>
+           </a>
+           <a title="info" href="info.html" class="nav-link w-inline-block w--current">
+             <div class="text-size-mobil-menu">Wie es funktioniert</div>
+             <div class="nav-link-bg"></div>
+           </a>
+          <a title="login" href="login.htm" class="assistant-button">
+            <div class="assistant-button-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+              </svg>
+            </div>
+            <div class="assistant-button-text">Enefit Assistant</div>
+          </a>
+          <div class="navbutonsmobil">
+             <a href="https://www.enefit.ai/kontakt" class="button text-size-medium burgermen w-button">Partner werden ➔</a>
+             <a href="https://www.enefit.ai/kontakt" class="button is-secondary text-size-medium white w-button">Kontakt</a>
+            <a href="login.htm" class="button is-secondary text-size-medium white w-button">Login</a>
+            <a href="login.htm" class="mobile-assistant-button">Enefit Assistant</a>
+          </div>
+        </div>
+      </nav>
+      <div class="navbar9_menu-right">
+        <div class="nav-menu">
+          <a title="contact" href="https://www.enefit.ai/kontakt" class="nav-link w-inline-block">
+            <div class="text-size-mobil-menu">Kontakt</div>
+            <div class="nav-link-bg"></div>
+          </a>
+          <button id="language-toggle" class="language-toggle" onclick="toggleLanguage()">
+            <span class="lang-text">EN</span>
+          </button>
+        </div>
+      </div>
+      <a href="https://enefit.ai" class="navbar9_menu-button home-button" aria-label="home" role="button" tabindex="0">
+        <div class="home-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8z"></path>
+          </svg>
+        </div>
+      </a>
+    </div>
+    <div class="w-nav-overlay" data-wf-ignore="" id="w-nav-overlay-0"></div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main-wrapper">
+    <!-- Hero Section -->
+    <header class="section_home_hero-header">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large">
+            <div class="home_hero-header_component">
+              <div class="w-layout-grid home_hero-header_content">
+                <div class="home_hero-header_content-left">
+                   <div class="margin-bottom margin-small">
+                     <h1 class="heading-style-h1">
+                       <span class="text-span">Wie KMU News</span><br><span class="text-span-2">funktioniert</span>
+                     </h1>
+                   </div>
+                   <p class="text-size-medium">
+                     Erfahren Sie, wie unser System die wichtigsten Neuigkeiten und Updates für kleine und mittlere Unternehmen aus verlässlichen Quellen sammelt und aufbereitet.
+                   </p>
+                   <div class="margin-top margin-medium">
+                     <div class="button-group">
+                       <a title="try-chatbot" href="news.html" class="button hover-glow w-inline-block">
+                         <div class="button-text">News ansehen</div>
+                       </a>
+                       <a title="about-enefit" href="https://www.enefit.ai/uber-enefit" class="button no-bg w-inline-block">
+                         <div class="button-text slide" style="color: rgb(49, 49, 49);">Über Enefit</div>
+                         <div class="button-bg" style="width: 0%;"></div>
+                       </a>
+                     </div>
+                   </div>
+                </div>
+                 <div class="home_hero-header_image-wrapper">
+                   <img class="home_hero-header_image" src="Chat.png" alt="AI Chatbot Illustration" sizes="(max-width: 991px) 100vw, 45vw" title="chatbot" loading="eager">
+                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Diagram Section -->
+    <section class="section_home_stats">
+      <div class="padding-global">
+        <div class="container-large">
+          <div class="padding-section-large">
+            <div class="home_stats_component">
+               <div class="margin-bottom margin-xlarge">
+                 <h2 class="heading-style-h2">KMU News Prozess Übersicht</h2>
+                 <p class="text-size-medium">Unser KMU News System aggregiert automatisch aktuelle Nachrichten aus verifizierten Regierungs- und Förderquellen für kleine und mittlere Unternehmen.</p>
+               </div>
+               
+               <!-- Main Diagram -->
+               <div class="diagram-container" style="text-align: center; margin: 40px 0;">
+                 <img src="NewsSchemeGerman.png" alt="KMU News Diagramm" style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.1);" loading="eager">
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action Section -->
+     <section class="section_cta7">
+       <div class="padding-global">
+         <div class="container-large">
+           <div class="padding-section-large">
+             <div class="cta7_component">
+               <div class="cta7_content">
+                 <div class="max-width-large">
+                   <div class="margin-bottom margin-xsmall">
+                     <h2 class="heading-style-h2">Möchten Sie es in Aktion sehen?</h2>
+                   </div>
+                   <p class="text-size-medium">
+                     Erleben Sie die Kraft unseres KI-Chatbots aus erster Hand. Erhalten Sie personalisierte Beratung für Ihre Energieeffizienz- und Dekarbonisierungsherausforderungen.
+                   </p>
+                   <div class="margin-top margin-medium">
+                     <div class="button-group">
+                       <a title="try-chatbot" href="news.html" class="button hover-glow w-inline-block">
+                         <div class="button-text">News ansehen</div>
+                       </a>
+                       <a title="about-enefit" href="https://www.enefit.ai/uber-enefit" class="button no-bg w-inline-block">
+                         <div class="button-text slide" style="color: rgb(49, 49, 49);">Über Enefit</div>
+                         <div class="button-bg" style="width: 0%;"></div>
+                       </a>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </section>
+
+   </main>
+
+  <!-- Footer -->
+  <footer class="footer3_component">
+    <div class="padding-global">
+      <div class="container-large">
+        <div class="padding-vertical padding-xxlarge">
+          <div class="padding-bottom padding-xxlarge">
+            <div class="w-layout-grid footer3_top-wrapper">
+              <div class="footer3_left-wrapper">
+                <div class="margin-bottom margin-medium">
+                  <a href="#" class="footer3_logo-link w-nav-brand">
+                    <img title="logo" loading="lazy" alt="" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d3534d45b959d82d50a2e_enfit_Logo_Wortbildmarke_anthrazit.avif" class="footer3_logo">
+                  </a>
+                </div>
+                <div class="margin-bottom margin-medium">
+                  <div class="footer3_details-wrapper">
+                    <div class="margin-bottom margin-small">
+                      <div class="text-size-medium">
+                        Technische Hochschule Würzburg-Schweinfurt<br>
+                        Ignaz-Schön-Str. 11<br>
+                        97421 Schweinfurt
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="w-layout-grid footer3_menu-wrapper">
+                <img class="image-4" src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d6944f68fce37d415d306_EFRE_Logo.avif" alt="Efre Logo Gray-Yellow" loading="lazy">
+                <img src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d694471816c353c36ae95_thws%20Logo.avif" loading="lazy" title="logo" alt="Insys.thws Logo Gray" class="image-4">
+                <img src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d75cf3a04a483eb5c56cd_eu%20logo%20.avif" loading="lazy" title="logo" alt="Kofinanziert EU Logo Blue" class="image-4">
+                 <div class="footer3_link-list">
+                   <a title="home" href="https://enefit.ai" class="text-size-medium">Startseite</a>
+                   <a title="about-enefit" href="https://www.enefit.ai/uber-enefit" class="text-size-medium">Über Enefit</a>
+                   <a title="events" href="https://www.enefit.ai/events" class="text-size-medium">Events & Netzwerk</a>
+                 </div>
+                 <div class="footer3_link-list">
+                   <a title="info" href="info.html" class="text-size-medium">Wie es funktioniert</a>
+                   <a title="contact" href="https://www.enefit.ai/kontakt" class="text-size-medium">Kontakt</a>
+                   <a title="privacy" href="https://www.enefit.ai/datenschutz" class="text-size-medium">Datenschutzvereinbarung</a>
+                 </div>
+              </div>
+            </div>
+          </div>
+          <div class="line-divider"></div>
+          <div class="padding-top padding-medium">
+            <div class="footer3_bottom-wrapper">
+              <div class="text-size-tiny">© <span class="year">2025</span> enefit - THWS</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+// Update year in footer and initialize German content
+document.addEventListener("DOMContentLoaded", function() { 
+  const yrSpan = document.querySelector('.year');
+  const currentYr = new Date().getFullYear();
+  yrSpan.textContent = currentYr;
+  
+  // Initialize page with German content by default
+  showGermanContent();
+});
+
+// Language toggle functionality
+let isEnglish = false;
+
+function toggleLanguage() {
+  isEnglish = !isEnglish;
+  const toggleBtn = document.getElementById('language-toggle');
+  const langText = toggleBtn.querySelector('.lang-text');
+  
+  if (isEnglish) {
+    langText.textContent = 'DE';
+    document.documentElement.lang = 'en';
+    document.documentElement.setAttribute('data-wf-locale', 'en-US');
+    showEnglishContent();
+  } else {
+    langText.textContent = 'EN';
+    document.documentElement.lang = 'de';
+    document.documentElement.setAttribute('data-wf-locale', 'de-DE');
+    showGermanContent();
+  }
+}
+
+function showEnglishContent() {
+  // Update title
+  document.title = 'How KMU News Works';
+  
+  // Update navigation
+  document.querySelector('a[title="about-enefit"] .text-size-mobil-menu').textContent = 'About Enefit';
+  document.querySelector('a[title="events"] .text-size-mobil-menu').textContent = 'Events & Network';
+  document.querySelector('a[title="info"] .text-size-mobil-menu').textContent = 'How It Works';
+  document.querySelector('a[title="contact"] .text-size-mobil-menu').textContent = 'Contact';
+  
+  // Update mobile buttons
+  document.querySelector('.navbutonsmobil a[href*="kontakt"]:first-child').textContent = 'Become Partner ➔';
+  document.querySelector('.navbutonsmobil a[href*="kontakt"]:nth-child(2)').textContent = 'Contact';
+  
+  // Update main content
+  document.querySelector('.heading-style-h1 .text-span').textContent = 'How KMU News';
+  document.querySelector('.heading-style-h1 .text-span-2').textContent = 'Works';
+  document.querySelector('.home_hero-header_content-left p').textContent = 'Learn how our system collects and prepares the most important news and updates for small and medium-sized enterprises from reliable sources.';
+  document.querySelector('.button-group a[title="try-chatbot"] .button-text').textContent = 'View News';
+  document.querySelector('.button-group a[title="about-enefit"] .button-text').textContent = 'About Enefit';
+  
+  // Update sections
+  document.querySelector('.home_stats_component h2').textContent = 'KMU News Process Overview';
+  document.querySelector('.home_stats_component p').textContent = 'Our KMU News system automatically aggregates the latest news from verified government and funding sources for small and medium-sized enterprises.';
+  
+  // Change image to 1.png
+  const diagramImg = document.querySelector('.diagram-container img');
+  diagramImg.src = 'NewsSchemeEnglish.png';
+  diagramImg.alt = 'KMU News Diagram';
+  
+  // Update Step-by-Step Process section
+  const stepSection = document.querySelectorAll('.home_stats_component')[1];
+  if (stepSection) {
+    const stepH2 = stepSection.querySelector('h2');
+    const stepP = stepSection.querySelector('p');
+    if (stepH2) stepH2.textContent = 'Step-by-Step Process';
+    if (stepP) stepP.textContent = 'Detailed breakdown of each stage in the chatbot workflow.';
+    
+    // Update step titles and descriptions
+    const steps = stepSection.querySelectorAll('.process-step');
+    if (steps.length >= 6) {
+      steps[0].querySelector('.step-title').textContent = 'User Question';
+      steps[0].querySelector('.step-description').textContent = 'A user (representative from KMU) formulates a question and sends it to the chatbot interface.';
+      
+      steps[1].querySelector('.step-title').textContent = 'Backend Security';
+      steps[1].querySelector('.step-description').textContent = 'The question first reaches our backend server, which protects the API key and ensures secure communication with LightRAG.';
+      
+      steps[2].querySelector('.step-title').textContent = 'LightRAG Processing';
+      steps[2].querySelector('.step-description').textContent = 'LightRAG receives the question and performs query embedding, converting the text into vector representation for intelligent search.';
+      
+      steps[3].querySelector('.step-title').textContent = 'Knowledge Retrieval';
+      steps[3].querySelector('.step-description').textContent = 'The system searches our knowledge base using vector similarity to find the most relevant documents and context.';
+      
+      steps[4].querySelector('.step-title').textContent = 'AI Generation';
+      steps[4].querySelector('.step-description').textContent = 'A fine-tuned Azure OpenAI LLM generates a precise answer using the retrieved context and specialized energy efficiency knowledge.';
+      
+      steps[5].querySelector('.step-title').textContent = 'Response Delivery';
+      steps[5].querySelector('.step-description').textContent = 'The generated answer is returned through the backend to the user, providing accurate and actionable guidance.';
+    }
+  }
+  
+  // Update Knowledge Base section
+  const knowledgeSection = document.querySelector('.knowledge-section');
+  if (knowledgeSection) {
+    const knowledgeH2 = knowledgeSection.querySelector('h2');
+    const knowledgeP = knowledgeSection.querySelector('p');
+    if (knowledgeH2) knowledgeH2.textContent = 'Knowledge Base Preparation';
+    if (knowledgeP) knowledgeP.textContent = 'Before the chatbot can provide intelligent responses, we carefully prepare and structure our knowledge base.';
+    
+    // Update knowledge items
+    const knowledgeItems = knowledgeSection.querySelectorAll('.knowledge-item');
+    if (knowledgeItems.length >= 6) {
+      knowledgeItems[0].querySelector('.step-title').textContent = 'Data Collection';
+      knowledgeItems[0].querySelector('.step-description').textContent = 'We gather comprehensive source materials including scientific articles, government reports, interviews, and specialized energy efficiency documentation.';
+      
+      knowledgeItems[1].querySelector('.step-title').textContent = 'Docling Conversion';
+      knowledgeItems[1].querySelector('.step-description').textContent = 'All documents undergo conversion to machine-readable format, removing formatting inconsistencies and standardizing content structure.';
+      
+      knowledgeItems[2].querySelector('.step-title').textContent = 'Data Structuring';
+      knowledgeItems[2].querySelector('.step-description').textContent = 'Documents are renamed, categorized, and organized to ensure optimal retrieval and processing by the AI system.';
+      
+      knowledgeItems[3].querySelector('.step-title').textContent = 'Vector Generation';
+      knowledgeItems[3].querySelector('.step-description').textContent = 'Advanced embedding models create vector representations of all content, enabling semantic search and intelligent matching.';
+      
+      knowledgeItems[4].querySelector('.step-title').textContent = 'Knowledge Base';
+      knowledgeItems[4].querySelector('.step-description').textContent = 'Processed data is stored in an optimized knowledge base, ready for real-time query processing and response generation.';
+      
+      knowledgeItems[5].querySelector('.step-title').textContent = 'Quality Assurance';
+      knowledgeItems[5].querySelector('.step-description').textContent = 'Continuous monitoring and refinement ensure the knowledge base remains accurate, up-to-date, and highly relevant.';
+    }
+  }
+  
+  // Update CTA section
+  const ctaSection = document.querySelector('.cta7_component');
+  if (ctaSection) {
+    const ctaH2 = ctaSection.querySelector('h2');
+    const ctaP = ctaSection.querySelector('p');
+    const ctaBtn = ctaSection.querySelector('.button-text');
+    if (ctaH2) ctaH2.textContent = 'Want to See It in Action?';
+    if (ctaP) ctaP.textContent = 'Experience the power of our AI chatbot firsthand. Get personalized guidance for your energy efficiency and decarbonization challenges.';
+    if (ctaBtn) ctaBtn.textContent = 'Try the Assistant';
+  }
+  
+  // Update footer
+  const footerLinks = document.querySelectorAll('.footer3_link-list a');
+  footerLinks.forEach(link => {
+    if (link.textContent.includes('Startseite')) link.textContent = 'Home';
+    if (link.textContent.includes('Über Enefit')) link.textContent = 'About Enefit';
+    if (link.textContent.includes('Events & Netzwerk')) link.textContent = 'Events & Network';
+    if (link.textContent.includes('Wie es funktioniert')) link.textContent = 'How It Works';
+    if (link.textContent.includes('Kontakt')) link.textContent = 'Contact';
+    if (link.textContent.includes('Datenschutz')) link.textContent = 'Privacy Policy';
+  });
+}
+
+function showGermanContent() {
+  // Update title
+  document.title = 'Wie KMU News funktioniert - KI-Assistent Technologie';
+  
+  // Update navigation
+  document.querySelector('a[title="about-enefit"] .text-size-mobil-menu').textContent = 'Über Enefit';
+  document.querySelector('a[title="events"] .text-size-mobil-menu').textContent = 'Events & Netzwerk';
+  document.querySelector('a[title="info"] .text-size-mobil-menu').textContent = 'Wie es funktioniert';
+  document.querySelector('a[title="contact"] .text-size-mobil-menu').textContent = 'Kontakt';
+  
+  // Update mobile buttons
+  document.querySelector('.navbutonsmobil a[href*="kontakt"]:first-child').textContent = 'Partner werden ➔';
+  document.querySelector('.navbutonsmobil a[href*="kontakt"]:nth-child(2)').textContent = 'Kontakt';
+  
+  // Update main content
+  document.querySelector('.heading-style-h1 .text-span').textContent = 'Wie KMU News';
+  document.querySelector('.heading-style-h1 .text-span-2').textContent = 'funktioniert';
+  document.querySelector('.home_hero-header_content-left p').textContent = 'Erfahren Sie, wie unser System die wichtigsten Neuigkeiten und Updates für kleine und mittlere Unternehmen aus verlässlichen Quellen sammelt und aufbereitet.';
+  document.querySelector('.button-group a[title="try-chatbot"] .button-text').textContent = 'News ansehen';
+  document.querySelector('.button-group a[title="about-enefit"] .button-text').textContent = 'Über Enefit';
+  
+  // Update sections
+  document.querySelector('.home_stats_component h2').textContent = 'KMU News Prozess Übersicht';
+  document.querySelector('.home_stats_component p').textContent = 'Unser KMU News System aggregiert automatisch aktuelle Nachrichten aus verifizierten Regierungs- und Förderquellen für kleine und mittlere Unternehmen.';
+  
+  // Change image to 2.png
+  const diagramImg = document.querySelector('.diagram-container img');
+  diagramImg.src = 'NewsSchemeGerman.png';
+  diagramImg.alt = 'KMU News Diagramm';
+  
+  // Update Step-by-Step Process section
+  const stepSection = document.querySelectorAll('.home_stats_component')[1];
+  if (stepSection) {
+    const stepH2 = stepSection.querySelector('h2');
+    const stepP = stepSection.querySelector('p');
+    if (stepH2) stepH2.textContent = 'Schritt-für-Schritt Prozess';
+    if (stepP) stepP.textContent = 'Detaillierte Aufschlüsselung jeder Stufe im Chatbot-Workflow.';
+    
+    // Update step titles and descriptions
+    const steps = stepSection.querySelectorAll('.process-step');
+    if (steps.length >= 6) {
+      steps[0].querySelector('.step-title').textContent = 'Benutzerfrage';
+      steps[0].querySelector('.step-description').textContent = 'Ein Benutzer (Vertreter eines KMU) formuliert eine Frage und sendet sie an die Chatbot-Oberfläche.';
+      
+      steps[1].querySelector('.step-title').textContent = 'Backend-Sicherheit';
+      steps[1].querySelector('.step-description').textContent = 'Die Frage erreicht zuerst unseren Backend-Server, der den API-Schlüssel schützt und eine sichere Kommunikation mit LightRAG gewährleistet.';
+      
+      steps[2].querySelector('.step-title').textContent = 'LightRAG-Verarbeitung';
+      steps[2].querySelector('.step-description').textContent = 'LightRAG empfängt die Frage und führt eine Abfrage-Einbettung durch, wodurch der Text in eine Vektordarstellung für intelligente Suche umgewandelt wird.';
+      
+      steps[3].querySelector('.step-title').textContent = 'Wissensabruf';
+      steps[3].querySelector('.step-description').textContent = 'Das System durchsucht unsere Wissensdatenbank mit Vektorähnlichkeit, um die relevantesten Dokumente und den Kontext zu finden.';
+      
+      steps[4].querySelector('.step-title').textContent = 'KI-Generierung';
+      steps[4].querySelector('.step-description').textContent = 'Ein fein abgestimmtes Azure OpenAI LLM generiert eine präzise Antwort unter Verwendung des abgerufenen Kontexts und spezialisierten Energieeffizienz-Wissens.';
+      
+      steps[5].querySelector('.step-title').textContent = 'Antwortlieferung';
+      steps[5].querySelector('.step-description').textContent = 'Die generierte Antwort wird über das Backend an den Benutzer zurückgegeben und bietet genaue und umsetzbare Anleitung.';
+    }
+  }
+  
+  // Update Knowledge Base section
+  const knowledgeSection = document.querySelector('.knowledge-section');
+  if (knowledgeSection) {
+    const knowledgeH2 = knowledgeSection.querySelector('h2');
+    const knowledgeP = knowledgeSection.querySelector('p');
+    if (knowledgeH2) knowledgeH2.textContent = 'Wissensdatenbank Vorbereitung';
+    if (knowledgeP) knowledgeP.textContent = 'Bevor der Chatbot intelligente Antworten liefern kann, bereiten wir unsere Wissensdatenbank sorgfältig vor und strukturieren sie.';
+    
+    // Update knowledge items
+    const knowledgeItems = knowledgeSection.querySelectorAll('.knowledge-item');
+    if (knowledgeItems.length >= 6) {
+      knowledgeItems[0].querySelector('.step-title').textContent = 'Datensammlung';
+      knowledgeItems[0].querySelector('.step-description').textContent = 'Wir sammeln umfassende Quellmaterialien einschließlich wissenschaftlicher Artikel, Regierungsberichte, Interviews und spezialisierter Energieeffizienz-Dokumentation.';
+      
+      knowledgeItems[1].querySelector('.step-title').textContent = 'Docling-Konvertierung';
+      knowledgeItems[1].querySelector('.step-description').textContent = 'Alle Dokumente werden in ein maschinenlesbares Format konvertiert, wodurch Formatierungsinkonsistenzen entfernt und die Inhaltsstruktur standardisiert wird.';
+      
+      knowledgeItems[2].querySelector('.step-title').textContent = 'Datenstrukturierung';
+      knowledgeItems[2].querySelector('.step-description').textContent = 'Dokumente werden umbenannt, kategorisiert und organisiert, um eine optimale Abrufung und Verarbeitung durch das KI-System zu gewährleisten.';
+      
+      knowledgeItems[3].querySelector('.step-title').textContent = 'Vektorgenerierung';
+      knowledgeItems[3].querySelector('.step-description').textContent = 'Fortschrittliche Einbettungsmodelle erstellen Vektordarstellungen aller Inhalte und ermöglichen semantische Suche und intelligente Zuordnung.';
+      
+      knowledgeItems[4].querySelector('.step-title').textContent = 'Wissensdatenbank';
+      knowledgeItems[4].querySelector('.step-description').textContent = 'Verarbeitete Daten werden in einer optimierten Wissensdatenbank gespeichert, bereit für Echtzeit-Abfrageverarbeitung und Antwortgenerierung.';
+      
+      knowledgeItems[5].querySelector('.step-title').textContent = 'Qualitätssicherung';
+      knowledgeItems[5].querySelector('.step-description').textContent = 'Kontinuierliche Überwachung und Verfeinerung stellen sicher, dass die Wissensdatenbank genau, aktuell und hochrelevant bleibt.';
+    }
+  }
+  
+  // Update CTA section
+  const ctaSection = document.querySelector('.cta7_component');
+  if (ctaSection) {
+    const ctaH2 = ctaSection.querySelector('h2');
+    const ctaP = ctaSection.querySelector('p');
+    const ctaBtn = ctaSection.querySelector('.button-text');
+    if (ctaH2) ctaH2.textContent = 'Möchten Sie es in Aktion sehen?';
+    if (ctaP) ctaP.textContent = 'Erleben Sie die Kraft unseres KI-Chatbots aus erster Hand. Erhalten Sie personalisierte Beratung für Ihre Energieeffizienz- und Dekarbonisierungsherausforderungen.';
+    if (ctaBtn) ctaBtn.textContent = 'Assistent ausprobieren';
+  }
+  
+  // Update footer
+  const footerLinks = document.querySelectorAll('.footer3_link-list a');
+  footerLinks.forEach(link => {
+    if (link.textContent.includes('Home')) link.textContent = 'Startseite';
+    if (link.textContent.includes('About Enefit')) link.textContent = 'Über Enefit';
+    if (link.textContent.includes('Events & Network')) link.textContent = 'Events & Netzwerk';
+    if (link.textContent.includes('How It Works')) link.textContent = 'Wie es funktioniert';
+    if (link.textContent.includes('Contact')) link.textContent = 'Kontakt';
+    if (link.textContent.includes('Privacy Policy')) link.textContent = 'Datenschutzvereinbarung';
+  });
+}
+</script>
+</body>
+</html>

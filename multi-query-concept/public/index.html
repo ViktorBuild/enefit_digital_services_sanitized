@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Enefit - Multi-Query Expertenmodus</title>
+<link href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d2c010e595f61517badb6_enfit_Logo_32x32.png" rel="shortcut icon" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --primary-accent: #dff45e;
+        --secondary-accent: #667eea;
+        --bg-gradient: linear-gradient(135deg, #ecf4f4 0%, #e8f2f2 100%);
+        --glass-bg: rgba(255, 255, 255, 0.85);
+        --text-dark: #1a202c;
+        --text-muted: #4a5568;
+        --border-color: rgba(223, 244, 94, 0.3);
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body { 
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+        background: var(--bg-gradient);
+        color: var(--text-dark);
+        min-height: 100vh;
+        padding: 40px 20px;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 900px; 
+        margin: 0 auto; 
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 24px;
+        padding: 40px;
+        box-shadow: var(--shadow);
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .logo-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #fff;
+        padding: 8px 16px;
+        border-radius: 100px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--secondary-accent);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        margin-bottom: 16px;
+    }
+
+    h1 { 
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 12px;
+        letter-spacing: -1px;
+        background: linear-gradient(135deg, #1a202c 0%, #4a5568 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+    }
+
+    .input-section {
+        background: #fff;
+        border-radius: 20px;
+        padding: 24px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        border: 1px solid rgba(0,0,0,0.05);
+        margin-bottom: 30px;
+    }
+
+    label { 
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px; 
+        font-weight: 700;
+        color: var(--text-dark);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    textarea { 
+        width: 100%; 
+        min-height: 120px; 
+        padding: 16px; 
+        font-size: 16px;
+        background: #f8fafc;
+        border: 2px solid transparent;
+        border-radius: 14px;
+        font-family: inherit;
+        resize: vertical;
+        transition: all 0.3s ease;
+        color: var(--text-dark);
+    }
+
+    textarea:focus {
+        outline: none;
+        background: #fff;
+        border-color: var(--secondary-accent);
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    }
+
+    .actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+    }
+
+    button { 
+        padding: 14px 32px; 
+        font-size: 16px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 14px;
+        cursor: pointer;
+        font-weight: 700;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+        filter: brightness(1.1);
+    }
+
+    button:active {
+        transform: translateY(0);
+    }
+
+    button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+    #status {
+        margin-top: 20px;
+        padding: 16px;
+        border-radius: 14px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .status-info { background: rgba(102, 126, 234, 0.1); color: #4c51bf; }
+    .status-success { background: rgba(72, 187, 120, 0.1); color: #276749; }
+    .status-error { background: rgba(245, 101, 101, 0.1); color: #9b2c2c; }
+
+    /* Flow visualization */
+    .flow-container {
+        margin-top: 50px;
+        display: none;
+    }
+
+    .flow-step {
+        margin-bottom: 40px;
+        padding: 30px;
+        border-radius: 20px;
+        background: #fff;
+        border-left: 6px solid var(--secondary-accent);
+        position: relative;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        animation: slideIn 0.5s ease-out;
+    }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .flow-step h3 {
+        margin-bottom: 20px;
+        color: var(--text-dark);
+        font-size: 1.4rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        background: var(--secondary-accent);
+        color: white;
+        border-radius: 10px;
+        font-weight: 800;
+        font-size: 0.9rem;
+    }
+
+    .variation-item {
+        background: #f8fafc;
+        padding: 16px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(0,0,0,0.05);
+        font-size: 0.95rem;
+        transition: transform 0.2s;
+    }
+
+    .variation-item:hover {
+        transform: translateX(5px);
+        border-color: var(--secondary-accent);
+    }
+
+    .variation-item strong {
+        color: var(--secondary-accent);
+        margin-right: 8px;
+    }
+
+    .response-item {
+        background: #fff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 16px;
+        border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .response-item pre {
+        margin-top: 12px;
+        padding: 16px;
+        background: #1a202c;
+        color: #e2e8f0;
+        border-radius: 10px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        font-size: 13px;
+        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+        line-height: 1.6;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .super-question-box {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 20px;
+        margin: 20px 0;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+
+    .super-question-box h4 {
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.85rem;
+        opacity: 0.9;
+    }
+
+    .sources-topics {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-top: 25px;
+    }
+
+    .sources-box, .topics-box {
+        background: rgba(255,255,255,0.1);
+        padding: 20px;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .sources-box h5, .topics-box h5 {
+        margin-bottom: 12px;
+        font-size: 0.9rem;
+        font-weight: 700;
+    }
+
+    .sources-box ul, .topics-box ul {
+        list-style: none;
+    }
+
+    .sources-box li, .topics-box li {
+        margin-bottom: 8px;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .sources-box li::before, .topics-box li::before {
+        content: '•';
+        color: var(--primary-accent);
+    }
+
+    .final-response {
+        background: #fff;
+        padding: 30px;
+        border-radius: 20px;
+        border: 2px solid var(--primary-accent);
+        box-shadow: 0 10px 30px rgba(223, 244, 94, 0.15);
+    }
+
+    .final-response h4 {
+        margin-bottom: 15px;
+        color: #2d3748;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .final-response pre {
+        background: #f8fafc;
+        color: #2d3748;
+        padding: 20px;
+        border-radius: 12px;
+        white-space: pre-wrap;
+        font-size: 15px;
+        line-height: 1.7;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .arrow {
+        text-align: center;
+        margin: 20px 0;
+        color: var(--secondary-accent);
+        opacity: 0.5;
+    }
+
+    .loading-indicator {
+        padding: 40px;
+        text-align: center;
+        color: var(--text-muted);
+    }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(102, 126, 234, 0.1);
+        border-top-color: var(--secondary-accent);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 15px;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+        .container { padding: 20px; }
+        h1 { font-size: 1.8rem; }
+        .sources-topics { grid-template-columns: 1fr; }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
+            Expert-Mode
+        </div>
+        <h1>Multi-Query Prozess</h1>
+        <p class="subtitle">Optimierung komplexer Anfragen durch intelligente Variation und Konsolidierung.</p>
+    </div>
+
+    <div class="input-section">
+        <label for="question">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            Ihre komplexe Abfrage
+        </label>
+        <textarea id="question" placeholder="Z.B.: Wie kann ich die Energieeffizienz eines Gebäudes aus den 1970er Jahren nachhaltig verbessern?"></textarea>
+        <div class="actions">
+            <button id="send">
+                <span>Prozess starten</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+    
+    <div id="status"></div>
+
+    <div id="flow-container" class="flow-container">
+        <!-- Step 1: Variations -->
+        <div class="flow-step" id="step-variations">
+            <h3><span class="step-number">1</span> Fragevarianten generieren</h3>
+            <div class="step-content" id="variations-content"></div>
+        </div>
+
+        <div class="arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+            </svg>
+        </div>
+
+        <!-- Step 2: Initial Responses -->
+        <div class="flow-step" id="step-initial">
+            <h3><span class="step-number">2</span> Antworten vom Chatbot (Analysen)</h3>
+            <div class="step-content" id="initial-responses-content"></div>
+        </div>
+
+        <div class="arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+            </svg>
+        </div>
+
+        <!-- Step 3: Super Question -->
+        <div class="flow-step" id="step-super">
+            <h3><span class="step-number">3</span> Synthese zur Super-Frage</h3>
+            <div class="step-content" id="super-question-content"></div>
+        </div>
+
+        <div class="arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+            </svg>
+        </div>
+
+        <!-- Step 4: Final Response -->
+        <div class="flow-step" id="step-final">
+            <h3><span class="step-number">4</span> Finale konsolidierte Antwort</h3>
+            <div class="step-content" id="final-response-content"></div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

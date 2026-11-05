@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - enefit</title>
+    <link href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d2c010e595f61517badb6_enfit_Logo_32x32.png" rel="shortcut icon" type="image/x-icon">
+    <link href="css/mobile-responsive.css" rel="stylesheet" type="text/css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            position: fixed;
+            height: 100vh;
+            height: 100dvh; /* Dynamic viewport height for mobile browsers */
+            overflow-y: auto;
+            overflow-x: hidden;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        }
+
+        .sidebar-header {
+            padding: 0 30px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            max-width: 150px;
+            margin-bottom: 15px;
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            background: #dff45e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: #1a1a1a;
+        }
+
+        .admin-details h4 {
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .admin-details p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0 20px;
+        }
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(223, 244, 94, 0.2);
+            transform: translateX(5px);
+            color: #dff45e;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(223, 244, 94, 0.1);
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #dff45e;
+            color: #1a1a1a;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(223, 244, 94, 0.3);
+        }
+
+        .btn-secondary {
+            background: #ecf0f1;
+            color: #2c3e50;
+        }
+
+        .btn-secondary:hover {
+            background: #d5dbdb;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+        
+
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid #dff45e;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-title {
+            font-size: 14px;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            background: #dff45e;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a1a1a;
+            font-size: 18px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .stat-change {
+            font-size: 14px;
+            color: #27ae60;
+            font-weight: 500;
+        }
+
+        .stat-change.negative {
+            color: #e74c3c;
+        }
+
+
+
+        /* Companies Table */
+        .companies-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 25px;
+            border-bottom: 1px solid #ecf0f1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+
+        .search-box input {
+            border: none;
+            background: none;
+            outline: none;
+            font-size: 14px;
+            width: 200px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .companies-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .companies-table th,
+        .companies-table td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .companies-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+
+        .companies-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Mobile Menu Toggle Button */
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: #dff45e;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            font-size: 14px;
+            min-width: 60px;
+            min-height: 44px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .mobile-menu-toggle:hover {
+            background: #c4e04e;
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-toggle:active {
+            transform: translateY(0);
+            background: #b8d43e;
+        }
+
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-menu-overlay.show {
+            opacity: 1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                z-index: 1000;
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 280px !important;
+                max-width: 85vw !important; /* Максимальная ширина для маленьких экранов */
+                height: 100vh !important;
+                height: 100dvh !important; /* Dynamic viewport height */
+                overflow-y: auto !important;
+                overflow-x: hidden !important;
+                -webkit-overflow-scrolling: touch !important;
+            }
+
+            .sidebar.open {
+                transform: translateX(0) !important;
+            }
+
+            .main-content {
+                margin-left: 0 !important;
+                width: 100% !important;
+            }
+
+            .mobile-menu-toggle {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                top: 15px;
+                left: 15px;
+                padding: 10px 14px;
+                font-size: 14px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .stat-card {
+                padding: 20px;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .header-actions {
+                width: 100%;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn {
+                padding: 12px 16px;
+                font-size: 14px;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 1rem;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+
+            .companies-table th,
+            .companies-table td {
+                padding: 10px 8px;
+                font-size: 12px;
+            }
+
+            .companies-table th:nth-child(3),
+            .companies-table td:nth-child(3),
+            .companies-table th:nth-child(4),
+            .companies-table td:nth-child(4),
+            .companies-table th:nth-child(5),
+            .companies-table td:nth-child(5) {
+                display: none;
+            }
+
+            .status-badge {
+                padding: 3px 8px;
+                font-size: 10px;
+            }
+
+            .btn-sm {
+                padding: 6px 10px;
+                font-size: 11px;
+                margin: 2px;
+            }
+
+            .modal-content {
+                margin: 10% auto;
+                padding: 20px;
+                width: 95%;
+                max-width: none;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .modal-actions .btn {
+                width: 100%;
+            }
+
+            .admin-info {
+                padding: 12px 20px;
+                margin-bottom: 15px;
+            }
+
+            .admin-avatar {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+
+            .admin-details h4 {
+                font-size: 13px;
+            }
+
+            .admin-details p {
+                font-size: 11px;
+            }
+
+            .nav-link {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+
+            .nav-icon {
+                width: 18px;
+                height: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .mobile-menu-toggle {
+                top: 10px;
+                left: 10px;
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+
+            .sidebar {
+                width: 100vw !important;
+                max-width: 100vw !important;
+                height: 100vh !important;
+                height: 100dvh !important;
+            }
+
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+
+            .stat-value {
+                font-size: 1.3rem;
+            }
+
+            .page-title {
+                font-size: 1.3rem;
+            }
+
+            .section-header {
+                padding: 15px;
+            }
+
+            .companies-table th,
+            .companies-table td {
+                padding: 8px 6px;
+                font-size: 11px;
+            }
+
+            .btn {
+                padding: 10px 14px;
+                font-size: 13px;
+            }
+
+            .btn-sm {
+                padding: 5px 8px;
+                font-size: 10px;
+            }
+
+            .modal-content {
+                margin: 5% auto;
+                padding: 15px;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .credentials-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #dff45e;
+        }
+
+        .modal-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Notification styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1001;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" id="mobileMenuToggle">
+            ☰ Menu
+        </button>
+        
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu-overlay" onclick="closeSidebar()"></div>
+        
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <img src="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d3534d45b959d82d50a2e_enfit_Logo_Wortbildmarke_anthrazit.avif" alt="enefit Logo" class="logo">
+            </div>
+            
+            <div class="admin-info">
+                <div class="admin-avatar">V</div>
+                <div class="admin-details">
+                    <h4>Viktor</h4>
+                    <p>Administrator</p>
+                </div>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" onclick="showSection('dashboard')">
+                        <div class="nav-icon">📊</div>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('applications')">
+                        <div class="nav-icon">📝</div>
+                        Ausstehende Bewerbungen
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('companies')">
+                        <div class="nav-icon">🏢</div>
+                        Aktive Unternehmen
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="showSection('events')">
+                        <div class="nav-icon">📅</div>
+                        Events
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/legal_radar/admin" class="nav-link">
+                        <div class="nav-icon">⚖️</div>
+                        Legal Radar Admin
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://enefit.ai" class="nav-link">
+                        <div class="nav-icon">🏠</div>
+                        Zurück zur Website
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" onclick="logout()">
+                        <div class="nav-icon">🚪</div>
+                        Abmelden
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Dashboard Section -->
+            <div id="dashboard-section">
+                <div class="header">
+                    <h1 class="page-title">Admin Dashboard</h1>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary" onclick="refreshData()">
+                            <span class="loading" id="refreshLoading" style="display: none;"></span>
+                            🔄 Aktualisieren
+                        </button>
+                        <button class="btn btn-primary" onclick="exportData()">
+                            📊 Export
+                        </button>
+
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Ausstehende Bewerbungen</span>
+                            <div class="stat-icon">⏳</div>
+                        </div>
+                        <div class="stat-value" id="pendingApplications">0</div>
+                        <div class="stat-change">Warten auf Prüfung</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Genehmigte Unternehmen</span>
+                            <div class="stat-icon">✅</div>
+                        </div>
+                        <div class="stat-value" id="approvedCompanies">0</div>
+                        <div class="stat-change" id="companiesChange">+0 diesen Monat</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Aktive Unternehmen</span>
+                            <div class="stat-icon">🏢</div>
+                        </div>
+                        <div class="stat-value" id="activeCompanies">0</div>
+                        <div class="stat-change">Aktiv im System</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Abgelehnte Bewerbungen</span>
+                            <div class="stat-icon">❌</div>
+                        </div>
+                        <div class="stat-value" id="rejectedApplications">0</div>
+                        <div class="stat-change">Insgesamt abgelehnt</div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- Applications Section -->
+            <div id="applications-section" style="display: none;">
+                <div class="header">
+                    <h1 class="page-title">Ausstehende Bewerbungen</h1>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary" onclick="refreshApplications()">
+                            <span class="loading" id="refreshLoading" style="display: none;"></span>
+                            🔄 Aktualisieren
+                        </button>
+                        <button class="btn btn-primary" onclick="exportData()">
+                            📊 Export
+                        </button>
+                    </div>
+                </div>
+
+                <div class="companies-section">
+                    <div class="section-header">
+                        <h3 class="section-title">Ausstehende Bewerbungen (Nur Bewerbungen mit Status "Ausstehend")</h3>
+                        <div class="search-box">
+                            <span>🔍</span>
+                            <input type="text" id="applicationsSearch" placeholder="Ausstehende Bewerbungen suchen...">
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="companies-table">
+                            <thead>
+                                <tr>
+                                    <th>Unternehmen</th>
+                                    <th>Branche</th>
+                                    <th>Kontakt</th>
+                                    <th>Eingegangen am</th>
+                                    <th>Status</th>
+                                    <th>Aktionen</th>
+                                </tr>
+                            </thead>
+                            <tbody id="applicationsTableBody">
+                                <!-- Data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Companies Section -->
+            <div id="companies-section" style="display: none;">
+                <div class="header">
+                    <h1 class="page-title">Aktive Genehmigte Unternehmen</h1>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary" onclick="refreshCompanies()">
+                            <span class="loading" id="refreshLoading" style="display: none;"></span>
+                            🔄 Aktualisieren
+                        </button>
+                        <button class="btn btn-primary" onclick="exportCompanies()">
+                            📊 Export
+                        </button>
+                    </div>
+                </div>
+
+                <div class="companies-section">
+                    <div class="section-header">
+                        <h3 class="section-title">Aktive Genehmigte Unternehmen (Nur aktive Unternehmen aus Bewerbungen)</h3>
+                        <div class="search-box">
+                            <span>🔍</span>
+                            <input type="text" id="companiesSearch" placeholder="Aktive Unternehmen suchen...">
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="companies-table">
+                            <thead>
+                                <tr>
+                                    <th>Unternehmen</th>
+                                    <th>Branche</th>
+                                    <th>Genehmigt am</th>
+                                    <th>Status</th>
+                                    <th>Zugangsdaten</th>
+                                    <th>Aktionen</th>
+                                </tr>
+                            </thead>
+                            <tbody id="companiesTableBody">
+                                <!-- Data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events Section -->
+            <div id="events-section" style="display: none;">
+                <div class="header">
+                    <h1 class="page-title">Events</h1>
+                    <div class="header-actions">
+                        <button class="btn btn-primary" onclick="showCreateEventModal()">
+                            ➕ Neues Event
+                        </button>
+                        <button class="btn btn-secondary" onclick="refreshEvents()">
+                            <span class="loading" id="refreshLoading" style="display: none;"></span>
+                            🔄 Aktualisieren
+                        </button>
+                    </div>
+                </div>
+
+                <div class="companies-section">
+                    <div class="section-header">
+                        <h3 class="section-title">Geplante Events</h3>
+                    </div>
+                    <div class="table-container">
+                        <table class="companies-table">
+                            <thead>
+                                <tr>
+                                    <th>Event</th>
+                                    <th>Datum</th>
+                                    <th>Ort</th>
+                                    <th>Registrierungs-URL</th>
+                                    <th>Erstellt von</th>
+                                    <th>Aktionen</th>
+                                </tr>
+                            </thead>
+                            <tbody id="eventsTableBody">
+                                <!-- Data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Application/Company Details -->
+    <div id="modal" class="modal">
+        <div class="modal-content" id="modalContent">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <!-- Content will be injected dynamically -->
+        </div>
+    </div>
+
+    <!-- Modal for Create Event -->
+    <div id="createEventModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close" onclick="closeCreateEventModal()">&times;</span>
+            <h2>Neues Event erstellen</h2>
+            
+            <form id="createEventForm">
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="eventTitle" style="display: block; margin-bottom: 8px; font-weight: 600;">Event Titel *</label>
+                    <input type="text" id="eventTitle" name="title" required style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px;">
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="eventDate" style="display: block; margin-bottom: 8px; font-weight: 600;">Datum & Zeit *</label>
+                    <input type="datetime-local" id="eventDate" name="date" required style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px;">
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="eventLocation" style="display: block; margin-bottom: 8px; font-weight: 600;">Ort</label>
+                    <input type="text" id="eventLocation" name="location" style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px;">
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label for="eventDescription" style="display: block; margin-bottom: 8px; font-weight: 600;">Beschreibung</label>
+                    <textarea id="eventDescription" name="description" rows="4" style="width: 100%; padding: 12px; border: 2px solid #e1e5e9; border-radius: 8px; font-size: 14px; resize: vertical;"></textarea>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeCreateEventModal()">Abbrechen</button>
+                    <button type="submit" class="btn btn-primary">Event erstellen</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        /*
+         * НОВАЯ ЛОГИКА АДМИНСКОГО DASHBOARD:
+         * 
+         * 1. Секция "Ausstehende Bewerbungen" (Ожидающие заявки):
+         *    - Показывает только заявки со статусом "pending"
+         *    - После принятия заявка исчезает из этого списка
+         *    - После отклонения заявка также исчезает из этого списка
+         * 
+         * 2. Секция "Aktive Unternehmen" (Активные принятые предприятия):
+         *    - Показывает только активные предприятия (статус 'active')
+         *    - После деактивации предприятие полностью удаляется из списка
+         *    - Предприятия автоматически перемещаются сюда после одобрения
+         * 
+         * 3. Статистика:
+         *    - "Ausstehende Bewerbungen": количество ожидающих заявок
+         *    - "Genehmigte Unternehmen": общее количество принятых предприятий
+         *    - "Aktive Unternehmen": количество активных предприятий
+         *    - "Abgelehnte Bewerbungen": общее количество отклоненных заявок
+         */
+        
+        // --- Mobile Menu Functions ---
+        function toggleSidebar() {
+            console.log('Toggle sidebar called'); // Debug log
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            
+            if (!sidebar || !overlay) {
+                console.error('Sidebar or overlay not found');
+                return;
+            }
+            
+            const isOpen = sidebar.classList.contains('open');
+            
+            if (isOpen) {
+                sidebar.classList.remove('open');
+                overlay.style.display = 'none';
+                overlay.classList.remove('show');
+                // Предотвращаем прокрутку body когда меню закрыто
+                document.body.style.overflow = '';
+            } else {
+                sidebar.classList.add('open');
+                overlay.style.display = 'block';
+                // Предотвращаем прокрутку body когда меню открыто
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => {
+                    overlay.classList.add('show');
+                }, 10);
+            }
+        }
+
+        function closeSidebar() {
+            console.log('Close sidebar called'); // Debug log
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            
+            if (!sidebar || !overlay) {
+                console.error('Sidebar or overlay not found');
+                return;
+            }
+            
+            sidebar.classList.remove('open');
+            overlay.classList.remove('show');
+            // Восстанавливаем прокрутку body
+            document.body.style.overflow = '';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 300);
+        }
+
+        // --- Section Navigation ---
+        function showSection(section) {
+            document.getElementById('dashboard-section').style.display = section === 'dashboard' ? '' : 'none';
+            document.getElementById('applications-section').style.display = section === 'applications' ? '' : 'none';
+            document.getElementById('companies-section').style.display = section === 'companies' ? '' : 'none';
+            document.getElementById('events-section').style.display = section === 'events' ? '' : 'none';
+            
+            // Highlight active nav
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            if (section === 'dashboard') document.querySelectorAll('.nav-link')[0].classList.add('active');
+            if (section === 'applications') document.querySelectorAll('.nav-link')[1].classList.add('active');
+            if (section === 'companies') document.querySelectorAll('.nav-link')[2].classList.add('active');
+            if (section === 'events') document.querySelectorAll('.nav-link')[3].classList.add('active');
+            
+            // Close mobile menu after navigation
+            if (window.innerWidth <= 1024) {
+                closeSidebar();
+            }
+        }
+
+        // --- Data Refresh Functions ---
+        async function refreshData() {
+            document.getElementById('refreshLoading').style.display = 'inline-block';
+            try {
+                const response = await fetch('/api/dashboard-stats');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                document.getElementById('pendingApplications').textContent = data.pendingApplications;
+                document.getElementById('approvedCompanies').textContent = data.totalCompanies;
+                document.getElementById('companiesChange').textContent = `+${data.approvedApplications} diesen Monat`;
+                document.getElementById('activeCompanies').textContent = data.activeCompanies;
+                document.getElementById('rejectedApplications').textContent = data.rejectedApplications || 0;
+                
+
+            } catch (error) {
+                console.error("Error fetching dashboard stats:", error);
+                alert("Fehler beim Laden der Dashboard-Statistiken.");
+            } finally {
+                document.getElementById('refreshLoading').style.display = 'none';
+            }
+        }
+
+        async function refreshApplications() {
+            document.getElementById('refreshLoading').style.display = 'inline-block';
+            try {
+                const response = await fetch('/api/applications');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                populateApplicationsTable(data);
+            } catch (error) {
+                console.error("Error fetching applications:", error);
+                alert("Fehler beim Laden der Bewerbungen.");
+            } finally {
+                document.getElementById('refreshLoading').style.display = 'none';
+            }
+        }
+
+        async function refreshCompanies() {
+            document.getElementById('refreshLoading').style.display = 'inline-block';
+            try {
+                const response = await fetch('/api/companies');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                populateCompaniesTable(data);
+                
+
+            } catch (error) {
+                console.error("Error fetching companies:", error);
+                alert("Fehler beim Laden der Unternehmen.");
+            } finally {
+                document.getElementById('refreshLoading').style.display = 'none';
+            }
+        }
+
+        // --- Data Export Functions ---
+        async function exportData() {
+            try {
+                const applicationsResponse = await fetch('/api/applications');
+                const companiesResponse = await fetch('/api/companies');
+                
+                if (!applicationsResponse.ok || !companiesResponse.ok) {
+                alert("Fehler beim Exportieren der Daten.");
+                return;
+            }
+                
+                const applications = await applicationsResponse.json();
+                const companies = await companiesResponse.json();
+                
+                // Create CSV content
+                let csvContent = 'data:text/csv;charset=utf-8,';
+                csvContent += 'Type,ID,Name,Industry,Status,Date\n';
+                
+                applications.forEach(app => {
+                    csvContent += `Application,${app.id},${app.companyName},${app.industry},${app.status},${app.submittedAt}\n`;
+                });
+                
+                companies.forEach(company => {
+                    csvContent += `Company,${company.id},${company.name},${company.industry},${company.status},${company.registeredAt}\n`;
+                });
+                
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement('a');
+                link.setAttribute('href', encodedUri);
+                link.setAttribute('download', 'admin_dashboard_data.csv');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (error) {
+                console.error("Export error:", error);
+                alert("Fehler beim Exportieren der Daten.");
+            }
+        }
+        
+        
+
+        async function exportCompanies() {
+            try {
+                const response = await fetch('/api/companies');
+            if (!response.ok) {
+                alert("Fehler beim Exportieren der Unternehmen.");
+                return;
+            }
+                
+                const companies = await response.json();
+                
+                // Фильтруем только активные предприятия для экспорта
+                const activeCompanies = companies.filter(company => company.status === 'active');
+                
+                // Create CSV content
+                let csvContent = 'data:text/csv;charset=utf-8,';
+                csvContent += 'ID,Name,Industry,Contact Email,Status,Registration Date\n';
+                
+                activeCompanies.forEach(company => {
+                    csvContent += `${company.id},${company.name},${company.industry},${company.contactEmail},${company.status},${company.registeredAt}\n`;
+                });
+                
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement('a');
+                link.setAttribute('href', encodedUri);
+                link.setAttribute('download', 'active_companies.csv');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (error) {
+                console.error("Export error:", error);
+                alert("Fehler beim Exportieren der Unternehmen.");
+            }
+        }
+
+        // --- Table Population Functions ---
+        function populateApplicationsTable(data) {
+            const tbody = document.getElementById('applicationsTableBody');
+            tbody.innerHTML = ''; // Clear existing data
+            
+            // Фильтруем только заявки со статусом "pending"
+            const pendingApplications = data.filter(app => app.status === 'pending');
+            
+            if (pendingApplications.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6">Keine ausstehenden Bewerbungen gefunden.</td></tr>';
+                return;
+            }
+            
+            pendingApplications.forEach(app => {
+                const row = document.createElement('tr');
+                const date = new Date(app.submittedAt).toLocaleDateString('de-DE');
+                row.innerHTML = `
+                    <td>${app.companyName}</td>
+                    <td>${app.industry}</td>
+                    <td>${app.contactEmail}</td>
+                    <td>${date}</td>
+                    <td><span class="status-badge status-pending">Ausstehend</span></td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="viewApplicationDetails('${app.id}')">Details</button>
+                        <button class="btn btn-success btn-sm" onclick="approveApplication('${app.id}')">Genehmigen</button>
+                        <button class="btn btn-danger btn-sm" onclick="rejectApplication('${app.id}')">Ablehnen</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function populateCompaniesTable(data) {
+            const tbody = document.getElementById('companiesTableBody');
+            tbody.innerHTML = ''; // Clear existing data
+            
+            // Фильтруем только активные предприятия (статус 'active')
+            const activeCompanies = data.filter(company => company.status === 'active');
+            
+            if (activeCompanies.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6">Keine aktiven genehmigten Unternehmen gefunden.</td></tr>';
+                return;
+            }
+            
+            activeCompanies.forEach(company => {
+                const row = document.createElement('tr');
+                const date = new Date(company.registeredAt).toLocaleDateString('de-DE');
+                row.innerHTML = `
+                    <td>${company.name}</td>
+                    <td>${company.industry}</td>
+                    <td>${date}</td>
+                    <td><span class="status-badge status-active">Aktiv</span></td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="viewCompanyDetails('${company.id}')">Details</button>
+                        <button class="btn btn-danger btn-sm" onclick="deactivateCompany('${company.id}')">Deaktivieren</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // --- Application/Company Actions ---
+        // Новая логика: После принятия заявки предприятие перемещается из списка "Bewerbungen" в список "Unternehmen"
+        // В списке "Bewerbungen" отображаются только заявки со статусом "pending"
+        // В списке "Unternehmen" отображаются все принятые предприятия
+        async function viewApplicationDetails(id) {
+            try {
+                const response = await fetch(`/api/applications`);
+            if (!response.ok) {
+                alert("Fehler beim Laden der Bewerbungsdetails.");
+                return;
+            }
+                const applications = await response.json();
+                const application = applications.find(app => app.id === id);
+                if (application) {
+                    showModal({
+                        type: 'application',
+                        ...application
+                    });
+                } else {
+                    alert("Bewerbung nicht gefunden.");
+                }
+            } catch (error) {
+                console.error("Error viewing application details:", error);
+                alert("Fehler beim Laden der Bewerbungsdetails.");
+            }
+        }
+
+        async function approveApplication(id) {
+            if (confirm('Möchten Sie diese Bewerbung genehmigen? Das Unternehmen wird dann in die Liste der genehmigten Unternehmen verschoben.')) {
+                try {
+                    const response = await fetch(`/api/approve-application/${id}`, { 
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ adminUser: 'admin' })
+                    });
+                if (response.ok) {
+                        showNotification('Bewerbung erfolgreich genehmigt! Das Unternehmen wurde in die Liste der genehmigten Unternehmen verschoben.');
+                    refreshApplications();
+                        refreshCompanies(); // Обновляем список компаний
+                        refreshData();
+                } else {
+                        showNotification("Fehler beim Genehmigen der Bewerbung.", 'error');
+                    }
+                } catch (error) {
+                    console.error("Error approving application:", error);
+                    alert("Fehler beim Genehmigen der Bewerbung.");
+                }
+            }
+        }
+
+        async function rejectApplication(id) {
+            if (confirm('Möchten Sie diese Bewerbung ablehnen? Die Bewerbung wird aus der Liste entfernt.')) {
+                try {
+                    const response = await fetch(`/api/reject-application/${id}`, { 
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ adminUser: 'admin', reason: 'Abgelehnt durch Administrator' })
+                    });
+                if (response.ok) {
+                        showNotification('Bewerbung erfolgreich abgelehnt!');
+                    refreshApplications();
+                        refreshData();
+                } else {
+                        showNotification("Fehler beim Ablehnen der Bewerbung.", 'error');
+                    }
+                } catch (error) {
+                    console.error("Error rejecting application:", error);
+                    alert("Fehler beim Ablehnen der Bewerbung.");
+                }
+            }
+        }
+
+        async function viewCompanyDetails(id) {
+            try {
+                const response = await fetch(`/api/companies`);
+            if (!response.ok) {
+                alert("Fehler beim Laden der Unternehmendetails.");
+                return;
+            }
+                const companies = await response.json();
+                // Ищем только среди активных предприятий
+                const company = companies.find(comp => comp.id === id && comp.status === 'active');
+                if (company) {
+                    showModal({
+                        type: 'company',
+                        ...company
+                    });
+                } else {
+                    alert("Aktives Unternehmen nicht gefunden.");
+                }
+            } catch (error) {
+                console.error("Error viewing company details:", error);
+                alert("Fehler beim Laden der Unternehmendetails.");
+            }
+        }
+
+        async function activateCompany(id) {
+            if (confirm('Möchten Sie dieses Unternehmen aktivieren? Es wird dann wieder in der Liste der aktiven Unternehmen angezeigt.')) {
+                try {
+                    const response = await fetch(`/api/companies/${id}/activate`, { method: 'POST' });
+                if (response.ok) {
+                        showNotification('Unternehmen erfolgreich aktiviert! Es ist jetzt wieder in der Liste sichtbar.');
+                    refreshCompanies();
+                        refreshData();
+                } else {
+                        showNotification("Fehler beim Aktivieren des Unternehmens.", 'error');
+                    }
+                } catch (error) {
+                    console.error("Error activating company:", error);
+                    alert("Fehler beim Aktivieren des Unternehmens.");
+                }
+            }
+        }
+
+        async function deactivateCompany(id) {
+            if (confirm('Möchten Sie dieses Unternehmen deaktivieren? Es wird dann vollständig aus der Liste der genehmigten Unternehmen entfernt.')) {
+                try {
+                    const response = await fetch(`/api/companies/${id}/deactivate`, { method: 'POST' });
+                if (response.ok) {
+                        showNotification('Unternehmen erfolgreich deaktiviert und aus der Liste entfernt!');
+                    refreshCompanies();
+                        refreshData();
+                } else {
+                        showNotification("Fehler beim Deaktivieren des Unternehmens.", 'error');
+                    }
+                } catch (error) {
+                    console.error("Error deactivating company:", error);
+                    alert("Fehler beim Deaktivieren des Unternehmens.");
+                }
+            }
+        }
+
+        // --- Modal Functions ---
+        function showModal(data) {
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = ''; // Clear previous content
+
+            if (data.type === 'application') {
+                const date = new Date(data.submittedAt).toLocaleDateString('de-DE');
+                modalContent.innerHTML = `
+                    <h2>Bewerbungsdetails</h2>
+                    <p><strong>ID:</strong> ${data.id}</p>
+                    <p><strong>Unternehmen:</strong> ${data.companyName}</p>
+                    <p><strong>Branche:</strong> ${data.industry}</p>
+                    <p><strong>E-Mail:</strong> ${data.contactEmail}</p>
+                    <p><strong>Telefon:</strong> ${data.contactPhone || 'Nicht angegeben'}</p>
+                    <p><strong>Adresse:</strong> ${data.address || 'Nicht angegeben'}</p>
+                    <p><strong>Beschreibung:</strong> ${data.description || 'Nicht angegeben'}</p>
+                    <p><strong>Mitarbeiter:</strong> ${data.employees || 'Nicht angegeben'}</p>
+                    <p><strong>Website:</strong> ${data.website || 'Nicht angegeben'}</p>
+                    <p><strong>Bewerbungsdatum:</strong> ${date}</p>
+                    <p><strong>Status:</strong> <span class="status-badge status-${data.status.toLowerCase()}">${data.status}</span></p>
+                    ${data.rejectionReason ? `<p><strong>Ablehnungsgrund:</strong> ${data.rejectionReason}</p>` : ''}
+                    <div class="modal-actions">
+                        <button class="btn btn-secondary" onclick="closeModal()">Schließen</button>
+                    </div>
+                `;
+            } else if (data.type === 'company') {
+                const date = new Date(data.registeredAt).toLocaleDateString('de-DE');
+                modalContent.innerHTML = `
+                    <h2>Unternehmendetails</h2>
+                    <p><strong>ID:</strong> ${data.id}</p>
+                    <p><strong>Unternehmen:</strong> ${data.name}</p>
+                    <p><strong>Branche:</strong> ${data.industry}</p>
+                    <p><strong>E-Mail:</strong> ${data.contactEmail}</p>
+                    <p><strong>Telefon:</strong> ${data.contactPhone || 'Nicht angegeben'}</p>
+                    <p><strong>Adresse:</strong> ${data.address || 'Nicht angegeben'}</p>
+                    <p><strong>Beschreibung:</strong> ${data.description || 'Nicht angegeben'}</p>
+                    <p><strong>Mitarbeiter:</strong> ${data.employees || 'Nicht angegeben'}</p>
+                    <p><strong>Website:</strong> ${data.website || 'Nicht angegeben'}</p>
+                    <p><strong>Registriert am:</strong> ${date}</p>
+                    <p><strong>Status:</strong> <span class="status-badge status-${data.status.toLowerCase()}">${data.status}</span></p>
+                    <p><strong>Zugangsdaten:</strong></p>
+                    <div class="credentials-box">
+                        <h4>Benutzername:</h4>
+                        <p>${data.credentials.username}</p>
+                    </div>
+                    <div class="credentials-box">
+                        <h4>Passwort:</h4>
+                        <p>${data.credentials.password}</p>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn btn-secondary" onclick="closeModal()">Schließen</button>
+                    </div>
+                `;
+            }
+            document.getElementById('modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            const createEventModal = document.getElementById('createEventModal');
+            
+            if (event.target === modal) {
+                closeModal();
+            }
+            if (event.target === createEventModal) {
+                closeCreateEventModal();
+            }
+        }
+
+        // --- Notification Functions ---
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // --- Logout Function ---
+        async function logout() {
+            if (confirm('Möchten Sie sich abmelden?')) {
+                try {
+                    const response = await fetch('/api/logout', { method: 'POST' });
+                    if (response.ok) {
+                        window.location.href = '/login';
+                    } else {
+                        alert('Fehler beim Abmelden');
+                    }
+                } catch (error) {
+                    console.error('Logout error:', error);
+                    window.location.href = '/login';
+                }
+            }
+        }
+
+        // --- Authentication Check ---
+        async function checkAuth() {
+            try {
+                const response = await fetch('/api/check-auth');
+                const result = await response.json();
+                
+                if (!result.authenticated) {
+                    window.location.href = '/login';
+                    return false;
+                }
+                
+                // Check if user is admin - only admins should access dashboard
+                if (result.user.role !== 'admin') {
+                    console.log('Non-admin user trying to access dashboard, redirecting to chat');
+                    window.location.href = '/chat';
+                    return false;
+                }
+                
+                // Update user info in sidebar
+                const adminInfo = document.querySelector('.admin-info');
+                adminInfo.innerHTML = `
+                    <div class="admin-avatar">A</div>
+                    <div class="admin-details">
+                        <h4>Administrator</h4>
+                        <p>System Admin</p>
+                    </div>
+                `;
+                
+                return true;
+            } catch (error) {
+                console.error('Auth check failed:', error);
+                window.location.href = '/login';
+                return false;
+            }
+        }
+
+        // --- Event Management Functions ---
+        async function refreshEvents() {
+            try {
+                const response = await fetch('/api/events');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                populateEventsTable(data);
+            } catch (error) {
+                console.error("Error fetching events:", error);
+                showNotification("Fehler beim Laden der Events.", 'error');
+            }
+        }
+
+        function populateEventsTable(data) {
+            const tbody = document.getElementById('eventsTableBody');
+            tbody.innerHTML = '';
+            
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6">Keine Events gefunden.</td></tr>';
+                return;
+            }
+            
+            data.forEach(event => {
+                const row = document.createElement('tr');
+                const date = new Date(event.date).toLocaleString('de-DE');
+                row.innerHTML = `
+                    <td>
+                        <strong>${event.title}</strong>
+                        ${event.description ? `<br><small>${event.description}</small>` : ''}
+                    </td>
+                    <td>${date}</td>
+                    <td>${event.location || 'Nicht angegeben'}</td>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <input type="text" value="${window.location.origin}${event.registrationUrl}" readonly style="
+                                padding: 5px 10px;
+                                border: 1px solid #ddd;
+                                border-radius: 4px;
+                                font-size: 12px;
+                                width: 200px;
+                                background: #f8f9fa;
+                            ">
+                            <button onclick="copyToClipboard('${event.registrationUrl}')" style="
+                                padding: 5px 10px;
+                                background: #dff45e;
+                                color: #1a1a1a;
+                                border: none;
+                                border-radius: 4px;
+                                cursor: pointer;
+                                font-size: 12px;
+                            ">Kopieren</button>
+                        </div>
+                    </td>
+                    <td>${event.createdBy}</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" onclick="deleteEvent('${event.id}')">Löschen</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function showCreateEventModal() {
+            document.getElementById('createEventModal').style.display = 'block';
+        }
+
+        function closeCreateEventModal() {
+            document.getElementById('createEventModal').style.display = 'none';
+            document.getElementById('createEventForm').reset();
+        }
+
+        async function createEvent(eventData) {
+            try {
+                const response = await fetch('/api/events', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(eventData)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                showNotification('Event erfolgreich erstellt!');
+                closeCreateEventModal();
+                refreshEvents();
+                return result;
+            } catch (error) {
+                console.error('Error creating event:', error);
+                showNotification('Fehler beim Erstellen des Events.', 'error');
+                throw error;
+            }
+        }
+
+        async function deleteEvent(eventId) {
+            if (confirm('Möchten Sie dieses Event wirklich löschen?')) {
+                try {
+                    const response = await fetch(`/api/events/${eventId}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    showNotification('Event erfolgreich gelöscht!');
+                    refreshEvents();
+                } catch (error) {
+                    console.error('Error deleting event:', error);
+                    showNotification('Fehler beim Löschen des Events.', 'error');
+                }
+            }
+        }
+
+        function copyToClipboard(relativeUrl) {
+            // Create full URL with current domain
+            const fullUrl = window.location.origin + relativeUrl;
+            navigator.clipboard.writeText(fullUrl).then(() => {
+                showNotification('URL in Zwischenablage kopiert!');
+            }).catch(() => {
+                showNotification('Fehler beim Kopieren der URL.', 'error');
+            });
+        }
+
+
+
+        // --- Initial Data Load ---
+        document.addEventListener('DOMContentLoaded', async () => {
+            const isAuthenticated = await checkAuth();
+            if (!isAuthenticated) return;
+            
+            refreshData();
+            refreshApplications();
+            refreshCompanies();
+            refreshEvents();
+            
+            // Автоматическое обновление данных каждые 30 секунд
+            setInterval(() => {
+                refreshData();
+                refreshApplications();
+                refreshCompanies();
+                refreshEvents();
+            }, 30000);
+
+            // Event form handler
+            document.getElementById('createEventForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const eventData = {
+                    title: formData.get('title'),
+                    date: formData.get('date'),
+                    location: formData.get('location'),
+                    description: formData.get('description')
+                };
+
+                try {
+                    await createEvent(eventData);
+                } catch (error) {
+                    console.error('Form submission error:', error);
+                }
+            });
+
+            // Handle window resize for mobile menu
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 1024) {
+                    closeSidebar();
+                }
+            });
+
+            // Add event listener for mobile menu toggle button
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Mobile menu button clicked');
+                    toggleSidebar();
+                });
+                
+                // Also add touch event for better mobile support
+                mobileMenuToggle.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Mobile menu button touched');
+                    toggleSidebar();
+                });
+            }
+
+            // Add event listener for overlay click
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            if (overlay) {
+                overlay.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Overlay clicked');
+                    closeSidebar();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

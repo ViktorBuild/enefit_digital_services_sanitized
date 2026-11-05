@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALERI Phase 2 - Quantifizierung der Effekte</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+        }
+
+        .phase-info {
+            background: #f0f4f8;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+
+        .phase-info h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .effects-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border-top: 3px solid #667eea;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .summary-card .label {
+            font-size: 0.85em;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .summary-card .value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .effects-grid {
+            display: grid;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .effect-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .effect-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .effect-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        .effect-title {
+            flex: 1;
+        }
+
+        .effect-title h3 {
+            margin: 0 0 5px 0;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .effect-title p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .effect-badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        .badge-benefit {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-burden {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .badge-confidence {
+            background: #e7f3ff;
+            color: #004085;
+        }
+
+        .input-group {
+            margin: 15px 0;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95em;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .input-row input[type="number"],
+        .input-row input[type="text"],
+        .input-row select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .input-row input[type="number"]:focus,
+        .input-row input[type="text"]:focus,
+        .input-row select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            border: 4px solid #f0f0f0;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #f5c6cb;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #c3e6cb;
+        }
+
+        .category-section {
+            margin-bottom: 30px;
+        }
+
+        .category-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .no-effects {
+            background: #f0f0f0;
+            padding: 40px;
+            text-align: center;
+            border-radius: 8px;
+            color: #666;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        .required {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <h1>VALERI - Phase 2: Quantifizierung der Effekte</h1>
+        <p>Erfassen Sie messbare Größen für die identifizierten Effekte aus Phase 1</p>
+    </div>
+
+    <!-- Messages -->
+    <div id="messageContainer"></div>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="loading">
+        <div class="spinner"></div>
+        <p>Phase 2 Daten werden geladen...</p>
+    </div>
+
+    <!-- Main Content (hidden initially) -->
+    <div id="mainContent" style="display: none;">
+        <!-- Phase Info -->
+        <div class="phase-info">
+            <h3>Projektübersicht</h3>
+            <p><strong>Projekt:</strong> <span id="projectName"></span></p>
+            <p><strong>Investitionsziel:</strong> <span id="investmentObjective"></span></p>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="effects-summary">
+            <div class="summary-card">
+                <div class="label">Zu quantifizierende Effekte</div>
+                <div class="value" id="totalEffects">0</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Davon Vorteile</div>
+                <div class="value" id="benefitCount">0</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Davon Belastungen</div>
+                <div class="value" id="burdenCount">0</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Fertigstellungsgrad</div>
+                <div class="value" id="progressPercent">0%</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Effects Form -->
+        <form id="quantificationsForm">
+            <div id="effectsContainer"></div>
+
+            <!-- Action Buttons -->
+            <div class="actions">
+                <button type="button" class="btn btn-secondary" onclick="goBackToPhase1()">Zurück zu Phase 1</button>
+                <button type="submit" class="btn btn-primary">Quantifizierungen speichern</button>
+                <button type="button" class="btn btn-primary" onclick="completePhase2()" id="completeBtn" style="display: none; background: #28a745;">Phase 2 abschließen</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+let projectId = null;
+let phase2Data = null;
+let quantifications = [];
+
+// Initialize
+document.addEventListener('DOMContentLoaded', async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    projectId = urlParams.get('projectId');
+
+    if (!projectId) {
+        showMessage('Projekt-ID fehlt. Bitte ein Projekt auswählen.', 'error');
+        return;
+    }
+
+    await loadPhase2Data();
+    setupFormHandlers();
+});
+
+// Load Phase 2 data from API
+async function loadPhase2Data() {
+    try {
+        const response = await fetch(`/api/valeri/projects/${projectId}/phase2/init`);
+        if (!response.ok) {
+            const error = await response.json();
+            showMessage(`Fehler beim Laden: ${error.error}`, 'error');
+            document.getElementById('loadingState').style.display = 'block';
+            return;
+        }
+
+        const result = await response.json();
+        phase2Data = result.data;
+        
+        renderPhase2Content();
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'block';
+    } catch (error) {
+        showMessage(`Fehler beim Laden der Phase 2 Daten: ${error.message}`, 'error');
+    }
+}
+
+// Render Phase 2 content
+function renderPhase2Content() {
+    // Populate header info
+    document.getElementById('projectName').textContent = phase2Data.projectName;
+    document.getElementById('investmentObjective').textContent = 
+        phase2Data.projectBrief?.investment_objective || 'N/A';
+
+    // Summary counts
+    const benefits = phase2Data.quantifiableEffects.filter(e => e.type === 'benefit').length;
+    const burdens = phase2Data.quantifiableEffects.filter(e => e.type === 'burden').length;
+
+    document.getElementById('totalEffects').textContent = phase2Data.quantifiableEffects.length;
+    document.getElementById('benefitCount').textContent = benefits;
+    document.getElementById('burdenCount').textContent = burdens;
+
+    // Render effects by category
+    const container = document.getElementById('effectsContainer');
+    container.innerHTML = '';
+
+    const categories = ['energy_flow_effects', 'additional_financial_effects', 'other_effects'];
+    const categoryNames = {
+        'energy_flow_effects': 'Energiefluss-Effekte',
+        'additional_financial_effects': 'Zusätzliche finanzielle Effekte',
+        'other_effects': 'Weitere Effekte'
+    };
+
+    categories.forEach(category => {
+        const categoryEffects = phase2Data.quantifiableEffects.filter(e => e.category === category);
+        
+        if (categoryEffects.length > 0) {
+            const section = document.createElement('div');
+            section.className = 'category-section';
+            section.innerHTML = `<h2 class="category-title">${categoryNames[category]}</h2>`;
+
+            categoryEffects.forEach((effect, index) => {
+                section.appendChild(createEffectCard(effect, index));
+            });
+
+            container.appendChild(section);
+        }
+    });
+
+    // Initialize quantifications array
+    quantifications = phase2Data.quantifiableEffects.map(e => ({
+        id: e.id,
+        category: e.category,
+        name: e.name,
+        value: null,
+        unit: '',
+        notes: ''
+    }));
+}
+
+// Create effect input card
+function createEffectCard(effect, index) {
+    const card = document.createElement('div');
+    card.className = 'effect-card';
+
+    const typeClass = effect.type === 'benefit' ? 'badge-benefit' : 'badge-burden';
+    const typeLabel = effect.type === 'benefit' ? 'Vorteil' : 'Belastung';
+    const confidenceText = {
+        'high': 'Hoch',
+        'medium': 'Mittel',
+        'low': 'Niedrig'
+    }[effect.confidence] || 'Unbekannt';
+
+    card.innerHTML = `
+        <div class="effect-header">
+            <div class="effect-title">
+                <h3>${effect.name}</h3>
+                <p>${effect.reason}</p>
+            </div>
+        </div>
+
+        <div class="effect-badges">
+            <span class="badge ${typeClass}">${typeLabel}</span>
+            <span class="badge badge-confidence">Konfidenz: ${confidenceText}</span>
+        </div>
+
+        <div class="input-group">
+            <label>Messwert eingeben <span class="required">*</span></label>
+            <div class="input-row">
+                <input type="number" 
+                       id="value_${index}" 
+                       placeholder="Numerischer Wert"
+                       step="0.01"
+                       data-effect-id="${effect.id}"
+                       class="effect-value"
+                       onchange="updateQuantification(${index})">
+                <input type="text" 
+                       id="unit_${index}" 
+                       placeholder="Einheit (z.B. kWh, h, St.)"
+                       data-effect-id="${effect.id}"
+                       class="effect-unit"
+                       onchange="updateQuantification(${index})">
+                <input type="text" 
+                       id="notes_${index}" 
+                       placeholder="Notizen (optional)"
+                       data-effect-id="${effect.id}"
+                       class="effect-notes"
+                       onchange="updateQuantification(${index})">
+            </div>
+        </div>
+    `;
+
+    return card;
+}
+
+// Update quantification data
+function updateQuantification(index) {
+    const value = document.getElementById(`value_${index}`).value;
+    const unit = document.getElementById(`unit_${index}`).value;
+    const notes = document.getElementById(`notes_${index}`).value;
+
+    if (quantifications[index]) {
+        quantifications[index].value = value ? parseFloat(value) : null;
+        quantifications[index].unit = unit;
+        quantifications[index].notes = notes;
+    }
+
+    updateProgress();
+}
+
+// Update progress bar
+function updateProgress() {
+    const completed = quantifications.filter(q => q.value !== null && q.value !== '').length;
+    const total = quantifications.length;
+    const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+    document.getElementById('progressPercent').textContent = percentage + '%';
+    document.getElementById('progressFill').style.width = percentage + '%';
+
+    // Show complete button if all quantifications are done
+    if (percentage === 100) {
+        document.getElementById('completeBtn').style.display = 'inline-block';
+    }
+}
+
+// Setup form handlers
+function setupFormHandlers() {
+    document.getElementById('quantificationsForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await saveQuantifications();
+    });
+}
+
+// Save quantifications
+async function saveQuantifications() {
+    try {
+        // Validate that at least some values are provided
+        const withValues = quantifications.filter(q => q.value !== null);
+        if (withValues.length === 0) {
+            showMessage('Bitte geben Sie mindestens einen Messwert ein.', 'error');
+            return;
+        }
+
+        const response = await fetch(`/api/valeri/projects/${projectId}/phase2/save-quantifications`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                quantifications: quantifications.filter(q => q.value !== null),
+                summary: {
+                    totalQuantified: quantifications.filter(q => q.value !== null).length,
+                    totalIdentified: quantifications.length
+                }
+            })
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            showMessage(`Fehler beim Speichern: ${error.error}`, 'error');
+            return;
+        }
+
+        const result = await response.json();
+        showMessage('Quantifizierungen erfolgreich gespeichert!', 'success');
+    } catch (error) {
+        showMessage(`Fehler beim Speichern: ${error.message}`, 'error');
+    }
+}
+
+// Complete Phase 2
+async function completePhase2() {
+    try {
+        const response = await fetch(`/api/valeri/projects/${projectId}/complete-phase/2`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            showMessage(`Fehler beim Abschließen: ${error.error}`, 'error');
+            return;
+        }
+
+        showMessage('Phase 2 erfolgreich abgeschlossen! Phase 3 ist nun verfügbar.', 'success');
+        setTimeout(() => {
+            window.location.href = '/valeri/dashboard';
+        }, 2000);
+    } catch (error) {
+        showMessage(`Fehler: ${error.message}`, 'error');
+    }
+}
+
+// GO BACK TO PHASE 1
+function goBackToPhase1() {
+    if (confirm('Möchten Sie zu Phase 1 zurückkehren? Ungespeicherte Änderungen gehen verloren.')) {
+        window.location.href = `/valeri/phase-1?projectId=${projectId}`;
+    }
+}
+
+// Show message
+function showMessage(message, type = 'info') {
+    const container = document.getElementById('messageContainer');
+    const messageEl = document.createElement('div');
+    messageEl.className = `${type}-message`;
+    messageEl.textContent = message;
+    container.innerHTML = '';
+    container.appendChild(messageEl);
+
+    if (type === 'success') {
+        setTimeout(() => {
+            messageEl.remove();
+        }, 3000);
+    }
+}
+</script>
+
+</body>
+</html>

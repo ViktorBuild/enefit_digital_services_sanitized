@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="VALERI – Bewertung energiebezogener Investitionen für deutsche KMU gemäß DIN EN 17463:2021 und A1:2024. KI-gestütztes Analyse-Tool für Kapitalwertberechnungen, Sensitivitäts- und Szenarioanalysen.">
+  <title>VALERI – Bewertung energiebezogener Investitionen | DIN EN 17463</title>
+  <link href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d2c010e595f61517badb6_enfit_Logo_32x32.png" rel="shortcut icon" type="image/x-icon">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
+  <!-- App styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ── Top Header ── -->
+  <header class="app-header" id="app-header">
+    <!-- Rendered by app.js -->
+  </header>
+
+  <!-- ── Body (sidebar + main) ── -->
+  <div class="app-body">
+
+    <!-- Sidebar (step navigation) -->
+    <nav class="sidebar" id="sidebar">
+      <!-- Rendered by app.js -->
+    </nav>
+
+    <!-- Main content area -->
+    <main class="main-content" id="main-content">
+      <!-- Rendered by app.js -->
+    </main>
+
+  </div>
+
+</div>
+
+<!-- ── Toast Notifications ── -->
+<div id="toast-container"></div>
+
+<!-- ── Scripts (order matters!) ── -->
+<script src="i18n/translations.js"></script>
+<script src="engine/math.js"></script>
+<script src="ai/gemini.js"></script>
+<script src="report/template.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

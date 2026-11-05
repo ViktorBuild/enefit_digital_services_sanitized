@@ -1,0 +1,18 @@
+[
+  {
+    "id": "user-demo-001",
+    "username": "demo_company",
+    "password": "DemoPassword123!",
+    "companyId": "demo-comp-001",
+    "role": "company",
+    "createdAt": "2024-01-15T10:00:00.000Z"
+  },
+  {
+    "id": "user-demo-002",
+    "username": "demo_logistics",
+    "password": "DemoPassword123!",
+    "companyId": "demo-comp-002",
+    "role": "company",
+    "createdAt": "2024-02-01T14:30:00.000Z"
+  }
+]

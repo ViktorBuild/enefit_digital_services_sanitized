@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALERI Phase 8 - Sensitivity Analysis</title>
+    <link href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d2c010e595f61517badb6_enfit_Logo_32x32.png" rel="shortcut icon" type="image/x-icon">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #ecf4f4 100%);
+            min-height: 100vh;
+            color: #1f2937;
+            padding: 34px 16px;
+        }
+        .page { max-width: 1400px; margin: 0 auto; }
+        .shell {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid #e5e7eb;
+            border-radius: 22px;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+            padding: 28px;
+        }
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 20px;
+            margin-bottom: 22px;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(223, 244, 94, 0.35);
+            background: rgba(223, 244, 94, 0.12);
+            color: #111827;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.92rem;
+            transition: all 0.25s ease;
+        }
+        .back-link:hover { transform: translateY(-2px); background: rgba(223, 244, 94, 0.2); }
+        h1 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 8px; }
+        .lead { color: #4b5563; line-height: 1.6; max-width: 880px; font-size: 0.98rem; }
+        .layout { display: grid; grid-template-columns: 1.45fr 1fr; gap: 20px; align-items: start; }
+        .panel {
+            border: 1px solid #e5e7eb;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(248, 250, 252, 0.92));
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.045);
+        }
+        .panel-title { font-size: 1rem; font-weight: 650; margin-bottom: 10px; letter-spacing: 0.01em; }
+        .label { font-size: 0.9rem; font-weight: 500; margin-bottom: 8px; display: block; color: #374151; }
+        textarea, input, select {
+            width: 100%;
+            border: 1px solid #dbe1ea;
+            border-radius: 12px;
+            padding: 11px 12px;
+            font: inherit;
+            background: #f8fafc;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: rgba(212, 225, 87, 0.9);
+            box-shadow: 0 0 0 4px rgba(212, 225, 87, 0.2);
+            background: #fff;
+        }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+        .field { margin-bottom: 14px; }
+        .actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
+        .btn {
+            border: none;
+            border-radius: 12px;
+            padding: 11px 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #dff45e, #c7e03a);
+            color: #111827;
+            box-shadow: 0 8px 20px rgba(223, 244, 94, 0.35);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(170, 190, 60, 0.33); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .meta-row { margin-top: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; color: #6b7280; font-size: 0.86rem; }
+        .result-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 12px; border-radius: 999px;
+            border: 1px solid rgba(223, 244, 94, 0.42);
+            background: rgba(223, 244, 94, 0.14);
+            font-size: 0.82rem; font-weight: 800; color: #111827;
+        }
+        .sensitivity-card {
+            border: 1px solid rgba(223, 244, 94, 0.35);
+            background: rgba(212, 225, 87, 0.10);
+            border-radius: 14px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+        .sensitivity-title { font-size: 0.85rem; color: #374151; font-weight: 700; }
+        .kpi {
+            border: 1px solid #e5e7eb; background: #fff;
+            border-radius: 14px; padding: 12px;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.03);
+        }
+        .kpi h3 { font-size: 0.78rem; color: #6b7280; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+        .kpi .value { font-size: 1.2rem; font-weight: 850; color: #111827; }
+        .kpi .sub { margin-top: 3px; color: #6b7280; font-size: 0.86rem; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        th, td {
+            border-top: 1px solid #eef2f7;
+            padding: 8px 6px;
+            text-align: left;
+        }
+        th { color: #6b7280; font-size: 0.82rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+        .source-tag {
+            border: 1px solid #dbe2ea;
+            background: #f8fafc;
+            color: #334155;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 0.77rem;
+        }
+        .info-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(223, 244, 94, 0.3);
+            border: 1px solid rgba(223, 244, 94, 0.6);
+            color: #374151;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        .info-btn:hover {
+            background: rgba(223, 244, 94, 0.5);
+            border-color: rgba(223, 244, 94, 0.9);
+            transform: scale(1.1);
+        }
+        .label-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 18px;
+            padding: 28px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 2px solid rgba(223, 244, 94, 0.3);
+            padding-bottom: 12px;
+        }
+        .modal-header h2 {
+            font-size: 1.3rem;
+            color: #111827;
+            margin: 0;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+            transition: color 0.2s ease;
+        }
+        .modal-close:hover {
+            color: #111827;
+        }
+        .modal-body {
+            color: #4b5563;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+        .modal-section {
+            margin-bottom: 16px;
+        }
+        .modal-section-title {
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+        .tornado-chart {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+        .tornado-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            gap: 12px;
+        }
+        .tornado-label {
+            width: 150px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #374151;
+            text-align: right;
+            flex-shrink: 0;
+        }
+        .tornado-bar-container {
+            flex: 1;
+            height: 30px;
+            background: #e5e7eb;
+            border-radius: 6px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            min-width: 200px;
+        }
+        .tornado-bar-negative {
+            background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+            height: 100%;
+            border-radius: 6px 0 0 6px;
+        }
+        .tornado-bar-positive {
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+            height: 100%;
+            border-radius: 0 6px 6px 0;
+        }
+        .tornado-value {
+            width: 80px;
+            text-align: right;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #111827;
+            flex-shrink: 0;
+        }
+        .range-input-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .range-input-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .range-label {
+            font-size: 0.8rem;
+            color: #6b7280;
+            font-weight: 600;
+        }
+        .npv-kpis {
+            display: grid; grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px; margin-top: 12px;
+        }
+        @media (max-width: 1200px) {
+            .layout { grid-template-columns: 1fr; }
+            .npv-kpis { grid-template-columns: 1fr; }
+            .tornado-label { width: 120px; }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <section class="shell">
+            <header class="topbar">
+                <div>
+                    <h1>VALERI Phase 8 - Sensitivity Analysis</h1>
+                    <p class="lead">
+                        Variieren Sie einzelne Parameter innerhalb definierter Unsicherheitsintervalle und beobachten Sie die Auswirkungen auf den NPV.
+                        Die Sensitivitätsanalyse hilft, die kritischen Wertreiber zu identifizieren.
+                    </p>
+                </div>
+                <a href="/accesspoint" class="back-link">Zurück zum Access Point</a>
+            </header>
+
+            <!-- Load Phase 7 Results Section -->
+            <section class="panel" style="margin-bottom: 22px; background: linear-gradient(135deg, #fef3c7 0%, #fef08a 100%); border-color: #fcd34d;">
+                <h2 class="panel-title" style="color: #92400e;">Phase 7 Ergebnis laden</h2>
+                <p style="color: #78350f; margin-bottom: 14px; font-size: 0.95rem;">Wählen Sie ein Phase 7 Ergebnis oder ein Projekt mit Szenarien aus um mit der Sensitivitätsanalyse zu beginnen.</p>
+                <div style="display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <label class="label" style="color: #92400e;">Verfügbare Ergebnisse</label>
+                        <select id="resultSelector" style="width: 100%; padding: 10px; border: 1px solid #fcd34d; border-radius: 8px; background: white; color: #111827; font-size: 0.95rem;">
+                            <option value="">-- Wählen Sie ein Ergebnis --</option>
+                        </select>
+                    </div>
+                    <button id="loadPhase7Btn" type="button" style="padding: 10px 16px; background: linear-gradient(135deg, #fcd34d 0%, #fbbf24 100%); color: #92400e; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">
+                        Laden
+                    </button>
+                </div>
+                <div id="loadStatus" style="margin-top: 12px; padding: 10px; background: white; border-radius: 8px; color: #6b7280; font-size: 0.9rem; display: none;"></div>
+            </section>
+
+            <section class="layout">
+                <!-- Left Panel: Sensitivity Parameters -->
+                <section class="panel">
+                    <h2 class="panel-title">Sensitivitätsparameter konfigurieren</h2>
+                    <p style="color: #6b7280; margin-bottom: 12px; font-size: 0.9rem;">Definieren Sie Unsicherheitsintervalle für Variable</p>
+
+                    <!-- Energy Price Sensitivity -->
+                    <div class="sensitivity-card">
+                        <div class="sensitivity-title">
+                            <div class="label-wrapper">
+                                <span>Energiepreis (EUR/kWh)</span>
+                                <button type="button" class="info-btn" data-field="energyPrice">i</button>
+                            </div>
+                        </div>
+                        <div class="range-input-group">
+                            <div class="range-input-item">
+                                <span class="range-label">Unteres Szenario</span>
+                                <input type="number" id="energyPriceLow" step="0.001" placeholder="Min" value="0.15">
+                            </div>
+                            <div class="range-input-item">
+                                <span class="range-label">Oberes Szenario</span>
+                                <input type="number" id="energyPriceHigh" step="0.001" placeholder="Max" value="0.35">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Discount Rate (WACC) Sensitivity -->
+                    <div class="sensitivity-card">
+                        <div class="sensitivity-title">
+                            <div class="label-wrapper">
+                                <span>Diskontierungssatz WACC (%)</span>
+                                <button type="button" class="info-btn" data-field="discountRate">i</button>
+                            </div>
+                        </div>
+                        <div class="range-input-group">
+                            <div class="range-input-item">
+                                <span class="range-label">Unteres Szenario</span>
+                                <input type="number" id="discountRateLow" step="0.1" placeholder="Min" value="4">
+                            </div>
+                            <div class="range-input-item">
+                                <span class="range-label">Oberes Szenario</span>
+                                <input type="number" id="discountRateHigh" step="0.1" placeholder="Max" value="12">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Energy Savings (kWh) Sensitivity -->
+                    <div class="sensitivity-card">
+                        <div class="sensitivity-title">
+                            <div class="label-wrapper">
+                                <span>Jährliche Energieeinsparung (kWh)</span>
+                                <button type="button" class="info-btn" data-field="energySavings">i</button>
+                            </div>
+                        </div>
+                        <div class="range-input-group">
+                            <div class="range-input-item">
+                                <span class="range-label">Unteres Szenario (-20%)</span>
+                                <input type="number" id="energySavingsLow" step="100" placeholder="Min" value="">
+                            </div>
+                            <div class="range-input-item">
+                                <span class="range-label">Oberes Szenario (+20%)</span>
+                                <input type="number" id="energySavingsHigh" step="100" placeholder="Max" value="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Price Trend Sensitivity -->
+                    <div class="sensitivity-card">
+                        <div class="sensitivity-title">
+                            <div class="label-wrapper">
+                                <span>Energiepreistrend (% p.a.)</span>
+                                <button type="button" class="info-btn" data-field="priceTrend">i</button>
+                            </div>
+                        </div>
+                        <div class="range-input-group">
+                            <div class="range-input-item">
+                                <span class="range-label">Unteres Szenario</span>
+                                <input type="number" id="priceTrendLow" step="0.1" placeholder="Min" value="0.5">
+                            </div>
+                            <div class="range-input-item">
+                                <span class="range-label">Oberes Szenario</span>
+                                <input type="number" id="priceTrendHigh" step="0.1" placeholder="Max" value="5.0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Technical Degradation Sensitivity -->
+                    <div class="sensitivity-card">
+                        <div class="sensitivity-title">
+                            <div class="label-wrapper">
+                                <span>Technische Degradation (% p.a.)</span>
+                                <button type="button" class="info-btn" data-field="degradation">i</button>
+                            </div>
+                        </div>
+                        <div class="range-input-group">
+                            <div class="range-input-item">
+                                <span class="range-label">Unteres Szenario</span>
+                                <input type="number" id="degradationLow" step="0.01" placeholder="Min" value="0.2">
+                            </div>
+                            <div class="range-input-item">
+                                <span class="range-label">Oberes Szenario</span>
+                                <input type="number" id="degradationHigh" step="0.01" placeholder="Max" value="1.5">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Initial Investment (CAPEX) Sensitivity -->
+                    <div class="sensitivity-card">
+                        <div class="sensitivity-title">
+                            <div class="label-wrapper">
+                                <span>Anfangsinvestition (EUR)</span>
+                                <button type="button" class="info-btn" data-field="capex">i</button>
+                            </div>
+                        </div>
+                        <div class="range-input-group">
+                            <div class="range-input-item">
+                                <span class="range-label">Unteres Szenario (-10%)</span>
+                                <input type="number" id="capexLow" step="100" placeholder="Min" value="">
+                            </div>
+                            <div class="range-input-item">
+                                <span class="range-label">Oberes Szenario (+10%)</span>
+                                <input type="number" id="capexHigh" step="100" placeholder="Max" value="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <button id="analyzeBtn" class="btn btn-primary">Sensitivitätsanalyse durchführen</button>
+                        <span id="analyzeStatus" style="color:#6b7280; font-size:0.9rem;"></span>
+                    </div>
+                </section>
+
+                <!-- Right Panel: Results -->
+                <section class="panel">
+                    <h2 class="panel-title">Analyseergebnisse</h2>
+                    
+                    <div id="baselineKpis" class="npv-kpis" style="display:none;">
+                        <div class="kpi">
+                            <h3>Basis NPV</h3>
+                            <div class="value" id="baselineNpv">€0</div>
+                            <div class="sub">Wahrscheinlichstes Szenario</div>
+                        </div>
+                        <div class="kpi">
+                            <h3>WACC</h3>
+                            <div class="value" id="baselineWacc">0%</div>
+                            <div class="sub">Diskontierungssatz</div>
+                        </div>
+                        <div class="kpi">
+                            <h3>Lifespan</h3>
+                            <div class="value" id="baselineLifespan">0</div>
+                            <div class="sub">Jahre</div>
+                        </div>
+                    </div>
+
+                    <!-- Tornado Diagram -->
+                    <div id="tornadoWrap" style="display:none;">
+                        <div class="panel-title" style="margin-top:18px;">Tornado-Diagramm: NPV-Sensitivität</div>
+                        <div class="tornado-chart" id="tornadoChart"></div>
+                    </div>
+
+                    <!-- Sensitivity Table -->
+                    <div id="sensitivityTableWrap" style="display:none;">
+                        <div class="panel-title" style="margin-top:18px;">Detaillierte Sensitivitätsanalyse</div>
+                        <div style="overflow:auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Parameter</th>
+                                        <th>Basis</th>
+                                        <th>Unteres Sz.</th>
+                                        <th>NPV Δ</th>
+                                        <th>Oberes Sz.</th>
+                                        <th>NPV Δ</th>
+                                        <th>Spannweite</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sensitivityBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Interpretation -->
+                    <div id="interpretationWrap" style="display:none;">
+                        <div class="panel-title" style="margin-top:18px;">Interpretation & Empfehlung</div>
+                        <div style="background: #f8fafc; padding: 12px; border-radius: 8px; border-left: 4px solid #dff45e; margin-top: 10px;">
+                            <div id="sensitivityInterpretation" style="color: #4b5563; line-height: 1.7; font-size: 0.95rem;"></div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:14px;">
+                        <div class="panel-title">Quellen (Framework)</div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;">
+                            <span class="source-tag" title="Core principle">DIN_EN_17463_VALERI_CORE</span>
+                            <span class="source-tag" title="Sensitivity & risk">ISO_13600_SENSITIVITY_ANALYSIS</span>
+                            <span class="source-tag" title="Uncertainty quantification">NIST_UNCERTAINTY_GUIDE</span>
+                            <span class="source-tag" title="Tornado analysis">TORNADO_DIAGRAM_METHOD</span>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </section>
+    </main>
+
+    <!-- Info Modal -->
+    <div class="modal-overlay" id="infoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Parameterinformation</h2>
+                <button type="button" class="modal-close" onclick="closeInfoModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const $ = (id) => document.getElementById(id);
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectId = urlParams.get('projectId');
+
+        const loadPhase7Btn = $('loadPhase7Btn');
+        const resultSelector = $('resultSelector');
+        const loadStatus = $('loadStatus');
+        const analyzeBtn = $('analyzeBtn');
+        const analyzeStatus = $('analyzeStatus');
+
+        let baselineInputs = null;
+        let baselineCalculation = null;
+
+        // Field Explanations
+        const fieldExplanations = {
+            energyPrice: {
+                title: 'Energiepreis (EUR/kWh)',
+                description: 'Der aktuelle Energiepreis pro Kilowattstunde. Unsicherheit entsteht durch Marktfluktuationen, Wechselkursänderungen und geopolitische Faktoren.',
+                where: 'Typischer Bereich: 0,15–0,35 EUR/kWh für Strom in Deutschland; variiert je nach Energieträger und Region.'
+            },
+            discountRate: {
+                title: 'Diskontierungssatz (WACC)',
+                description: 'Der zur Diskontierung verwendete Zinssatz. Unsicherheit entsteht durch Schwankungen der Kapitalkosten, Zinssätze und Risikoprämien.',
+                where: 'Typischer Bereich: 4–12% p.a.; abhängig von Kreditwürdigkeit, Marktbedingungen und Risikoklasse.'
+            },
+            energySavings: {
+                title: 'Jährliche Energieeinsparung (kWh)',
+                description: 'Die erwartete jährliche Energieeinsparung. Unsicherheit entsteht durch Wettervariation, Betriebsbedingungen und tatsächliche vs. projizierte Nutzung.',
+                where: 'Änderung um ±20% um Messunsicherheiten und Annahmerisiken abzudecken.'
+            },
+            priceTrend: {
+                title: 'Energiepreistrend (% p.a.)',
+                description: 'Die erwartete jährliche Steigerungsrate von Energiepreisen. Unsicherheit durch Inflation, Energiepolitik und Marktdynamiken.',
+                where: 'Typischer Bereich: 0,5–5,0% p.a.; historisch 2–4%, aber volatil.'
+            },
+            degradation: {
+                title: 'Technische Degradation (% p.a.)',
+                description: 'Der jährliche Effizienzverlust von Ausrüstungen. Unsicherheit durch Herstellerangaben, Umweltfaktoren und tatsächliche Lebensdauer.',
+                where: 'Typischer Bereich: 0,2–1,5% p.a.; variiert nach Technologie.'
+            },
+            capex: {
+                title: 'Anfangsinvestition (EUR)',
+                description: 'Gesamte CAPEX-Kosten (Equipment, Installation, Planung). Unsicherheit durch Kostenschätzfehler, Preisvolatilität und unerwartete Änderungen.',
+                where: 'Änderung um ±10% um Kostenüberläufer und Einsparungen abzudecken.'
+            }
+        };
+
+        function openInfoModal(fieldId) {
+            const info = fieldExplanations[fieldId];
+            if (!info) return;
+            
+            const modal = $('infoModal');
+            const title = $('modalTitle');
+            const body = $('modalBody');
+            
+            title.textContent = info.title;
+            body.innerHTML = `
+                <div class="modal-section">
+                    <div class="modal-section-title">Was ist das?</div>
+                    <p>${info.description}</p>
+                </div>
+                <div class="modal-section">
+                    <div class="modal-section-title">Typische Werte & Unsicherheit</div>
+                    <p>${info.where}</p>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        function closeInfoModal() {
+            const modal = $('infoModal');
+            modal.classList.remove('active');
+        }
+
+        $('infoModal').addEventListener('click', (e) => {
+            if (e.target.id === 'infoModal') {
+                closeInfoModal();
+            }
+        });
+
+        document.querySelectorAll('.info-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const fieldId = btn.dataset.field;
+                openInfoModal(fieldId);
+            });
+        });
+
+        function formatEUR(n) {
+            if (!Number.isFinite(n)) return '€0';
+            return '€' + n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        // Load Phase 7 results/projects
+        async function loadPhase7Results() {
+            try {
+                const endpoint = projectId ? `/api/valeri/projects/${projectId}/scenarios` : '/api/valeri/phase7/user-results';
+                const response = await fetch(endpoint);
+                const data = await response.json();
+                
+                resultSelector.innerHTML = '<option value="">-- Wählen Sie ein Ergebnis --</option>';
+                
+                if (projectId) {
+                    // Load scenarios from project
+                    const scenarios = data.scenarios || [];
+                    scenarios.forEach(scenario => {
+                        const option = document.createElement('option');
+                        option.value = JSON.stringify({
+                            type: 'project_scenario',
+                            projectId: projectId,
+                            scenarioId: scenario.scenarioId,
+                            inputs: scenario.inputs,
+                            calculation: scenario.calculation
+                        });
+                        const label = scenario.scenarioType === 'most_likely' ? 'Wahrscheinlichster Fall' : scenario.scenarioType;
+                        option.textContent = `${label} (${formatEUR(scenario.calculation.npv)})`;
+                        resultSelector.appendChild(option);
+                    });
+                } else {
+                    // Load individual results
+                    const results = data.results || [];
+                    results.forEach(result => {
+                        const option = document.createElement('option');
+                        option.value = JSON.stringify({
+                            type: 'individual_result',
+                            inputs: result.inputs,
+                            calculation: result.calculation
+                        });
+                        option.textContent = `${result.name} (${formatEUR(result.calculation.npv)})`;
+                        resultSelector.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading Phase 7 results:', error);
+                loadStatus.style.display = 'block';
+                loadStatus.textContent = '✗ Fehler beim Laden der Ergebnisse: ' + error.message;
+                loadStatus.style.color = '#991b1b';
+            }
+        }
+
+        // Load selected Phase 7 result
+        async function loadSelectedPhase7() {
+            const selectedValue = resultSelector.value;
+            if (!selectedValue) {
+                loadStatus.textContent = 'Bitte wählen Sie ein Ergebnis aus.';
+                loadStatus.style.display = 'block';
+                loadStatus.style.color = '#6b7280';
+                return;
+            }
+
+            try {
+                const result = JSON.parse(selectedValue);
+                baselineInputs = result.inputs;
+                baselineCalculation = result.calculation;
+
+                // Populate energy savings fields based on baseline
+                const baseEnergy = baselineInputs.annualEnergySavedKwh || 1000;
+                $('energySavingsLow').value = (baseEnergy * 0.8).toFixed(0);
+                $('energySavingsHigh').value = (baseEnergy * 1.2).toFixed(0);
+
+                // Populate CAPEX fields
+                const baseCapex = baselineCalculation.I0 || 10000;
+                $('capexLow').value = (baseCapex * 0.9).toFixed(0);
+                $('capexHigh').value = (baseCapex * 1.1).toFixed(0);
+
+                loadStatus.innerHTML = `<strong>✓ Ergebnis geladen:</strong> NPV = ${formatEUR(baselineCalculation.npv)}, WACC = ${(baselineCalculation.wacc * 100).toFixed(2)}%`;
+                loadStatus.style.display = 'block';
+                loadStatus.style.color = '#166534';
+                loadStatus.style.background = '#f0fdf4';
+                loadStatus.style.borderColor = '#86efac';
+                loadStatus.style.border = '1px solid #86efac';
+                loadStatus.style.borderRadius = '8px';
+                loadStatus.style.padding = '10px';
+
+                // Show baseline KPIs
+                showBaselineKpis();
+            } catch (error) {
+                loadStatus.textContent = '✗ Fehler: ' + error.message;
+                loadStatus.style.display = 'block';
+                loadStatus.style.color = '#991b1b';
+            }
+        }
+
+        function showBaselineKpis() {
+            $('baselineKpis').style.display = 'grid';
+            $('baselineNpv').textContent = formatEUR(baselineCalculation.npv);
+            $('baselineWacc').textContent = (baselineCalculation.wacc * 100).toFixed(2) + '%';
+            $('baselineLifespan').textContent = baselineCalculation.lifespanYears;
+        }
+
+        loadPhase7Btn.addEventListener('click', loadSelectedPhase7);
+        resultSelector.addEventListener('change', () => {
+            loadStatus.style.display = 'none';
+        });
+
+        // Sensitivity Analysis
+        analyzeBtn.addEventListener('click', async () => {
+            if (!baselineCalculation || !baselineInputs) {
+                alert('Bitte laden Sie zuerst ein Phase 7 Ergebnis.');
+                return;
+            }
+
+            analyzeBtn.disabled = true;
+            analyzeStatus.textContent = 'Analyse wird durchgeführt...';
+
+            try {
+                const analysisParams = {
+                    baselineInputs,
+                    baselineCalculation,
+                    energyPriceLow: parseFloat($('energyPriceLow').value) || 0.15,
+                    energyPriceHigh: parseFloat($('energyPriceHigh').value) || 0.35,
+                    discountRateLow: parseFloat($('discountRateLow').value) || 4,
+                    discountRateHigh: parseFloat($('discountRateHigh').value) || 12,
+                    energySavingsLow: parseFloat($('energySavingsLow').value) || 0,
+                    energySavingsHigh: parseFloat($('energySavingsHigh').value) || 0,
+                    priceTrendLow: parseFloat($('priceTrendLow').value) || 0.5,
+                    priceTrendHigh: parseFloat($('priceTrendHigh').value) || 5,
+                    degradationLow: parseFloat($('degradationLow').value) || 0.2,
+                    degradationHigh: parseFloat($('degradationHigh').value) || 1.5,
+                    capexLow: parseFloat($('capexLow').value) || 0,
+                    capexHigh: parseFloat($('capexHigh').value) || 0
+                };
+
+                const response = await fetch('/api/valeri/phase8/sensitivity-analysis', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(analysisParams)
+                });
+
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.error || 'Analyse fehlgeschlagen');
+
+                displayResults(data);
+                analyzeStatus.textContent = 'Fertig.';
+            } catch (error) {
+                analyzeStatus.textContent = '';
+                alert('Fehler: ' + (error.message || 'Sensitivitätsanalyse fehlgeschlagen'));
+            } finally {
+                analyzeBtn.disabled = false;
+            }
+        });
+
+        function displayResults(data) {
+            // Show tornado diagram
+            displayTornado(data.tornadoData);
+            
+            // Show sensitivity table
+            displaySensitivityTable(data.detailedResults);
+            
+            // Show interpretation
+            displayInterpretation(data.interpretation);
+
+            $('tornadoWrap').style.display = 'block';
+            $('sensitivityTableWrap').style.display = 'block';
+            $('interpretationWrap').style.display = 'block';
+        }
+
+        function displayTornado(tornadoData) {
+            const chart = $('tornadoChart');
+            chart.innerHTML = '';
+
+            // Sort by impact (descending)
+            const sorted = [...tornadoData].sort((a, b) => Math.abs(b.totalImpact) - Math.abs(a.totalImpact));
+
+            sorted.forEach(item => {
+                const maxImpact = Math.max(...sorted.map(i => Math.abs(i.totalImpact)));
+                const negativeWidth = (Math.abs(item.negativeImpact) / maxImpact * 300);
+                const positiveWidth = (item.positiveImpact / maxImpact * 300);
+
+                const row = document.createElement('div');
+                row.className = 'tornado-row';
+                row.innerHTML = `
+                    <div class="tornado-label">${item.parameter}</div>
+                    <div class="tornado-bar-container">
+                        <div class="tornado-bar-negative" style="width: ${negativeWidth}px;"></div>
+                        <div class="tornado-bar-positive" style="width: ${positiveWidth}px;"></div>
+                    </div>
+                    <div class="tornado-value">${formatEUR(item.totalImpact)}</div>
+                `;
+                chart.appendChild(row);
+            });
+        }
+
+        function displaySensitivityTable(results) {
+            const body = $('sensitivityBody');
+            body.innerHTML = '';
+
+            results.forEach(r => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${r.parameter}</strong></td>
+                    <td>${r.baselineValue}</td>
+                    <td>${r.lowValue}</td>
+                    <td style="color: #ef4444; font-weight: 600;">${formatEUR(r.lowNpvDelta)}</td>
+                    <td>${r.highValue}</td>
+                    <td style="color: #10b981; font-weight: 600;">${formatEUR(r.highNpvDelta)}</td>
+                    <td style="font-weight: 600;">${formatEUR(r.totalImpact)}</td>
+                `;
+                body.appendChild(tr);
+            });
+        }
+
+        function displayInterpretation(interpretation) {
+            $('sensitivityInterpretation').textContent = interpretation;
+        }
+
+        // Load results on page load
+        loadPhase7Results();
+    </script>
+</body>
+</html>

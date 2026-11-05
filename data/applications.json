@@ -1,0 +1,17 @@
+[
+  {
+    "id": "app-demo-001",
+    "companyName": "GreenTech Manufacturing GmbH",
+    "industry": "Erneuerbare Energien & Fertigung",
+    "contactEmail": "demo-contact@greentech-example.com",
+    "contactPhone": "+49 931 0000000",
+    "address": "Industriestraße 1, 97070 Würzburg",
+    "description": "Entwicklung und Fertigung hocheffizienter industrieller Wärmepumpensysteme.",
+    "employees": "50-100",
+    "website": "https://example.com/greentech",
+    "status": "approved",
+    "submittedAt": "2024-01-14T09:00:00.000Z",
+    "reviewedAt": "2024-01-15T10:00:00.000Z",
+    "reviewedBy": "admin"
+  }
+]

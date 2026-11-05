@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALERI Phase 7 - NPV (Wahrscheinlichstes Szenario)</title>
+    <link href="https://cdn.prod.website-files.com/67769ab96d9c5332b7ceefdc/677d2c010e595f61517badb6_enfit_Logo_32x32.png" rel="shortcut icon" type="image/x-icon">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #ecf4f4 100%);
+            min-height: 100vh;
+            color: #1f2937;
+            padding: 34px 16px;
+        }
+        .page { max-width: 1260px; margin: 0 auto; }
+        .shell {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid #e5e7eb;
+            border-radius: 22px;
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+            padding: 28px;
+        }
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 20px;
+            margin-bottom: 22px;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(223, 244, 94, 0.35);
+            background: rgba(223, 244, 94, 0.12);
+            color: #111827;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.92rem;
+            transition: all 0.25s ease;
+        }
+        .back-link:hover { transform: translateY(-2px); background: rgba(223, 244, 94, 0.2); }
+        h1 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 8px; }
+        .lead { color: #4b5563; line-height: 1.6; max-width: 880px; font-size: 0.98rem; }
+        .layout { display: grid; grid-template-columns: 1.45fr 1fr; gap: 20px; align-items: start; }
+        .panel {
+            border: 1px solid #e5e7eb;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(248, 250, 252, 0.92));
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.045);
+        }
+        .panel-title { font-size: 1rem; font-weight: 650; margin-bottom: 10px; letter-spacing: 0.01em; }
+        .label { font-size: 0.9rem; font-weight: 500; margin-bottom: 8px; display: block; color: #374151; }
+        textarea, input, select {
+            width: 100%;
+            border: 1px solid #dbe1ea;
+            border-radius: 12px;
+            padding: 11px 12px;
+            font: inherit;
+            background: #f8fafc;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: rgba(212, 225, 87, 0.9);
+            box-shadow: 0 0 0 4px rgba(212, 225, 87, 0.2);
+            background: #fff;
+        }
+        textarea { resize: vertical; min-height: 90px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+        .field { margin-bottom: 14px; }
+        .actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
+        .btn {
+            border: none;
+            border-radius: 12px;
+            padding: 11px 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #dff45e, #c7e03a);
+            color: #111827;
+            box-shadow: 0 8px 20px rgba(223, 244, 94, 0.35);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(170, 190, 60, 0.33); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .meta-row { margin-top: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; color: #6b7280; font-size: 0.86rem; }
+        .result-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .loop-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 12px; border-radius: 999px;
+            border: 1px solid rgba(223, 244, 94, 0.42);
+            background: rgba(223, 244, 94, 0.14);
+            font-size: 0.82rem; font-weight: 800; color: #111827;
+        }
+        .decision-card {
+            border: 1px solid rgba(223, 244, 94, 0.35);
+            background: rgba(212, 225, 87, 0.10);
+            border-radius: 14px;
+            padding: 12px;
+            margin-top: 12px;
+        }
+        .decision-title { font-size: 0.85rem; color: #374151; font-weight: 700; }
+        .decision-text { margin-top: 6px; font-weight: 900; letter-spacing: 0.01em; color: #111827; }
+        .npv-kpis {
+            display: grid; grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px; margin-top: 12px;
+        }
+        .kpi {
+            border: 1px solid #e5e7eb; background: #fff;
+            border-radius: 14px; padding: 12px;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.03);
+        }
+        .kpi h3 { font-size: 0.78rem; color: #6b7280; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+        .kpi .value { font-size: 1.2rem; font-weight: 850; color: #111827; }
+        .kpi .sub { margin-top: 3px; color: #6b7280; font-size: 0.86rem; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        th, td {
+            border-top: 1px solid #eef2f7;
+            padding: 8px 6px;
+            text-align: left;
+        }
+        th { color: #6b7280; font-size: 0.82rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+        .sources-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .source-tag {
+            border: 1px solid #dbe2ea;
+            background: #f8fafc;
+            color: #334155;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 0.77rem;
+            cursor: help;
+        }
+        .explanation {
+            white-space: pre-wrap;
+            line-height: 1.7;
+            color: #374151;
+            font-size: 0.96rem;
+            margin-top: 10px;
+        }
+        .label-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .info-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(223, 244, 94, 0.3);
+            border: 1px solid rgba(223, 244, 94, 0.6);
+            color: #374151;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+        .info-btn:hover {
+            background: rgba(223, 244, 94, 0.5);
+            border-color: rgba(223, 244, 94, 0.9);
+            transform: scale(1.1);
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 18px;
+            padding: 28px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            border-bottom: 2px solid rgba(223, 244, 94, 0.3);
+            padding-bottom: 12px;
+        }
+        .modal-header h2 {
+            font-size: 1.3rem;
+            color: #111827;
+            margin: 0;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+            transition: color 0.2s ease;
+        }
+        .modal-close:hover {
+            color: #111827;
+        }
+        .modal-body {
+            color: #4b5563;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+        .modal-section {
+            margin-bottom: 16px;
+        }
+        .modal-section-title {
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+        @media (max-width: 1060px) {
+            .layout { grid-template-columns: 1fr; }
+            .npv-kpis { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <section class="shell">
+            <header class="topbar">
+                <div>
+                    <h1>VALERI Phase 7 - NPV (Wahrscheinlichstes Szenario)</h1>
+                    <p class="lead">
+                        Berechnen Sie den Kapitalwert (NPV) auf Basis von WACC und diskontierten Cash-Flows.
+                        Der Assistent interpretiert das Ergebnis anschließend in einer KMU-gerechten,
+                        beratungsorientierten Sprache.
+                    </p>
+                </div>
+                <a href="/accesspoint" class="back-link">Zurück zum Access Point</a>
+            </header>
+
+            <!-- Project Selector Panel -->
+            <section class="panel" style="margin-bottom: 22px; background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border-color: #86efac;">
+                <h2 class="panel-title" style="color: #166534;">Projekt laden</h2>
+                <p style="color: #4b5563; margin-bottom: 14px; font-size: 0.95rem;">Wählen Sie ein Projekt aus um die Szenarioanalyse zu beginnen.</p>
+                <div style="display: flex; gap: 12px; align-items: flex-end;">
+                    <div style="flex: 1;">
+                        <label class="label" style="color: #166534;">Verfügbare Projekte</label>
+                        <select id="projectSelector" style="width: 100%; padding: 10px; border: 1px solid #86efac; border-radius: 8px; background: white; color: #111827; font-size: 0.95rem;">
+                            <option value="">-- Kein Projekt (neue Analyse) --</option>
+                        </select>
+                    </div>
+                    <button id="loadProjectBtn" type="button" style="padding: 10px 16px; background: linear-gradient(135deg, #86efac 0%, #4ade80 100%); color: #166534; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">
+                        Laden
+                    </button>
+                </div>
+                <div id="projectLoadStatus" style="margin-top: 12px; padding: 10px; background: white; border-radius: 8px; color: #6b7280; font-size: 0.9rem; display: none;"></div>
+            </section>
+
+            <section class="layout">
+                <section class="panel">
+                    <h2 class="panel-title">Phase 7 Eingabe (Wahrscheinlichstes Szenario)</h2>
+
+                    <div class="grid-2">
+                        <div class="field">
+                            <div class="label-wrapper">
+                                <span class="label">CAPEX Ausrüstung (EUR)</span>
+                                <button type="button" class="info-btn" data-field="capexEquipment">i</button>
+                            </div>
+                            <input id="capexEquipment" type="number" step="0.01" value="0">
+                        </div>
+                        <div class="field">
+                            <div class="label-wrapper">
+                                <span class="label">CAPEX Installation (EUR)</span>
+                                <button type="button" class="info-btn" data-field="capexInstallation">i</button>
+                            </div>
+                            <input id="capexInstallation" type="number" step="0.01" value="0">
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="field">
+                            <div class="label-wrapper">
+                                <span class="label">CAPEX Planung/Ingenieurleistungen (EUR)</span>
+                                <button type="button" class="info-btn" data-field="capexPlanning">i</button>
+                            </div>
+                            <input id="capexPlanning" type="number" step="0.01" value="0">
+                        </div>
+                        <div class="field">
+                            <div class="label-wrapper">
+                                <span class="label">Sonstige Anfangskosten (EUR)</span>
+                                <button type="button" class="info-btn" data-field="capexOtherInitial">i</button>
+                            </div>
+                            <input id="capexOtherInitial" type="number" step="0.01" value="0">
+                        </div>
+                    </div>
+
+                    <div class="meta-row">
+                        <span>Anfangsinvestition I0 = CAPEX-Summe</span>
+                        <span id="i0Preview">I0: 0 EUR</span>
+                    </div>
+
+                    <div class="field" style="margin-top:14px;">
+                        <div class="label-wrapper">
+                            <span class="label">WACC - Eigenkapitalanteil (%)</span>
+                            <button type="button" class="info-btn" data-field="equitySharePct">i</button>
+                        </div>
+                        <input id="equitySharePct" type="number" step="0.01" value="60">
+                    </div>
+                    <div class="field">
+                        <div class="label-wrapper">
+                            <span class="label">Eigenkapitalkosten (%)</span>
+                            <button type="button" class="info-btn" data-field="costOfEquityPct">i</button>
+                        </div>
+                        <input id="costOfEquityPct" type="number" step="0.01" value="8">
+                    </div>
+                    <div class="field">
+                        <div class="label-wrapper">
+                            <span class="label">WACC - Fremdkapitalanteil (%)</span>
+                            <button type="button" class="info-btn" data-field="debtSharePct">i</button>
+                        </div>
+                        <input id="debtSharePct" type="number" step="0.01" value="40">
+                    </div>
+                    <div class="field">
+                        <div class="label-wrapper">
+                            <span class="label">Fremdkapitalzinssatz (%)</span>
+                            <button type="button" class="info-btn" data-field="interestRateDebtPct">i</button>
+                        </div>
+                        <input id="interestRateDebtPct" type="number" step="0.01" value="5">
+                    </div>
+
+                    <div class="grid-2" style="margin-top:14px;">
+                        <div class="field">
+                            <div class="label-wrapper">
+                                <span class="label">Lebensdauer n (Jahre)</span>
+                                <button type="button" class="info-btn" data-field="lifespanYears">i</button>
+                            </div>
+                            <input id="lifespanYears" type="number" step="1" value="20">
+                        </div>
+                        <div class="field">
+                            <div class="label-wrapper">
+                                <span class="label">Wartungseinsparungen pro Jahr (EUR)</span>
+                                <button type="button" class="info-btn" data-field="maintenanceSavingsPerYear">i</button>
+                            </div>
+                            <input id="maintenanceSavingsPerYear" type="number" step="0.01" value="0">
+                        </div>
+                    </div>
+
+                    <div class="field" style="margin-top:14px;">
+                        <div class="label-wrapper">
+                            <span class="label">Eingesparte Energie (kWh) pro Jahr (Wahrscheinlichstes Szenario)</span>
+                            <button type="button" class="info-btn" data-field="annualEnergySavedKwh">i</button>
+                        </div>
+                        <input id="annualEnergySavedKwh" type="number" step="0.01" value="0">
+                    </div>
+                    <div class="grid-2">
+                        <div class="field">
+                            <div class="label-wrapper">
+                                <span class="label">Energiepreisbasis (EUR/kWh)</span>
+                                <button type="button" class="info-btn" data-field="energyPriceBase">i</button>
+                            </div>
+                            <input id="energyPriceBase" type="number" step="0.0001" value="0">
+                        </div>
+                        <div class="field">
+                            <div class="label-wrapper">
+                                <span class="label">Preistrend (% p.a.)</span>
+                                <button type="button" class="info-btn" data-field="priceTrendPct">i</button>
+                            </div>
+                            <input id="priceTrendPct" type="number" step="0.01" value="0">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label-wrapper">
+                            <span class="label">Technische Degradation (% p.a.)</span>
+                            <button type="button" class="info-btn" data-field="technicalDegradationPct">i</button>
+                        </div>
+                        <input id="technicalDegradationPct" type="number" step="0.01" value="0">
+                    </div>
+
+                    <div class="grid-2" style="margin-top:14px;">
+                        <div class="field">
+                            <div class="label-wrapper">
+                                <span class="label">Zuschuss/Förderung in Jahr 1 (EUR)</span>
+                                <button type="button" class="info-btn" data-field="subsidyYear1">i</button>
+                            </div>
+                            <input id="subsidyYear1" type="number" step="0.01" value="0">
+                        </div>
+                        <div class="field">
+                            <div class="label-wrapper">
+                                <span class="label">Ersatzkosten (EUR)</span>
+                                <button type="button" class="info-btn" data-field="replacementCost">i</button>
+                            </div>
+                            <input id="replacementCost" type="number" step="0.01" value="0">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="label-wrapper">
+                            <span class="label">Ersatzjahr (1..n)</span>
+                            <button type="button" class="info-btn" data-field="replacementYear">i</button>
+                        </div>
+                        <input id="replacementYear" type="number" step="1" value="10">
+                    </div>
+                    <div class="field">
+                        <div class="label-wrapper">
+                            <span class="label">Schrottwert in Jahr n (EUR)</span>
+                            <button type="button" class="info-btn" data-field="scrapValue">i</button>
+                        </div>
+                        <input id="scrapValue" type="number" step="0.01" value="0">
+                    </div>
+
+                    <div class="actions">
+                        <button id="calcBtn" class="btn btn-primary">NPV berechnen</button>
+                        <button id="exampleBtn" class="btn btn-primary" style="background: linear-gradient(135deg, #94a3b8, #64748b); box-shadow: 0 8px 20px rgba(100, 116, 139, 0.35);">Beispielantworten</button>
+                        <button id="saveBtn" class="btn btn-primary" style="background: linear-gradient(135deg, #60a5fa, #3b82f6); box-shadow: 0 8px 20px rgba(59, 130, 246, 0.35); display: none;">Ergebnis speichern</button>
+                        <button id="loadBtn" class="btn btn-primary" style="background: linear-gradient(135deg, #34d399, #10b981); box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);">Gespeicherte Ergebnisse</button>
+                        <span id="calcStatus" style="color:#6b7280; font-size:0.9rem;"></span>
+                    </div>
+                </section>
+
+                <section class="panel">
+                    <h2 class="panel-title">Ergebnis</h2>
+                    <div class="decision-card" id="decisionCard" style="display:none;">
+                        <div class="decision-title">Entscheidungsregel</div>
+                        <div class="decision-text" id="decisionText"></div>
+                    </div>
+
+                    <div class="npv-kpis" id="kpiGrid" style="display:none;">
+                        <div class="kpi">
+                            <h3>NPV</h3>
+                            <div class="value" id="npvValue">€0</div>
+                            <div class="sub">Diskontiersumme</div>
+                        </div>
+                        <div class="kpi">
+                            <h3>WACC</h3>
+                            <div class="value" id="waccValue">0%</div>
+                            <div class="sub">Diskontierungssatz</div>
+                        </div>
+                        <div class="kpi">
+                            <h3>Lebensdauer</h3>
+                            <div class="value" id="lifeValue">0</div>
+                            <div class="sub">Jahre (n)</div>
+                        </div>
+                    </div>
+
+                    <div id="cashflowWrap" style="display:none;">
+                        <div class="panel-title" style="margin-top:18px;">Cash-Flow &amp; Diskontierung (Wahrscheinlichstes Szenario)</div>
+                        <div style="overflow:auto;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Jahr</th>
+                                        <th>Gesamter Cash-Flow</th>
+                                        <th>Diskontierter CF</th>
+                                        <th>Kumulativer NPV</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cashflowBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="aiExplanationWrap" style="display:none;">
+                        <div class="panel-title" style="margin-top:18px;">KI-Interpretation</div>
+                        <div class="explanation" id="aiExplanation"></div>
+                    </div>
+
+                    <div style="margin-top:14px;">
+                        <div class="panel-title">Quellen (Framework)</div>
+                        <div class="sources-grid" id="sourcesBox">
+                            <span class="source-tag" title="Core principle">DIN_EN_17463_VALERI_CORE</span>
+                            <span class="source-tag" title="Energy performance">ISO_50001_ENERGY_PERFORMANCE</span>
+                            <span class="source-tag" title="Measurement &amp; verification">IPMVP_MEASUREMENT_VERIFICATION</span>
+                            <span class="source-tag" title="Lifecycle cost view">LCOE_TOTAL_COST_VIEW</span>
+                            <span class="source-tag" title="Carbon cost signals">EU_ETS_CO2_COST_SIGNAL</span>
+                            <span class="source-tag" title="Resilience &amp; security of supply">SUPPLY_SECURITY_RESILIENCE</span>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </section>
+    </main>
+
+    <!-- Info Modal -->
+    <div class="modal-overlay" id="infoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Feldinformationen</h2>
+                <button type="button" class="modal-close" onclick="closeInfoModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Save Result Modal -->
+    <div class="modal-overlay" id="saveModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Ergebnis speichern</h2>
+                <button type="button" class="modal-close" onclick="closeSaveModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="scenarioTypeField" class="field" style="display: none;">
+                    <label class="label">Szenario-Typ</label>
+                    <select id="saveScenarioType" style="width: 100%; padding: 10px; border: 1px solid #dbe1ea; border-radius: 8px;">
+                        <option value="most_likely">Wahrscheinlichster Fall</option>
+                        <option value="best_case">Best Case</option>
+                        <option value="worst_case">Worst Case</option>
+                    </select>
+                </div>
+                <div id="resultNameField" class="field">
+                    <label class="label">Name für dieses Ergebnis</label>
+                    <input type="text" id="saveResultName" placeholder="z.B. Solarpanels - Szenario 1" style="width: 100%; padding: 10px; border: 1px solid #dbe1ea; border-radius: 8px;">
+                </div>
+                <div style="margin-top: 20px; display: flex; gap: 10px;">
+                    <button onclick="confirmSaveResult()" class="btn btn-primary" style="flex: 1;">Speichern</button>
+                    <button onclick="closeSaveModal()" class="btn" style="flex: 1; background: #e5e7eb; color: #111827;">Abbrechen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Results Modal -->
+    <div class="modal-overlay" id="loadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Gespeicherte Ergebnisse</h2>
+                <button type="button" class="modal-close" onclick="closeLoadModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="loadModalBody">
+                <p style="color: #6b7280;">Ergebnisse werden geladen...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const $ = (id) => document.getElementById(id);
+        
+        // Get projectId from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectId = urlParams.get('projectId');
+        
+        // Initialize with project if available
+        if (projectId) {
+            document.title = `Phase 7 NPV - Projekt: ${projectId}`;
+        }
+        
+        const calcBtn = $('calcBtn');
+        const exampleBtn = $('exampleBtn');
+        const saveBtn = $('saveBtn');
+        const loadBtn = $('loadBtn');
+        const calcStatus = $('calcStatus');
+        const projectSelector = $('projectSelector');
+        const loadProjectBtn = $('loadProjectBtn');
+        const projectLoadStatus = $('projectLoadStatus');
+        
+        // Store latest calculation result for saving
+        let latestCalculation = null;
+        let latestInputs = null;
+        let latestExplanation = null;
+        let currentProject = null;
+
+        // Load projects list on page load
+        async function loadProjectsList() {
+            try {
+                const response = await fetch('/api/valeri/projects');
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    console.error('Failed to load projects:', data.error);
+                    return;
+                }
+                
+                projectSelector.innerHTML = '<option value="">-- Kein Projekt (neue Analyse) --</option>';
+                
+                if (data.projects && data.projects.length > 0) {
+                    data.projects.forEach(project => {
+                        const option = document.createElement('option');
+                        option.value = project.projectId;
+                        option.textContent = `${project.name} (${project.scenarioCount} Szenarien)`;
+                        projectSelector.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading projects:', error);
+            }
+        }
+
+        // Load selected project
+        async function loadSelectedProject() {
+            const selectedProjectId = projectSelector.value;
+            
+            if (!selectedProjectId) {
+                currentProject = null;
+                projectLoadStatus.style.display = 'none';
+                return;
+            }
+            
+            loadProjectBtn.disabled = true;
+            projectLoadStatus.style.display = 'block';
+            projectLoadStatus.textContent = 'Projekt wird geladen...';
+            projectLoadStatus.style.color = '#4b5563';
+            
+            try {
+                const response = await fetch(`/api/valeri/projects/${selectedProjectId}`);
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to load project');
+                }
+                
+                currentProject = data.project;
+                
+                // Display project info
+                projectLoadStatus.innerHTML = `<strong>✓ Projekt geladen:</strong> ${currentProject.name}<br>
+                    <small style="opacity: 0.8;">Phase 1 Idee: ${currentProject.idea.substring(0, 100)}...</small>`;
+                projectLoadStatus.style.color = '#166534';
+                projectLoadStatus.style.background = '#f0fdf4';
+                projectLoadStatus.style.borderColor = '#86efac';
+                projectLoadStatus.style.border = '1px solid #86efac';
+                projectLoadStatus.style.borderRadius = '8px';
+                projectLoadStatus.style.padding = '10px';
+                
+                loadProjectBtn.disabled = false;
+            } catch (error) {
+                projectLoadStatus.textContent = '✗ Fehler: ' + error.message;
+                projectLoadStatus.style.color = '#991b1b';
+                projectLoadStatus.style.background = '#fee2e2';
+                projectLoadStatus.style.borderColor = '#fecaca';
+                projectLoadStatus.style.border = '1px solid #fecaca';
+                projectLoadStatus.style.borderRadius = '8px';
+                projectLoadStatus.style.padding = '10px';
+                currentProject = null;
+                loadProjectBtn.disabled = false;
+            }
+        }
+
+        // Event listeners for project selector
+        loadProjectBtn.addEventListener('click', loadSelectedProject);
+        projectSelector.addEventListener('change', () => {
+            // Clear status when selector changes
+            projectLoadStatus.style.display = 'none';
+        });
+
+        // Load projects list on page load
+        loadProjectsList();
+
+        // Felderklaerungen Woerterbuch
+        const fieldExplanations = {
+            capexEquipment: {
+                title: 'CAPEX Ausr\u00fcstung (EUR)',
+                description: 'Die Anschaffungskosten der Ausr\u00fcstung (z.B. Solarpanels, W\u00e4rmepumpe, D\u00e4mmaterialien, etc.). Dies sind die tats\u00e4chlichen Hardwarekosten von Lieferant oder Hersteller.',
+                where: 'Quelle: Lieferantenofferten, Herstellerpreislisten oder Marktrecherchen'
+            },
+            capexInstallation: {
+                title: 'CAPEX Installation (EUR)',
+                description: 'Die Arbeits- und Materialkosten f\u00fcr die Installation der Ausr\u00fcstung (z.B. Montagearbeit, Elektrotechnik, Rohrverlege, Konstruktionssicherung). Dies beinhaltet nicht die Ingenieurleistung oder Planung.',
+                where: 'Quelle: Installationsfirmen-Offerten, Lohnkostenschätzungen, Materialkosten für Installation (Kabel, Halterungen, etc.)'
+            },
+            capexPlanning: {
+                title: 'CAPEX Planung/Ingenieurleistungen (EUR)',
+                description: 'Kosten für Design, Ingenieurstudien, Genehmigungen und fachliche Beratung vor der Installation. Dies umfasst Ortsbegehungen, technische Zeichnungen und behördliche Genehmigungen.',
+                where: 'Quelle: Ingenieurbüros, Genehmigungsgebühren, Planungsbüros. Typischerweise 5-15% der Ausrüstungskosten.'
+            },
+            capexOtherInitial: {
+                title: 'Sonstige Anfangskosten (EUR)',
+                description: 'Alle zusätzlichen einmaligen Kosten nicht abgedeckt oben, wie Standortvorbereitung, Prüfung, Inbetriebnahme, Schulung oder Rücklagenbildung für Risiken.',
+                where: 'Quelle: Projektmanagement, Testlabore, Schulungsanbieter oder Risikoreserven'
+            },
+            equitySharePct: {
+                title: 'WACC - Eigenkapitalanteil (%)',
+                description: 'Der Prozentsatz der Investition, die mit eigenem Kapital finanziert wird. Wenn Sie z.B. 60% selbst bereitstellen und 40% kreditfinanzieren, geben Sie 60 ein.',
+                where: 'Quelle: Ihr Finanzierungsplan oder Kapitalstruktur; typischer Bereich: 40-80%'
+            },
+            costOfEquityPct: {
+                title: 'Eigenkapitalkosten (%)',
+                description: 'Die erwartete jährliche Rendite, die Ihr Eigenkapital generieren soll (Ihre Mindestverzinsungsanforderung). Dies spiegelt das Risiko der Investition und Ihre Kapitalkosten wider.',
+                where: 'Quelle: CAPM-Formel, Eigenkapitalkostenpolitik des Unternehmens oder risikofreier Zinssatz + Risikoprämie (typischerweise 6-12% p.a.)'
+            },
+            debtSharePct: {
+                title: 'WACC - Fremdkapitalanteil (%)',
+                description: 'Der Prozentsatz der Investition, die durch Kreditaufnahme finanziert wird. Sollte zusammen mit Eigenkapitalanteil 100% ergeben.',
+                where: 'Quelle: Ihr Finanzierungsplan; typischer Bereich: 20-60%'
+            },
+            interestRateDebtPct: {
+                title: 'Fremdkapitalzinssatz (%)',
+                description: 'Der jährliche Zinssatz, den Sie für aufgenommene Mittel zahlen. Dies wird mit Banken oder Kreditgebern verhandelt.',
+                where: 'Quelle: Bankkreditangebote, Hypothekenzinssätze oder Marktvergleichswerte (typischerweise 2-7% p.a. je nach Kreditwürdigkeit und Marktbedingungen)'
+            },
+            lifespanYears: {
+                title: 'Lebensdauer n (Jahre)',
+                description: 'Die erwartete wirtschaftliche Lebensdauer oder Analysedauer der Investition. Dies ist die angenommene Dauer, in der das System betrieben wird und Nutzen generiert.',
+                where: 'Quelle: Ausrüstungsgarantie, Herstellerspezifikationen oder Standard-Branchenpraktiken (typischerweise 15-30 Jahre für Energieeffizienzmaßnahmen)'
+            },
+            maintenanceSavingsPerYear: {
+                title: 'Wartungseinsparungen pro Jahr (EUR)',
+                description: 'Jährliche Kostenreduktionen durch niedrigere Wartungsbedarfe nach Implementierung der Maßnahme (z.B. weniger Reparaturen, weniger Reinigung, reduzierte Serviceaufrufe).',
+                where: 'Quelle: Historische Wartungsunterlagen, Auftragnehmer-Schätzungen, Herstellerdaten'
+            },
+            annualEnergySavedKwh: {
+                title: 'Eingesparte Energie (kWh) pro Jahr',
+                description: 'Die jährlichen Kilowattstunden Energieeinsparung (Strom, Wärme, Gas, etc.) durch die Maßnahme unter "wahrscheinlichsten" Bedingungen.',
+                where: 'Quelle: Energieaudit, Ingenieurberechnungen, ASHRAE/DIN-Standards, Hersteller-Leistungsdaten oder Simulationssoftware'
+            },
+            energyPriceBase: {
+                title: 'Energiepreisbasis (EUR/kWh)',
+                description: 'Der aktuelle Energiepreis (Strom, Heizöl, Erdgas, etc.) pro Kilowattstunde. Wird verwendet, um Energieeinsparungen in Euro-Einsparungen umzuwandeln.',
+                where: 'Quelle: Aktuelle Stromrechnungen, lokale Energiemarkpreise oder Branchenbenchmarks'
+            },
+            priceTrendPct: {
+                title: 'Preistrend (% p.a.)',
+                description: 'Die erwartete jährliche Kosteninflation für Energiepreise. Reflektiert Inflation, Knappheit und Marktdynamiken.',
+                where: 'Quelle: Historische Energiepreistrends, Inflationsprognosen der Zentralbank oder Energiemarktberichte (typischerweise 2-5% p.a.)'
+            },
+            technicalDegradationPct: {
+                title: 'Technische Degradation (% p.a.)',
+                description: 'Der jährliche prozentuale Rückgang der Systemeffizienz oder -leistung. Zum Beispiel degradieren Solarpanels typischerweise 0,5-0,8% pro Jahr.',
+                where: 'Quelle: Herstellerdaten, Ausrüstungsgarantiebedingungen, wissenschaftliche Literatur oder Praxiserfahrung'
+            },
+            subsidyYear1: {
+                title: 'Zuschuss/Förderung in Jahr 1 (EUR)',
+                description: 'Staatliche Zuschüsse, Steuervergünstigungen oder Rabatte im ersten Jahr zur Kompensation von Kapitalkosten. Dies reduziert Ihre Nettoinvestition.',
+                where: 'Quelle: Staatliche Energieprogramme, KfW (Deutschland), EU-Fonds, lokale Zuschüsse oder Steuergutschriften'
+            },
+            replacementCost: {
+                title: 'Ersatzkosten (EUR)',
+                description: 'Die Kosten für den Austausch von Komponentengruppen, die vor Ende der Projektlebensdauer das Ende ihrer Lebensdauer erreichen (z.B. Batterie-, Wechselrichter- oder Verdichteraustausch).',
+                where: 'Quelle: Herstellerangebote, Marktpreise für Ersatzkomponenten oder historische Ersatzdaten'
+            },
+            replacementYear: {
+                title: 'Ersatzjahr (1..n)',
+                description: 'Das Projektjahr, in dem der Austausch stattfindet (z.B. Jahr 12 von 25). Muss zwischen 1 und der Lebensdauer liegen.',
+                where: 'Quelle: Komponenten-Gewährleistungszeit, technische Spezifikationen, Herstellerempfehlungen'
+            },
+            scrapValue: {
+                title: 'Schrottwert in Jahr n (EUR)',
+                description: 'Der Restwert oder Schrottwert der Ausrüstung am Ende der Projektlebensdauer. Zum Beispiel Recyclingmaterialien, Landwert oder Wiederverkauf gebrauchter Ausrüstung.',
+                where: 'Quelle: Recycling-Tarife, Schrottmetallpreise, Gebrauchtausrüstungsmarkt oder Abschreibungstabellen'
+            }
+        };
+
+        function openInfoModal(fieldId) {
+            const info = fieldExplanations[fieldId];
+            if (!info) return;
+            
+            const modal = $('infoModal');
+            const title = $('modalTitle');
+            const body = $('modalBody');
+            
+            title.textContent = info.title;
+            body.innerHTML = `
+                <div class="modal-section">
+                    <div class="modal-section-title">Was ist das?</div>
+                    <p>${info.description}</p>
+                </div>
+                <div class="modal-section">
+                    <div class="modal-section-title">Wo bekomme ich diese Daten?</div>
+                    <p>${info.where}</p>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        function closeInfoModal() {
+            const modal = $('infoModal');
+            modal.classList.remove('active');
+        }
+
+        // Close modal on outside click
+        $('infoModal').addEventListener('click', (e) => {
+            if (e.target.id === 'infoModal') {
+                closeInfoModal();
+            }
+        });
+
+        // Setup info buttons
+        document.querySelectorAll('.info-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const fieldId = btn.dataset.field;
+                openInfoModal(fieldId);
+            });
+        });
+
+        // Helper function to generate random number between min and max
+        function randomBetween(min, max, decimals = 2) {
+            const value = Math.random() * (max - min) + min;
+            return parseFloat(value.toFixed(decimals));
+        }
+
+        // Populate form with example answers
+        function fillExampleAnswers() {
+            // CAPEX values
+            $('capexEquipment').value = randomBetween(8000, 45000, 2);
+            $('capexInstallation').value = randomBetween(2000, 18000, 2);
+            $('capexPlanning').value = randomBetween(800, 4000, 2);
+            $('capexOtherInitial').value = randomBetween(500, 3000, 2);
+            updateI0();
+
+            // WACC parameters
+            $('equitySharePct').value = randomBetween(45, 70, 2);
+            $('costOfEquityPct').value = randomBetween(6.5, 11, 2);
+            $('debtSharePct').value = randomBetween(30, 55, 2);
+            $('interestRateDebtPct').value = randomBetween(2.5, 5.5, 2);
+
+            // Project parameters
+            $('lifespanYears').value = randomBetween(15, 25, 0);
+            $('maintenanceSavingsPerYear').value = randomBetween(1500, 5000, 2);
+
+            // Energy parameters
+            $('annualEnergySavedKwh').value = randomBetween(8000, 45000, 2);
+            $('energyPriceBase').value = randomBetween(0.18, 0.32, 4);
+            $('priceTrendPct').value = randomBetween(2.5, 4.5, 2);
+            $('technicalDegradationPct').value = randomBetween(0.3, 1.5, 2);
+
+            // Subsidy and replacement parameters
+            $('subsidyYear1').value = randomBetween(0, 20000, 2);
+            $('replacementCost').value = randomBetween(5000, 20000, 2);
+            $('replacementYear').value = randomBetween(10, 18, 0);
+            $('scrapValue').value = randomBetween(2000, 8000, 2);
+
+            calcStatus.textContent = 'Beispielwerte eingefügt. Klicken Sie "NPV berechnen", um die Ergebnisse zu sehen.';
+            setTimeout(() => { calcStatus.textContent = ''; }, 4000);
+        }
+
+        exampleBtn.addEventListener('click', fillExampleAnswers);
+
+        const i0Preview = $('i0Preview');
+        const capexIds = ['capexEquipment','capexInstallation','capexPlanning','capexOtherInitial'];
+        const capexRead = () => capexIds.reduce((sum, id) => sum + (parseFloat($(id).value) || 0), 0);
+        const updateI0 = () => { i0Preview.textContent = `I0: ${capexRead().toFixed(2)} EUR`; };
+        capexIds.forEach(id => $(id).addEventListener('input', updateI0));
+        updateI0();
+
+        function setCalcBusy(busy) {
+            calcBtn.disabled = busy;
+            calcBtn.textContent = busy ? 'Berechnung läuft...' : 'NPV berechnen';
+        }
+
+        function formatEUR(n) {
+            if (!Number.isFinite(n)) return '€0';
+            return '€' + n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function renderCashflows(rows) {
+            const body = $('cashflowBody');
+            body.innerHTML = '';
+            rows.forEach(r => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${r.year}</td>
+                    <td>${formatEUR(r.totalCashFlow)}</td>
+                    <td>${formatEUR(r.discountedCashFlow)}</td>
+                    <td>${formatEUR(r.cumulativeNPV)}</td>
+                `;
+                body.appendChild(tr);
+            });
+        }
+
+        function showResult(data) {
+            $('decisionCard').style.display = 'block';
+            $('decisionText').textContent = data.calculation.decision;
+            $('kpiGrid').style.display = 'grid';
+            $('npvValue').textContent = formatEUR(data.calculation.npv);
+            $('waccValue').textContent = (data.calculation.wacc * 100).toFixed(2) + '%';
+            $('lifeValue').textContent = String(data.calculation.lifespanYears);
+
+            $('cashflowWrap').style.display = 'block';
+            renderCashflows(data.calculation.cashflowRows);
+
+            $('aiExplanationWrap').style.display = 'block';
+            $('aiExplanation').textContent = data.explanation || '';
+            
+            // Show save button after calculation
+            saveBtn.style.display = 'inline-block';
+            
+            // Store calculation for saving
+            latestCalculation = data.calculation;
+            latestInputs = data.inputs;
+            latestExplanation = data.explanation;
+        }
+
+        // Save functionality
+        function openSaveModal() {
+            if (!latestCalculation) {
+                alert('Bitte führen Sie zuerst eine Berechnung durch.');
+                return;
+            }
+            
+            // Show scenario selector if project mode, otherwise show name field
+            const scenarioField = $('scenarioTypeField');
+            const nameField = $('resultNameField');
+            
+            if (currentProject || projectId) {
+                scenarioField.style.display = 'block';
+                nameField.style.display = 'none';
+            } else {
+                scenarioField.style.display = 'none';
+                nameField.style.display = 'block';
+                const now = new Date();
+                const defaultName = `NPV Berechnung ${now.toLocaleDateString('de-DE')} ${now.toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'})}`;
+                $('saveResultName').value = defaultName;
+            }
+            
+            $('saveModal').classList.add('active');
+        }
+
+        function closeSaveModal() {
+            $('saveModal').classList.remove('active');
+        }
+
+        async function confirmSaveResult() {
+            if (!latestCalculation || !latestInputs) {
+                alert('Keine Berechnung verfügbar zum Speichern.');
+                return;
+            }
+
+            try {
+                let endpoint, body;
+                
+                if (currentProject) {
+                    // Save as project scenario
+                    const scenarioType = $('saveScenarioType').value;
+                    endpoint = `/api/valeri/projects/${currentProject.projectId}/scenarios`;
+                    body = {
+                        scenarioType,
+                        inputs: latestInputs,
+                        calculation: latestCalculation,
+                        explanation: latestExplanation
+                    };
+                } else if (projectId) {
+                    // Save as project scenario (from URL param)
+                    const scenarioType = $('saveScenarioType').value;
+                    endpoint = `/api/valeri/projects/${projectId}/scenarios`;
+                    body = {
+                        scenarioType,
+                        inputs: latestInputs,
+                        calculation: latestCalculation,
+                        explanation: latestExplanation
+                    };
+                } else {
+                    // Save as individual result (legacy)
+                    const name = $('saveResultName').value.trim();
+                    if (!name) {
+                        alert('Bitte geben Sie einen Namen ein.');
+                        return;
+                    }
+                    endpoint = '/api/valeri/phase7/save-result';
+                    body = {
+                        name,
+                        inputs: latestInputs,
+                        calculation: latestCalculation,
+                        explanation: latestExplanation
+                    };
+                }
+                
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.error || 'Fehler beim Speichern');
+
+                calcStatus.textContent = 'Ergebnis erfolgreich gespeichert!';
+                setTimeout(() => { calcStatus.textContent = ''; }, 3000);
+                closeSaveModal();
+            } catch (e) {
+                alert('Fehler beim Speichern: ' + (e.message || 'Unbekannter Fehler'));
+            }
+        }
+
+        // Load functionality
+        async function openLoadModal() {
+            $('loadModal').classList.add('active');
+            try {
+                let endpoint;
+                let useProjectMode = false;
+                let projectIdForLoad = null;
+                
+                if (currentProject) {
+                    useProjectMode = true;
+                    projectIdForLoad = currentProject.projectId;
+                    endpoint = `/api/valeri/projects/${projectIdForLoad}/scenarios`;
+                } else if (projectId) {
+                    useProjectMode = true;
+                    projectIdForLoad = projectId;
+                    endpoint = `/api/valeri/projects/${projectId}/scenarios`;
+                } else {
+                    endpoint = '/api/valeri/phase7/user-results';
+                }
+                
+                const response = await fetch(endpoint);
+                const data = await response.json();
+                
+                let html = '';
+                
+                if (useProjectMode) {
+                    // Project scenarios
+                    const scenarios = data.scenarios || [];
+                    if (scenarios.length === 0) {
+                        html = '<p style="color: #6b7280;">Noch keine Szenarien für dieses Projekt.</p>';
+                    } else {
+                        html = '<div style="max-height: 400px; overflow-y: auto;">';
+                        scenarios.forEach(scenario => {
+                            const scenarioLabel = {
+                                'most_likely': 'Wahrscheinlichster Fall',
+                                'best_case': 'Best Case',
+                                'worst_case': 'Worst Case'
+                            }[scenario.scenarioType] || scenario.scenarioType;
+                            const date = new Date(scenario.createdAt).toLocaleDateString('de-DE');
+                            html += `
+                                <div style="padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 10px;">
+                                    <div style="font-weight: 600; color: #111827; margin-bottom: 6px;">${scenarioLabel}</div>
+                                    <div style="font-size: 0.85rem; color: #6b7280; margin-bottom: 10px;">Erstellt: ${date}</div>
+                                    <div style="font-size: 0.9rem; color: #4b5563; margin-bottom: 10px;">NPV: ${formatEUR(scenario.calculation.npv)} | WACC: ${(scenario.calculation.wacc * 100).toFixed(2)}%</div>
+                                    <div style="display: flex; gap: 8px;">
+                                        <button onclick="loadProjectScenario('${scenario.scenarioId}')" class="btn btn-primary" style="flex: 1; padding: 6px 12px; font-size: 0.85rem;">Laden</button>
+                                        <button onclick="deleteProjectScenario('${scenario.scenarioId}')" class="btn" style="flex: 1; padding: 6px 12px; font-size: 0.85rem; background: #fee2e2; color: #dc2626;">Löschen</button>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        html += '</div>';
+                    }
+                } else {
+                    // Individual results
+                    const count = data.count || 0;
+                    if (count === 0) {
+                        html = '<p style="color: #6b7280;">Sie haben noch keine Ergebnisse gespeichert.</p>';
+                    } else {
+                        html = '<div style="max-height: 400px; overflow-y: auto;">';
+                        data.results.forEach(result => {
+                            const date = new Date(result.createdAt).toLocaleDateString('de-DE');
+                            html += `
+                                <div style="padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 10px;">
+                                    <div style="font-weight: 600; color: #111827; margin-bottom: 6px;">${result.name}</div>
+                                    <div style="font-size: 0.85rem; color: #6b7280; margin-bottom: 10px;">Erstellt: ${date}</div>
+                                    <div style="font-size: 0.9rem; color: #4b5563; margin-bottom: 10px;">NPV: ${formatEUR(result.calculation.npv)} | WACC: ${(result.calculation.wacc * 100).toFixed(2)}%</div>
+                                    <div style="display: flex; gap: 8px;">
+                                        <button onclick="loadResult('${result.id}')" class="btn btn-primary" style="flex: 1; padding: 6px 12px; font-size: 0.85rem;">Laden</button>
+                                        <button onclick="deleteResult('${result.id}')" class="btn" style="flex: 1; padding: 6px 12px; font-size: 0.85rem; background: #fee2e2; color: #dc2626;">Löschen</button>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        html += '</div>';
+                    }
+                }
+                
+                $('loadModalBody').innerHTML = html;
+            } catch (e) {
+                $('loadModalBody').innerHTML = '<p style="color: #dc2626;">Fehler beim Laden der Ergebnisse: ' + e.message + '</p>';
+            }
+        }
+
+        function closeLoadModal() {
+            $('loadModal').classList.remove('active');
+        }
+
+        async function loadProjectScenario(scenarioId) {
+            try {
+                // Load from project
+                let projectIdToLoad = projectId;
+                let projectData = null;
+                
+                if (currentProject) {
+                    projectData = { project: currentProject };
+                } else if (projectId) {
+                    const projectResponse = await fetch(`/api/valeri/projects/${projectId}`);
+                    projectData = await projectResponse.json();
+                    if (!projectResponse.ok) throw new Error(projectData.error);
+                } else {
+                    throw new Error('No project selected');
+                }
+                
+                const scenario = projectData.project.phase7Scenarios.find(s => s.scenarioId === scenarioId);
+                if (!scenario) throw new Error('Scenario not found');
+                
+                // Load inputs into form
+                const inputs = scenario.inputs;
+                $('capexEquipment').value = inputs.capexEquipment || 0;
+                $('capexInstallation').value = inputs.capexInstallation || 0;
+                $('capexPlanning').value = inputs.capexPlanning || 0;
+                $('capexOtherInitial').value = inputs.capexOtherInitial || 0;
+                updateI0();
+                
+                $('equitySharePct').value = inputs.equitySharePct || 60;
+                $('costOfEquityPct').value = inputs.costOfEquityPct || 8;
+                $('debtSharePct').value = inputs.debtSharePct || 40;
+                $('interestRateDebtPct').value = inputs.interestRateDebtPct || 5;
+                
+                $('lifespanYears').value = inputs.lifespanYears || 20;
+                $('maintenanceSavingsPerYear').value = inputs.maintenanceSavingsPerYear || 0;
+                
+                $('annualEnergySavedKwh').value = inputs.annualEnergySavedKwh || 0;
+                $('energyPriceBase').value = inputs.energyPriceBase || 0;
+                $('priceTrendPct').value = inputs.priceTrendPct || 0;
+                $('technicalDegradationPct').value = inputs.technicalDegradationPct || 0;
+                
+                $('subsidyYear1').value = inputs.subsidyYear1 || 0;
+                $('replacementCost').value = inputs.replacementCost || 0;
+                $('replacementYear').value = inputs.replacementYear || 10;
+                $('scrapValue').value = inputs.scrapValue || 0;
+                
+                // Show results
+                latestCalculation = scenario.calculation;
+                latestInputs = scenario.inputs;
+                latestExplanation = scenario.explanation;
+                showResult({
+                    ...scenario,
+                    inputs: scenario.inputs,
+                    calculation: scenario.calculation,
+                    explanation: scenario.explanation
+                });
+                
+                closeLoadModal();
+                calcStatus.textContent = 'Szenario geladen!';
+                setTimeout(() => { calcStatus.textContent = ''; }, 2000);
+            } catch (e) {
+                alert('Fehler beim Laden: ' + e.message);
+            }
+        }
+
+        async function deleteProjectScenario(scenarioId) {
+            if (!confirm('Dieses Szenario wirklich löschen?')) return;
+            
+            try {
+                let projectIdForDelete = currentProject ? currentProject.projectId : projectId;
+                if (!projectIdForDelete) throw new Error('No project selected');
+                
+                const response = await fetch(`/api/valeri/projects/${projectIdForDelete}/scenarios/${scenarioId}`, {
+                    method: 'DELETE'
+                });
+                
+                if (!response.ok) {
+                    const data = await response.json();
+                    throw new Error(data.error || 'Fehler beim Löschen');
+                }
+                
+                calcStatus.textContent = 'Szenario gelöscht.';
+                setTimeout(() => { calcStatus.textContent = ''; }, 2000);
+                openLoadModal(); // Refresh list
+            } catch (e) {
+                alert('Fehler beim Löschen: ' + e.message);
+            }
+        }
+
+        async function loadResult(resultId) {
+            try {
+                const response = await fetch(`/api/valeri/phase7/result/${resultId}`);
+                const data = await response.json();
+                
+                if (!response.ok) throw new Error(data.error);
+                
+                const result = data.result;
+                
+                // Load inputs into form
+                $('capexEquipment').value = result.inputs.capexEquipment || 0;
+                $('capexInstallation').value = result.inputs.capexInstallation || 0;
+                $('capexPlanning').value = result.inputs.capexPlanning || 0;
+                $('capexOtherInitial').value = result.inputs.capexOtherInitial || 0;
+                updateI0();
+                
+                $('equitySharePct').value = result.inputs.equitySharePct || 60;
+                $('costOfEquityPct').value = result.inputs.costOfEquityPct || 8;
+                $('debtSharePct').value = result.inputs.debtSharePct || 40;
+                $('interestRateDebtPct').value = result.inputs.interestRateDebtPct || 5;
+                
+                $('lifespanYears').value = result.inputs.lifespanYears || 20;
+                $('maintenanceSavingsPerYear').value = result.inputs.maintenanceSavingsPerYear || 0;
+                
+                $('annualEnergySavedKwh').value = result.inputs.annualEnergySavedKwh || 0;
+                $('energyPriceBase').value = result.inputs.energyPriceBase || 0;
+                $('priceTrendPct').value = result.inputs.priceTrendPct || 0;
+                $('technicalDegradationPct').value = result.inputs.technicalDegradationPct || 0;
+                
+                $('subsidyYear1').value = result.inputs.subsidyYear1 || 0;
+                $('replacementCost').value = result.inputs.replacementCost || 0;
+                $('replacementYear').value = result.inputs.replacementYear || 10;
+                $('scrapValue').value = result.inputs.scrapValue || 0;
+                
+                // Show results
+                latestCalculation = result.calculation;
+                latestInputs = result.inputs;
+                latestExplanation = result.explanation;
+                showResult(result);
+                
+                closeLoadModal();
+                calcStatus.textContent = 'Ergebnis geladen!';
+                setTimeout(() => { calcStatus.textContent = ''; }, 2000);
+            } catch (e) {
+                alert('Fehler beim Laden: ' + e.message);
+            }
+        }
+
+        async function deleteResult(resultId) {
+            if (!confirm('Möchten Sie dieses Ergebnis wirklich löschen?')) return;
+            
+            try {
+                const response = await fetch(`/api/valeri/phase7/result/${resultId}`, {
+                    method: 'DELETE'
+                });
+                
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.error);
+                
+                calcStatus.textContent = 'Ergebnis gelöscht!';
+                setTimeout(() => { openLoadModal(); }, 500);
+            } catch (e) {
+                alert('Fehler beim Löschen: ' + e.message);
+            }
+        }
+
+        // Modal controls
+        $('saveModal').addEventListener('click', (e) => {
+            if (e.target.id === 'saveModal') closeSaveModal();
+        });
+
+        $('loadModal').addEventListener('click', (e) => {
+            if (e.target.id === 'loadModal') closeLoadModal();
+        });
+
+        // Button event listeners
+        saveBtn.addEventListener('click', openSaveModal);
+        loadBtn.addEventListener('click', openLoadModal);
+
+        calcBtn.addEventListener('click', async () => {
+            setCalcBusy(true);
+            calcStatus.textContent = 'Berechne NPV (Wahrscheinlichstes Szenario) ...';
+            try {
+                const payload = {
+                    capexEquipment: parseFloat($('capexEquipment').value) || 0,
+                    capexInstallation: parseFloat($('capexInstallation').value) || 0,
+                    capexPlanning: parseFloat($('capexPlanning').value) || 0,
+                    capexOtherInitial: parseFloat($('capexOtherInitial').value) || 0,
+                    equitySharePct: parseFloat($('equitySharePct').value) || 0,
+                    costOfEquityPct: parseFloat($('costOfEquityPct').value) || 0,
+                    debtSharePct: parseFloat($('debtSharePct').value) || 0,
+                    interestRateDebtPct: parseFloat($('interestRateDebtPct').value) || 0,
+                    lifespanYears: parseInt($('lifespanYears').value) || 20,
+                    annualEnergySavedKwh: parseFloat($('annualEnergySavedKwh').value) || 0,
+                    energyPriceBase: parseFloat($('energyPriceBase').value) || 0,
+                    priceTrendPct: parseFloat($('priceTrendPct').value) || 0,
+                    technicalDegradationPct: parseFloat($('technicalDegradationPct').value) || 0,
+                    maintenanceSavingsPerYear: parseFloat($('maintenanceSavingsPerYear').value) || 0,
+                    subsidyYear1: parseFloat($('subsidyYear1').value) || 0,
+                    replacementCost: parseFloat($('replacementCost').value) || 0,
+                    replacementYear: parseInt($('replacementYear').value) || 10,
+                    scrapValue: parseFloat($('scrapValue').value) || 0
+                };
+
+                const resp = await fetch('/api/valeri/phase7/calc-most-likely', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await resp.json();
+                if (!resp.ok) throw new Error(data.error || 'Berechnung fehlgeschlagen');
+                calcStatus.textContent = 'Fertig.';
+                showResult(data);
+            } catch (e) {
+                calcStatus.textContent = '';
+                alert(e.message || 'Berechnung fehlgeschlagen');
+            } finally {
+                setCalcBusy(false);
+            }
+        });
+    </script>
+</body>
+</html>
+
